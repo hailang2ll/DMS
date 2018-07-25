@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Authors>Dylan,hailang</Authors>
+    <Company>Dylan,hailang</Company>
+    <Description>基于Autofac框架，完全自动注入，默认都是以构造函数来注入，在这里支持属性注入，简单代码方便调用
+修复了之前版本的注入问题</Description>
+    <Copyright>Copyright@2018 Dylan</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.0" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if &quot;$(ConfigurationName)&quot; == &quot;Release&quot; (&#xD;&#xA; dotnet pack --no-build --configuration Release  --output $(SolutionDir)\nupkg&#xD;&#xA;)" />
+  </Target>
+
+</Project>

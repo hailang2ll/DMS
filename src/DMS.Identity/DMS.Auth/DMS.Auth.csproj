@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Copyright>Copyright@2018 Dylan</Copyright>
+    <Company>Dylan,hailang</Company>
+    <Authors>Dylan,hailang</Authors>
+    <Description>主要用于token头部权限验证，需要在请求头加入AccessToken信息才能进行验证</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DMS.Core\DMS.Exceptionless\DMS.Exceptionless.csproj" />
+    <ProjectReference Include="..\..\DMS.Core\DMS.Redis\DMS.Redis.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if &quot;$(ConfigurationName)&quot; == &quot;Release&quot; (&#xD;&#xA; dotnet pack --no-build --configuration Release  --output $(SolutionDir)\nupkg&#xD;&#xA;)" />
+  </Target>
+
+</Project>

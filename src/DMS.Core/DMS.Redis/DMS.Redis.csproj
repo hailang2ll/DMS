@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Description>基于StackExchange.Redis框架开发，依赖DMS中基础框架，主要用于分布式缓存系统</Description>
+    <Company>Dylan,hailang</Company>
+    <Authors>Dylan,hailang</Authors>
+    <Copyright>Copyright@2018 Dylan</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StackExchange.Redis" Version="1.2.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DMS.BASE\DMS.BaseFramework.Common\DMS.BaseFramework.Common.csproj" />
+    <ProjectReference Include="..\DMS.Exceptionless\DMS.Exceptionless.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if &quot;$(ConfigurationName)&quot; == &quot;Release&quot; (&#xD;&#xA; dotnet pack --no-build --configuration Release  --output $(SolutionDir)\nupkg&#xD;&#xA;)" />
+  </Target>
+
+</Project>
