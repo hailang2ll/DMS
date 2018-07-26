@@ -26,11 +26,7 @@ namespace DMS.BaseFramework.Common.APITest.Controllers
 
         public IActionResult Index()
         {
-            var configPath = AppSettings.GetConfigPath;
-            var tableConfigCollection = AppSettings.GetModel<List<TableConfigCollection>>("TableConfigCollection");
-
             var RedisEntity = AppSettings.GetCustomModel<RedisEntityConfig>("Redis.json");
-            var tableConfig = AppSettings.GetCustomModel<List<TableConfigCollection>>("TableConfig.json", "TableConfigurations");
 
 
             #region 分布式日志收集
@@ -56,78 +52,11 @@ namespace DMS.BaseFramework.Common.APITest.Controllers
             #endregion
 
 
-            var ImgServerUrl = DomainManageSettings.GetDomain("ImgServerUrl");
 
             return View();
         }
 
-        #region excel导出，只支持web
-        /// <summary>
-        /// excel导出
-        /// </summary>
-        /// <returns></returns>
-        public FileResult ExportFS()
-        {
-            List<User> userList = new List<User>() {
-                 new User(){ ID=1,Name="aaa" },
-                 new User(){ ID=2,Name="bbb" },
-            };
-            var fs = ExportHelper.ExportToFsExcel<User>(userList, new string[] { "ID", "Name" },
-               c => c.ID,
-               c => c.Name.ToString()
-               );
 
-            return File(fs, "application/vnd.ms-excel", "ExportFS");
-        }
-
-        /// <summary>
-        /// excel导出
-        /// </summary>
-        /// <returns></returns>
-        public FileResult ExportBuilderFS()
-        {
-            List<User> userList = new List<User>() {
-                 new User(){ ID=1,Name="aaa" },
-                 new User(){ ID=2,Name="bbb" },
-            };
-
-            var fs = new ExportBuilderHelper<User>()
-                   .Column(c => c.ID)
-                   .Column(c => c.Name)
-                   .Export(userList);
-
-            return File(fs, "application/vnd.ms-excel", "ExportBuilderFS");
-        }
-        #endregion
-
-        #region excel导出，支持所有方式导出，推荐用这两种方式
-        /// <summary>
-        /// API导出数据
-        /// </summary>
-        /// <returns></returns>
-        public string Export()
-        {
-            List<User> list = new List<User>();
-            list.Add(new User() { ID = 1, Name = "lang" });
-            list.Add(new User() { ID = 1, Name = "aaa" });
-            DataTable dt = list.ToDataTable("dd");
-            return ExportHelper.ExportToExcel(dt, @"d:\Export.xls");
-        }
-        public string ExportToExcel()
-        {
-            List<User> userList = new List<User>() {
-                 new User(){ ID=1,Name="aaa" },
-                 new User(){ ID=2,Name="bbb" },
-            };
-            var s = ExportHelper.ExportToExcel<User>(userList, @"d:\ExportToExcel.xls",
-               new string[] { "用户ID", "用户名称" },
-               c => c.ID,
-               c => c.Name.ToString()
-               );
-
-            return s;
-        }
-        #endregion
 
         #region 分布日志
         public static void LessLog1()

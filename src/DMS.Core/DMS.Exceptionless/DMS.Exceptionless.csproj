@@ -9,11 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DMS.BaseFramework.Common" Version="1.0.1" />
     <PackageReference Include="Exceptionless" Version="4.3.2004" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\DMS.BASE\DMS.BaseFramework.Common\DMS.BaseFramework.Common.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
