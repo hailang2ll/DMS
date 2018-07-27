@@ -26,7 +26,7 @@ namespace DMS.Auth
         /// </summary>
         /// <param name="context"></param>
         /// <param name="type">0=检查登录，获取用户信息，不退出；1=检查登录，未登录直接退出</param>
-        public void CheckLogin(ActionExecutingContext context, int type)
+        protected void CheckLogin(ActionExecutingContext context, int type)
         {
             Microsoft.Extensions.Primitives.StringValues token = context.HttpContext.Request.Headers["AccessToken"];
             if (!string.IsNullOrWhiteSpace(token))
@@ -52,8 +52,6 @@ namespace DMS.Auth
                 };
                 context.Result = new ContentResult() { Content = SerializerJson.SerializeObject(result), StatusCode = 200 };
             }
-
         }
-
     }
 }
