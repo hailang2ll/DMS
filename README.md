@@ -75,7 +75,42 @@ public class RabbitMQConfig
 ```
 ### 项目调用方法
 ```c# 
+RabbitMQHelper help = new RabbitMQHelper();
+help.Send<NoticeMessageParam>("Notice", notice);
+```
+
+
+
+## DMS.Redis 基于StackExchange.Redis框架开发，依赖DMS中基础框架，主要用于分布式缓存系统
+首先定义你的数据实体文件Redis.json
+```c# 
+public class RedisEntityConfig
+    {
+        #region 属性
+
+        /// <summary>
+        /// Redis服务器
+        /// </summary>
+        public string RedisConnectionString { get; set; }
+
+        /// <summary>
+        /// Redis密码
+        /// </summary>
+        public string RedisConnectionPwd { get; set; }
+
+        /// <summary>
+        /// 系统自定义Key前缀
+        /// </summary>
+        public string RedisPrefixKey { get; set; }
+
+        #endregion
+    }
+```
+### 项目调用方法
+```c# 
 RedisManager redisManager = new RedisManager(0);
 redisManager.StringSet("key", "value1");
 var key = redisManager.StringGet("key");
 ```
+
+### 待完善
