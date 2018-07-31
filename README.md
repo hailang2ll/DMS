@@ -2,6 +2,8 @@
 
 ### DMS将会是一个集中式的中间件框架，每一个小型中间件将会是完全独立的，如：gRPC，Thrift，netty，Wcf，Exceptionless，Ocelot，RabbitMQ，Redis，IdentityServer，Consul，Zookeeper等，Demo中会有每一个中间件的实例方便开发者了解 
 
+
+
 ## DMS.Exceptionless 基于Exceptionless框架开发，依赖DMS中基础框架，主要用于分页式日志系统
 github源码地址：https://github.com/exceptionless/Exceptionless.Net
 参考资料将客户端服务配置起来，目前仅支持ElasticSearch5.X版本
@@ -13,6 +15,7 @@ LessLog.Error("这是一条错误的信息");
 LessLog.Fatal("这是一条致命的信息");
 ```
 
+
 ## DMS.Autofac 基于Autofac框架，完全自动注入，默认都是以构造函数来注入，在这里支持属性注入，简单代码方便调用修复了之前版本的注入问题
 在Startup中的方法添加：return AutofacService.RegisterAutofac(services, "项目接口名.Contracts", "项目服务名.Service");即可属性注入，方法返回类型为：IServiceProvider
 
@@ -21,6 +24,7 @@ LessLog.Fatal("这是一条致命的信息");
 public IDemoService service { get; set; } 只需在调用的位置定义接口属性就好
 var entity1 = service.GetEntity(13); 在方法中直接调用，不需要在实例化
 ```
+
 
 ## DMS.RabbitMQ 基于RabbitMQ.Client框架开发，依赖DMS中基础框架，主要用于分布式消息对列系统
 首先定义你的数据实体文件RabbitMQ.json
