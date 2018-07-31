@@ -6,7 +6,7 @@
 github源码地址：https://github.com/exceptionless/Exceptionless.Net
 参考资料将客户端服务配置起来，目前仅支持ElasticSearch5.X版本
 
-### 项目代码调用
+### DMS.Exceptionless
 ```c# 
 LessLog.Info("这是一条提示信息");
 LessLog.Error("这是一条错误的信息");
