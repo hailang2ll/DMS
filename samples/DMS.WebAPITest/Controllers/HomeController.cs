@@ -26,8 +26,6 @@ namespace DMS.BaseFramework.Common.APITest.Controllers
 
         public IActionResult Index()
         {
-            var RedisEntity = AppSettings.GetCustomModel<RedisEntityConfig>("Redis.json");
-
 
             #region 分布式日志收集
             //LessLog.Info("这是一条提示信息");

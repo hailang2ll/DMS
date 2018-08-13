@@ -1,77 +1,84 @@
-﻿using DMS.BaseFramework.Common.BaseParam;
+﻿using DMS.BaseFramework.Common;
+using DMS.BaseFramework.Common.BaseParam;
 using DMS.BaseFramework.Common.BaseResult;
+using DMS.BaseFramework.Common.Configuration;
 using DMS.BaseFramework.Common.Helper;
 using DMS.BaseFramework.Common.Serializer;
+using DMS.ConsoleAppTest.Model;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DMS.WebAPITest
 {
-    public class DataList
-    {
-        public List<ProductModel> PortalAdList { get; set; }
-    }
-
-    public class ProductModel
-    {
-        public string ConfigImage { get; set; }
-        public string RelationLink { get; set; }
-        public string ShowName { get; set; }
-        public int LinkType { get; set; }
-    }
-
-
-
-
-
-
 
     class Program
     {
-
-        private static HashSet<string> set = new HashSet<string>();
-
-        private static void GetID()
-        {
-            int num = 0;
-            for (var i = 0; i < 1000000; i++)
-            {
-                var id = RandomHelper.CreateRandom(100000, 999999);//UniquenessHelper.GetWorkerID();
-
-                if (set.Contains(id))
-                {
-                    num++;
-                    Console.WriteLine("发现重复项 : {0}", id);
-                }
-                else
-                {
-                    Console.WriteLine("{0}=====重复总个数" + num, id);
-                    set.Add(id);
-                }
-
-            }
-            // Console.WriteLine($"任务{++taskCount}完成");
-        }
-
+        private static HashSet<long> longSet = new HashSet<long>();
+        private static int taskCount = 0;
 
         static void Main(string[] args)
         {
-            //Get();
-            //Post();
-            //Post1();
-            //Post2();
+            ConfigurationDemo();
+            DomainManageSettingsDemo();
+            //序列化
+            SerializerJsonDemo();
+            SerializerXmlDemo();
 
-            //HttpWebHelper_Post();
-            //HttpWebHelper_Get();
 
-            Task.Run(() => GetID());
+            HttpClientHelperGetDemo();
+            HttpClientHelperPostDemo();
+
+            HttpWebHelperGet();
+            HttpWebHelperPost();
+
+            Task.Run(() => GetNewID());
+            Task.Run(() => GetNewID());
+            Task.Run(() => GetNewID());
+            Task.Run(() => Printf());
 
             Console.ReadKey();
         }
 
 
-        static void Get()
+        static void ConfigurationDemo()
+        {
+            //获取appsettings.json的配置目录
+            var configPath = AppSettings.GetConfigPath;
+            var tableConfigCollection = AppSettings.GetModel<List<TableConfigCollection>>("TableConfigCollection");
+            //读取指定的目录(configPath)中的TableConfig.json文件
+            var tableConfig = AppSettings.GetCustomModel<List<TableConfigCollection>>("TableConfig.json", "TableConfigurations");
+        }
+        static void DomainManageSettingsDemo()
+        {
+            //读取指定的目录(configPath)Domain.json文件
+            var ImgServerUrl = DomainManageSettings.PortalUrl;
+        }
+
+        #region Serializer
+        /// <summary>
+        /// 序列化
+        /// </summary>
+        static void SerializerJsonDemo()
+        {
+            SearchProductParam dict = new SearchProductParam()
+            {
+                SearchKey = "国元信托1",
+                AttrParam = new SearchProductAttrParam() { CodeName = "xintuo", ProductStatusType = 1 },
+            };
+            var jsonStr = SerializerJson.SerializeObject(dict);
+
+            dict = SerializerJson.DeserializeObject<SearchProductParam>(jsonStr);
+        }
+        static void SerializerXmlDemo()
+        {
+            //需要添加实例
+        }
+        #endregion
+
+        #region HttpClientHelper
+        static void HttpClientHelperGetDemo()
         {
             Dictionary<string, string> dict = new Dictionary<string, string>()
             {
@@ -86,77 +93,40 @@ namespace DMS.WebAPITest
             }
         }
 
-        static void Post()
+        static void HttpClientHelperPostDemo()
         {
-            //Dictionary<string, string> dict = new Dictionary<string, string>()
-            //{
-            //    { "SearchKey","国元信托"},
-            //    { "AttrParam.CodeName","xintuo"},
-            //    { "AttrParam.ProductStatusType","1"},
-            //};
             SearchProductParam dict = new SearchProductParam()
             {
                 SearchKey = "国元信托",
                 AttrParam = new SearchProductAttrParam() { CodeName = "xintuo1" },
             };
+            //第一种
+            for (int i = 0; i <= 100; i++)
+            {
+                var result = HttpClientHelper.PostResponse<SearchProductParam>("http://productapi.jinglih.com/api/Product/GetProductList", dict);
+                Console.WriteLine(i + "====" + result);
+            }
 
 
+            //第二种
             var jsonStr = Newtonsoft.Json.JsonConvert.SerializeObject(dict);
             for (int i = 0; i <= 100; i++)
             {
                 var result = HttpClientHelper.PostResponse("http://productapi.jinglih.com/api/Product/GetProductList", jsonStr);
                 Console.WriteLine(i + "====" + result);
             }
-        }
-
-        static void Post1()
-        {
-            SearchProductParam dict = new SearchProductParam()
-            {
-                SearchKey = "国元信托",
-                AttrParam = new SearchProductAttrParam() { CodeName = "xintuo2" },
-            };
-
-            for (int i = 0; i <= 100; i++)
-            {
-                var result = HttpClientHelper.PostResponse<SearchProductParam>("http://productapi.jinglih.com/api/Product/GetProductList", dict);
-                Console.WriteLine(i + "====" + result);
-            }
-        }
-
-        static void Post2()
-        {
-            SearchProductParam dict = new SearchProductParam()
-            {
-                SearchKey = "国元信托",
-                AttrParam = new SearchProductAttrParam() { CodeName = "xintuo3" },
-            };
-            var jsonStr = Newtonsoft.Json.JsonConvert.SerializeObject(dict);
-
+            //第三种
             for (int i = 0; i <= 100; i++)
             {
                 var result = HttpClientHelper.PostResponse<ResponseResult>("http://productapi.jinglih.com/api/Product/GetProductList", jsonStr);
                 Console.WriteLine(i + "====" + result);
             }
+
         }
+        #endregion
 
-        static void HttpWebHelper_Post()
-        {
-            SearchProductParam dict = new SearchProductParam()
-            {
-                SearchKey = "国元信托1",
-                AttrParam = new SearchProductAttrParam() { CodeName = "xintuo", ProductStatusType = 1 },
-            };
-            var jsonStr = Newtonsoft.Json.JsonConvert.SerializeObject(dict);
-
-            for (int i = 0; i <= 100; i++)
-            {
-                var result = HttpWebHelper.PostRequest<ResponseResult>("http://productapi.jinglih.com/api/Product/GetProductList", jsonStr);
-                Console.WriteLine(i + "====" + result);
-            }
-        }
-
-        static void HttpWebHelper_Get()
+        #region HttpWebHelper
+        static void HttpWebHelperGet()
         {
             Dictionary<string, string> dict = new Dictionary<string, string>()
             {
@@ -171,6 +141,60 @@ namespace DMS.WebAPITest
                 Console.WriteLine(i + "====" + result);
             }
         }
+
+        static void HttpWebHelperPost()
+        {
+            SearchProductParam dict = new SearchProductParam()
+            {
+                SearchKey = "国元信托1",
+                AttrParam = new SearchProductAttrParam() { CodeName = "xintuo", ProductStatusType = 1 },
+            };
+            var jsonStr = Newtonsoft.Json.JsonConvert.SerializeObject(dict);
+
+            for (int i = 0; i <= 100; i++)
+            {
+                var result = HttpWebHelper.PostRequest<ResponseResult>("http://productapi.jinglih.com/api/Product/GetProductList", jsonStr);
+                Console.WriteLine(i + "====" + result);
+            }
+        }
+        #endregion
+
+        #region GetNewID
+        private static object o = new object();
+        private static int N = 20000;
+        static void GetNewID()
+        {
+            int num = 0;
+            for (var i = 0; i < N; i++)
+            {
+                var id = UniquenessHelper.GetWorkerID();
+                lock (o)
+                {
+                    if (longSet.Contains(id))
+                    {
+                        num++;
+                        Console.WriteLine("发现重复项 : {0}", id);
+                    }
+                    else
+                    {
+                        longSet.Add(id);
+                    }
+                }
+
+            }
+            Console.WriteLine($"任务{++taskCount}完成");
+        }
+        private static void Printf()
+        {
+            while (taskCount != 3)
+            {
+                Console.WriteLine("...");
+                Thread.Sleep(1000);
+            }
+            Console.WriteLine(longSet.Count == N * taskCount);
+        }
+        #endregion
+
     }
 
 
@@ -246,4 +270,20 @@ namespace DMS.WebAPITest
     }
 
     #endregion
+
+    #region 广告实体
+    public class DataList
+    {
+        public List<ProductModel> PortalAdList { get; set; }
+    }
+
+    public class ProductModel
+    {
+        public string ConfigImage { get; set; }
+        public string RelationLink { get; set; }
+        public string ShowName { get; set; }
+        public int LinkType { get; set; }
+    }
+    #endregion
+
 }
