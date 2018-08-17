@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using DMS.Auth.Tickets;
+﻿using DMS.Auth.Tickets;
 using DMS.BaseFramework.Common.BaseResult;
 using DMS.BaseFramework.Common.Serializer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace DMS.Auth
 {
@@ -11,15 +11,26 @@ namespace DMS.Auth
     /// </summary>
     public class BaseController : Controller
     {
+        /// <summary>
+        /// 当前会话Id
+        /// </summary>
+        public string Sid
+        {
+            get
+            {
+                string sId = string.Empty;
+                if (Request.Headers.ContainsKey("AccessToken"))
+                {
+                    sId = Request.Headers["AccessToken"];
+                }
+                return sId;
+            }
+        }
 
         /// <summary>
         /// 用户票据
         /// </summary>
-        public TicketEntity CurrentUserTicket
-        {
-            get;
-            private set;
-        }
+        public TicketEntity CurrentUserTicket { get; private set; }
 
         /// <summary>
         /// 验证登录的情况
