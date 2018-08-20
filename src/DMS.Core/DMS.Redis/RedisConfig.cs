@@ -55,7 +55,7 @@ namespace DMS.Redis
                             }
                             catch (Exception ex)
                             {
-                                ExceptionsLess.Submit("初始化Redis缓存错误,"+ex.Message);
+                                LessExceptionLog.Submit("初始化Redis缓存错误,"+ex.Message);
                                 return null;
 
                             }
@@ -116,7 +116,7 @@ namespace DMS.Redis
         private static void MuxerConfigurationChanged(object sender, EndPointEventArgs e)
         {
             System.Console.WriteLine("Configuration changed: " + e.EndPoint);
-            LogMessagesLess.Info("Configuration changed: " + e.EndPoint);
+            LessLog.Info("Configuration changed: " + e.EndPoint);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace DMS.Redis
         private static void MuxerErrorMessage(object sender, RedisErrorEventArgs e)
         {
             System.Console.WriteLine("ErrorMessage: " + e.Message);
-            LogMessagesLess.Info("ErrorMessage: " + e.Message);
+            LessLog.Info("ErrorMessage: " + e.Message);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace DMS.Redis
         private static void MuxerConnectionRestored(object sender, ConnectionFailedEventArgs e)
         {
             System.Console.WriteLine("ConnectionRestored: " + e.EndPoint);
-            LogMessagesLess.Info("ConnectionRestored: " + e.EndPoint);
+            LessLog.Info("ConnectionRestored: " + e.EndPoint);
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace DMS.Redis
         private static void MuxerConnectionFailed(object sender, ConnectionFailedEventArgs e)
         {
             System.Console.WriteLine("重新连接：Endpoint failed: " + e.EndPoint + ", " + e.FailureType + (e.Exception == null ? "" : (", " + e.Exception.Message)));
-            LogMessagesLess.Info("重新连接：Endpoint failed: " + e.EndPoint + ", " + e.FailureType + (e.Exception == null ? "" : (", " + e.Exception.Message)));
+            LessLog.Info("重新连接：Endpoint failed: " + e.EndPoint + ", " + e.FailureType + (e.Exception == null ? "" : (", " + e.Exception.Message)));
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace DMS.Redis
         private static void MuxerHashSlotMoved(object sender, HashSlotMovedEventArgs e)
         {
             System.Console.WriteLine("HashSlotMoved:NewEndPoint" + e.NewEndPoint + ", OldEndPoint" + e.OldEndPoint);
-            LogMessagesLess.Info("HashSlotMoved:NewEndPoint" + e.NewEndPoint + ", OldEndPoint" + e.OldEndPoint);
+            LessLog.Info("HashSlotMoved:NewEndPoint" + e.NewEndPoint + ", OldEndPoint" + e.OldEndPoint);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace DMS.Redis
         private static void MuxerInternalError(object sender, InternalErrorEventArgs e)
         {
             System.Console.WriteLine("InternalError:Message" + e.Exception.Message);
-            LogMessagesLess.Info("InternalError:Message" + e.Exception.Message);
+            LessLog.Info("InternalError:Message" + e.Exception.Message);
         }
 
         #endregion 事件

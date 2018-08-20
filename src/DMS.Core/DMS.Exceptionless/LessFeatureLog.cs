@@ -9,7 +9,7 @@ namespace DMS.Exceptionless
     /// <summary>
     /// 特性使用
     /// </summary>
-    public class FeatureUsageLess
+    public class LessFeatureLog
     {
         /// <summary>
         /// 提交特性

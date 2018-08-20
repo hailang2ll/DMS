@@ -9,7 +9,7 @@ namespace DMS.Exceptionless
     /// <summary>
     /// 失效链接
     /// </summary>
-    public class BrokenLinksLess
+    public class LessLinksLog
     {
         /// <summary>
         /// 提交失效链接

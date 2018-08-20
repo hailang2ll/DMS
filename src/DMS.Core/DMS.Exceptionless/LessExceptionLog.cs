@@ -11,7 +11,7 @@ namespace DMS.Exceptionless
     /// <summary>
     /// 异常信息
     /// </summary>
-    public class ExceptionsLess
+    public class LessExceptionLog
     {
         /// <summary>
         /// 提交异常

@@ -1005,7 +1005,7 @@ namespace DMS.Redis
             }
             catch (Exception ex)
             {
-                ExceptionsLess.Submit("操作Redis异常:", ex.Message);
+                LessExceptionLog.Submit("操作Redis异常:", ex.Message);
                 return default(T);
             }
         }

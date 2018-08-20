@@ -44,13 +44,13 @@ namespace DMS.Exceptionless.ConsoleAppTest
                 }
             };
 
-            FeatureUsageLess.Submit("不带参数");
-            FeatureUsageLess.Submit("带标签", tagName);
-            FeatureUsageLess.Submit("带用户&标签", user, tagName);
-            FeatureUsageLess.Submit("带自定义数据&标签", data, tagName);
-            FeatureUsageLess.Submit("带自定义数据&标签", datas, tagName);
-            FeatureUsageLess.Submit("带用户&自定义数据&标签", user, data, tagName);
-            FeatureUsageLess.Submit("带用户&自定义数据&标签", user, datas, tagName);
+            LessFeatureLog.Submit("不带参数");
+            LessFeatureLog.Submit("带标签", tagName);
+            LessFeatureLog.Submit("带用户&标签", user, tagName);
+            LessFeatureLog.Submit("带自定义数据&标签", data, tagName);
+            LessFeatureLog.Submit("带自定义数据&标签", datas, tagName);
+            LessFeatureLog.Submit("带用户&自定义数据&标签", user, data, tagName);
+            LessFeatureLog.Submit("带用户&自定义数据&标签", user, datas, tagName);
         }
 
         /// <summary>
@@ -72,13 +72,13 @@ namespace DMS.Exceptionless.ConsoleAppTest
                     Data=new { Id = 003, Name = "王五" }
                 }
             };
-            BrokenLinksLess.Submit("不带参数：http://www.baidu.com");
-            BrokenLinksLess.Submit("带标签：http://www.baidu.com", tagName);
-            BrokenLinksLess.Submit("带用户&标签：http://www.baidu.com", user, tagName);
-            BrokenLinksLess.Submit("带自定义数据&标签：http://www.baidu.com", data, tagName);
-            BrokenLinksLess.Submit("带自定义数据&标签：http://www.baidu.com", datas, tagName);
-            BrokenLinksLess.Submit("带用户&自定义数据&标签：http://www.baidu.com", user, data, tagName);
-            BrokenLinksLess.Submit("带用户&自定义数据&标签：http://www.baidu.com", user, datas, tagName);
+            LessLinksLog.Submit("不带参数：http://www.baidu.com");
+            LessLinksLog.Submit("带标签：http://www.baidu.com", tagName);
+            LessLinksLog.Submit("带用户&标签：http://www.baidu.com", user, tagName);
+            LessLinksLog.Submit("带自定义数据&标签：http://www.baidu.com", data, tagName);
+            LessLinksLog.Submit("带自定义数据&标签：http://www.baidu.com", datas, tagName);
+            LessLinksLog.Submit("带用户&自定义数据&标签：http://www.baidu.com", user, data, tagName);
+            LessLinksLog.Submit("带用户&自定义数据&标签：http://www.baidu.com", user, datas, tagName);
         }
 
         /// <summary>
@@ -102,58 +102,58 @@ namespace DMS.Exceptionless.ConsoleAppTest
             };
 
             //日志等级：跟踪信息
-            LogMessagesLess.Trace("不带参数");
-            LogMessagesLess.Trace("带标签", tagName);
-            LogMessagesLess.Trace("带用户&标签", user, tagName);
-            LogMessagesLess.Trace("带自定义数据&标签", data, tagName);
-            LogMessagesLess.Trace("带自定义数据&标签", datas, tagName);
-            LogMessagesLess.Trace("带用户&自定义数据&标签", user, data, tagName);
-            LogMessagesLess.Trace("带用户&自定义数据&标签", user, datas, tagName);
+            LessLog.Trace("不带参数");
+            LessLog.Trace("带标签", tagName);
+            LessLog.Trace("带用户&标签", user, tagName);
+            LessLog.Trace("带自定义数据&标签", data, tagName);
+            LessLog.Trace("带自定义数据&标签", datas, tagName);
+            LessLog.Trace("带用户&自定义数据&标签", user, data, tagName);
+            LessLog.Trace("带用户&自定义数据&标签", user, datas, tagName);
 
             //日志等级：调试信息
-            LogMessagesLess.Debug("不带参数");
-            LogMessagesLess.Debug("带标签", tagName);
-            LogMessagesLess.Debug("带用户&标签", user, tagName);
-            LogMessagesLess.Debug("带自定义数据&标签", data, tagName);
-            LogMessagesLess.Debug("带自定义数据&标签", datas, tagName);
-            LogMessagesLess.Debug("带用户&自定义数据&标签", user, data, tagName);
-            LogMessagesLess.Debug("带用户&自定义数据&标签", user, datas, tagName);
+            LessLog.Debug("不带参数");
+            LessLog.Debug("带标签", tagName);
+            LessLog.Debug("带用户&标签", user, tagName);
+            LessLog.Debug("带自定义数据&标签", data, tagName);
+            LessLog.Debug("带自定义数据&标签", datas, tagName);
+            LessLog.Debug("带用户&自定义数据&标签", user, data, tagName);
+            LessLog.Debug("带用户&自定义数据&标签", user, datas, tagName);
 
             //日志等级：普通信息
-            LogMessagesLess.Info("不带参数");
-            LogMessagesLess.Info("带标签", tagName);
-            LogMessagesLess.Info("带用户&标签", user, tagName);
-            LogMessagesLess.Info("带自定义数据&标签", data, tagName);
-            LogMessagesLess.Info("带自定义数据&标签", datas, tagName);
-            LogMessagesLess.Info("带用户&自定义数据&标签", user, data, tagName);
-            LogMessagesLess.Info("带用户&自定义数据&标签", user, datas, tagName);
+            LessLog.Info("不带参数");
+            LessLog.Info("带标签", tagName);
+            LessLog.Info("带用户&标签", user, tagName);
+            LessLog.Info("带自定义数据&标签", data, tagName);
+            LessLog.Info("带自定义数据&标签", datas, tagName);
+            LessLog.Info("带用户&自定义数据&标签", user, data, tagName);
+            LessLog.Info("带用户&自定义数据&标签", user, datas, tagName);
 
             //日志等级：警告
-            LogMessagesLess.Warn("不带参数");
-            LogMessagesLess.Warn("带标签", tagName);
-            LogMessagesLess.Warn("带用户&标签", user, tagName);
-            LogMessagesLess.Warn("带自定义数据&标签", data, tagName);
-            LogMessagesLess.Warn("带自定义数据&标签", datas, tagName);
-            LogMessagesLess.Warn("带用户&自定义数据&标签", user, data, tagName);
-            LogMessagesLess.Warn("带用户&自定义数据&标签", user, datas, tagName);
+            LessLog.Warn("不带参数");
+            LessLog.Warn("带标签", tagName);
+            LessLog.Warn("带用户&标签", user, tagName);
+            LessLog.Warn("带自定义数据&标签", data, tagName);
+            LessLog.Warn("带自定义数据&标签", datas, tagName);
+            LessLog.Warn("带用户&自定义数据&标签", user, data, tagName);
+            LessLog.Warn("带用户&自定义数据&标签", user, datas, tagName);
 
             //日志等级：致命的
-            LogMessagesLess.Fatal("不带参数");
-            LogMessagesLess.Fatal("带标签", tagName);
-            LogMessagesLess.Fatal("带用户&标签", user, tagName);
-            LogMessagesLess.Fatal("带自定义数据&标签", data, tagName);
-            LogMessagesLess.Fatal("带自定义数据&标签", datas, tagName);
-            LogMessagesLess.Fatal("带用户&自定义数据&标签", user, data, tagName);
-            LogMessagesLess.Fatal("带用户&自定义数据&标签", user, datas, tagName);
+            LessLog.Fatal("不带参数");
+            LessLog.Fatal("带标签", tagName);
+            LessLog.Fatal("带用户&标签", user, tagName);
+            LessLog.Fatal("带自定义数据&标签", data, tagName);
+            LessLog.Fatal("带自定义数据&标签", datas, tagName);
+            LessLog.Fatal("带用户&自定义数据&标签", user, data, tagName);
+            LessLog.Fatal("带用户&自定义数据&标签", user, datas, tagName);
 
             //日志等级：异常
-            LogMessagesLess.Error("不带参数");
-            LogMessagesLess.Error("带标签", tagName);
-            LogMessagesLess.Error("带用户&标签", user, tagName);
-            LogMessagesLess.Error("带自定义数据&标签", data, tagName);
-            LogMessagesLess.Error("带自定义数据&标签", datas, tagName);
-            LogMessagesLess.Error("带用户&自定义数据&标签", user, data, tagName);
-            LogMessagesLess.Error("带用户&自定义数据&标签", user, datas, tagName);
+            LessLog.Error("不带参数");
+            LessLog.Error("带标签", tagName);
+            LessLog.Error("带用户&标签", user, tagName);
+            LessLog.Error("带自定义数据&标签", data, tagName);
+            LessLog.Error("带自定义数据&标签", datas, tagName);
+            LessLog.Error("带用户&自定义数据&标签", user, data, tagName);
+            LessLog.Error("带用户&自定义数据&标签", user, datas, tagName);
         }
 
         /// <summary>
@@ -177,13 +177,13 @@ namespace DMS.Exceptionless.ConsoleAppTest
             };
             try
             {
-                ExceptionsLess.Submit("不带参数");
-                ExceptionsLess.Submit("带标签", tagName);
-                ExceptionsLess.Submit("带用户&标签", user, tagName);
-                ExceptionsLess.Submit("带自定义数据&标签", data, tagName);
-                ExceptionsLess.Submit("带自定义数据&标签", datas, tagName);
-                ExceptionsLess.Submit("带用户&自定义数据&标签", user, data, tagName);
-                ExceptionsLess.Submit("带用户&自定义数据&标签", user, datas, tagName);
+                LessExceptionLog.Submit("不带参数");
+                LessExceptionLog.Submit("带标签", tagName);
+                LessExceptionLog.Submit("带用户&标签", user, tagName);
+                LessExceptionLog.Submit("带自定义数据&标签", data, tagName);
+                LessExceptionLog.Submit("带自定义数据&标签", datas, tagName);
+                LessExceptionLog.Submit("带用户&自定义数据&标签", user, data, tagName);
+                LessExceptionLog.Submit("带用户&自定义数据&标签", user, datas, tagName);
 
                 //程序逻辑异常测试，用过try catch 捕获
                 int number = 0;

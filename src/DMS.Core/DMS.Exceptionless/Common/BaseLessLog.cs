@@ -9,7 +9,7 @@ namespace DMS.Exceptionless.Common
     /// <summary>
     /// 日志基础处理类
     /// </summary>
-    public class BaseMessageLess
+    public class BaseLessLog
     {
         /// <summary>
         /// 提交消息

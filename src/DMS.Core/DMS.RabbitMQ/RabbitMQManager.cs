@@ -79,7 +79,7 @@ namespace DMS.RabbitMQ
                     channel.BasicPublish("", queueName, properties, bytes);
                 }
             }
-            LogMessagesLess.Info("发送成功，服务器IP为：" + rabbitConfig.HostName);
+            LessLog.Info("发送成功，服务器IP为：" + rabbitConfig.HostName);
             return true;
         }
 

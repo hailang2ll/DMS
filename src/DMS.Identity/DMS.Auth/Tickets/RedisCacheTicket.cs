@@ -44,7 +44,7 @@ namespace DMS.Auth.Tickets
                                     //APP用户票据缓存30天,用户票据缓存时间超时，重新登录
                                     memCached.KeyDelete(sid);
                                     errMsg = string.Format("用户票据缓存时间超时，sid={0},userid={1},username={2},days={3}", sid, userTicket.MemberID, userTicket.MemberName, days);
-                                    LogMessagesLess.Info(errMsg);
+                                    LessLog.Info(errMsg);
                                 }
                                 else
                                 {
@@ -58,7 +58,7 @@ namespace DMS.Auth.Tickets
                             {
                                 //获取用户票据成功，但用户名称为空，重新登录
                                 errMsg = string.Format("获取用户票据成功，但用户名为空，sid={0}", sid);
-                                LogMessagesLess.Info(errMsg);
+                                LessLog.Info(errMsg);
                             }
 
                         }
@@ -66,14 +66,14 @@ namespace DMS.Auth.Tickets
                         {
                             //获取用户票据为空，重新登录
                             errMsg = string.Format("获取用户票据为空，sid={0}", sid);
-                            LogMessagesLess.Info(errMsg);
+                            LessLog.Info(errMsg);
                         }
                     }
                     else
                     {
                         //初始缓存对象为空，重新登录
                         errMsg = string.Format("初始缓存对象为空，sid={0}", sid);
-                        LogMessagesLess.Info(errMsg);
+                        LessLog.Info(errMsg);
                     }
                 }
                 return result;
