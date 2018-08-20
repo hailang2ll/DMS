@@ -53,4 +53,26 @@ namespace DMS.RabbitMQ
         /// </summary>
         public bool IsSend { get; set; }
     }
+
+    /// <summary>
+    /// 死信队列实体
+    /// </summary>
+    [RabbitMq("dead-letter-{Queue}", ExchangeName = "dead-letter-{exchange}")]
+    public class DeadLetterQueue
+    {
+        public string Body { get; set; }
+
+        public string Exchange { get; set; }
+
+        public string Queue { get; set; }
+
+        public string RoutingKey { get; set; }
+
+        public int RetryCount { get; set; }
+
+        public string ExceptionMsg { get; set; }
+
+        public DateTime CreateDateTime { get; set; }
+    }
+
 }

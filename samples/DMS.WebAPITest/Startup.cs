@@ -89,7 +89,6 @@ namespace DMS.WebAPITest
                 app.UseHsts();
             }
 
-            //
             app.UseStaticHttpContext();
 
             app.UseHttpsRedirection();
