@@ -42,7 +42,7 @@ namespace DMS.Autofac
             //String baseDir = AppDomain.CurrentDomain.BaseDirectory; //AppContext.BaseDirectory; //String basePath2 = Path.GetDirectoryName(typeof(Program).Assembly.Location);
             //DirectoryInfo dirInfo = new DirectoryInfo(baseDir);
             //var serviceFileInfo = dirInfo.GetFiles().Where(q => q.FullName.Contains(currentDomainName + ".Service")).FirstOrDefault();
-
+            
 
             services.Replace(ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());
 
