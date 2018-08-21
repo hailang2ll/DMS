@@ -9,7 +9,7 @@
 
 ### 1.1、示例调用，属性注入，需要传入接口与实现类名
 ```c# 
-在Startup中的方法添加：
+在Startup类的ConfigureServices方法中添加：
 return AutofacService.RegisterAutofac(services, "项目接口名.Contracts", "项目服务名.Service");即可属性注入，方法返回类型为：IServiceProvider
 ```
 ### 1.2、实现方法
