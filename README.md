@@ -1,6 +1,7 @@
 # DMS
 
 ### DMS将会是一个集中式的中间件框架，每一个小型中间件将会是完全独立的，如：gRPC，Thrift，netty，Wcf，Exceptionless，Ocelot，RabbitMQ，Redis，IdentityServer，Consul，Zookeeper等，Demo中会有每一个中间件的实例方便开发者了解 
+qq交流群：18362376
 
 <br />
 
