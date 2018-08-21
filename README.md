@@ -4,15 +4,15 @@
 
 <br />
 
-## 1、DMS.Autofac 依赖与注入
+## 一.DMS.Autofac 依赖与注入
 基于Autofac框架，支持多种方式注入（构造函数来注入，属性注入）
 
-### 1.1、示例调用，属性注入，需要传入接口与实现类名
+### 1.示例调用，属性注入，需要传入接口与实现类名
 ```c# 
 在Startup类的ConfigureServices方法中添加：
 return AutofacService.RegisterAutofac(services, "项目接口名.Contracts", "项目服务名.Service");即可属性注入，方法返回类型为：IServiceProvider
 ```
-### 1.2、实现方法
+### 2.实现方法
 ```c# 
 public IDemoService service { get; set; } //只需在调用类中定义接口属性就好，自动会注入
 var entity1 = service.GetEntity(13); 在方法中直接调用，不需要在实例化
