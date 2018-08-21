@@ -1,8 +1,21 @@
-## DMS
+# DMS
 
 ### DMS将会是一个集中式的中间件框架，每一个小型中间件将会是完全独立的，如：gRPC，Thrift，netty，Wcf，Exceptionless，Ocelot，RabbitMQ，Redis，IdentityServer，Consul，Zookeeper等，Demo中会有每一个中间件的实例方便开发者了解 
 
+<br />
 
+## 1.DMS.Autofac 依赖与注入
+基于Autofac框架，支持多种方式注入（构造函数来注入，属性注入）
+
+### 1.1示例调用，属性注入，需要传入接口与实现类名
+```c# 
+在Startup中的方法添加：return AutofacService.RegisterAutofac(services, "项目接口名.Contracts", "项目服务名.Service");即可属性注入，方法返回类型为：IServiceProvider
+```
+### 1.2实现方法
+```c# 
+public IDemoService service { get; set; } //只需在调用类中定义接口属性就好，自动会注入
+var entity1 = service.GetEntity(13); 在方法中直接调用，不需要在实例化
+```
 
 ## DMS.Exceptionless 基于Exceptionless框架开发，依赖DMS中基础框架，主要用于分页式日志系统
 github源码地址：https://github.com/exceptionless/Exceptionless.Net
@@ -13,16 +26,6 @@ github源码地址：https://github.com/exceptionless/Exceptionless.Net
 LessLog.Info("这是一条提示信息");
 LessLog.Error("这是一条错误的信息");
 LessLog.Fatal("这是一条致命的信息");
-```
-
-
-## DMS.Autofac 基于Autofac框架，完全自动注入，默认都是以构造函数来注入，在这里支持属性注入，简单代码方便调用修复了之前版本的注入问题
-在Startup中的方法添加：return AutofacService.RegisterAutofac(services, "项目接口名.Contracts", "项目服务名.Service");即可属性注入，方法返回类型为：IServiceProvider
-
-### 项目调用方法
-```c# 
-public IDemoService service { get; set; } 只需在调用的位置定义接口属性就好
-var entity1 = service.GetEntity(13); 在方法中直接调用，不需要在实例化
 ```
 
 
