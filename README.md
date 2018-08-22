@@ -144,7 +144,55 @@ catch (Exception ex)
 	//ex.Submit(user, data, tagName);//带用户&自定义数据&标签
 	ex.Submit(user, datas, tagName);//带用户&自定义数据&标签
 }
+```
+### 4.功能特性日志使用示例
+```c# 
+string tagName = "特性使用标签";//自定义标签
+var data = new ExcDataParam() { Name = "请求参数", Data = new { Id = 001, Name = "张三" } };//自定义单个model
+var user = new ExcUserParam() { Id = "No0001", Name = "李廷礼", Email = "litingxian@live.cn", Description = "菁鲤汇高级开发工程师" };//用户信息
+var datas = new List<ExcDataParam>()//自定义列表数据
+{
+	new ExcDataParam(){
+		Name="请求参数",
+		Data=new { Id = 002, Name = "李四" }
+	},
+	new ExcDataParam(){
+		Name="返回结果",
+		Data=new { Id = 003, Name = "王五" }
+	}
+};
 
+LessFeatureLog.Submit("不带参数");
+LessFeatureLog.Submit("带标签", tagName);
+LessFeatureLog.Submit("带用户&标签", user, tagName);
+LessFeatureLog.Submit("带自定义数据&标签", data, tagName);
+LessFeatureLog.Submit("带自定义数据&标签", datas, tagName);
+LessFeatureLog.Submit("带用户&自定义数据&标签", user, data, tagName);
+LessFeatureLog.Submit("带用户&自定义数据&标签", user, datas, tagName);
+```
+### 5.失效链接日志使用示例
+```c# 
+string tagName = "失效链接标签";//自定义标签
+var data = new ExcDataParam() { Name = "请求参数", Data = new { Id = 001, Name = "张三" } };//自定义单个model
+var user = new ExcUserParam() { Id = "No0001", Name = "李廷礼", Email = "litingxian@live.cn", Description = "菁鲤汇高级开发工程师" };//用户信息
+var datas = new List<ExcDataParam>()//自定义列表数据
+{
+	new ExcDataParam(){
+		Name="请求参数",
+		Data=new { Id = 002, Name = "李四" }
+	},
+	new ExcDataParam(){
+		Name="返回结果",
+		Data=new { Id = 003, Name = "王五" }
+	}
+};
+LessLinksLog.Submit("不带参数：http://www.baidu.com");
+LessLinksLog.Submit("带标签：http://www.baidu.com", tagName);
+LessLinksLog.Submit("带用户&标签：http://www.baidu.com", user, tagName);
+LessLinksLog.Submit("带自定义数据&标签：http://www.baidu.com", data, tagName);
+LessLinksLog.Submit("带自定义数据&标签：http://www.baidu.com", datas, tagName);
+LessLinksLog.Submit("带用户&自定义数据&标签：http://www.baidu.com", user, data, tagName);
+LessLinksLog.Submit("带用户&自定义数据&标签：http://www.baidu.com", user, datas, tagName);
 ```
 
 ## DMS.RabbitMQ 基于RabbitMQ.Client框架开发，依赖DMS中基础框架，主要用于分布式消息对列系统
