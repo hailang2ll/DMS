@@ -28,8 +28,8 @@ namespace DMS.WebAPITest
         public static IWebHost CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
             .UseStartup<Startup>()
-            .UseNLog($"{Directory.GetCurrentDirectory()}\\Config\\nlog.config")
-            .UseLog4net($"{Directory.GetCurrentDirectory()}\\Config\\log4net.config")
+            .UseNLog("Config\\nlog.config")
+            .UseLog4net("Config\\log4net.config")
             .Build();
     }
 }
