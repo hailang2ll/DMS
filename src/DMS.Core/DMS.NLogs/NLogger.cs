@@ -1,7 +1,7 @@
 ﻿using NLog;
 using System;
 
-namespace DMS.NLog
+namespace DMS.NLogs
 {
     /// <summary>
     /// 

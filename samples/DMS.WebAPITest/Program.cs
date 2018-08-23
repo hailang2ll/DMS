@@ -1,8 +1,7 @@
 ﻿using DMS.Log4net;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using NLog;
-using System.IO;
+using NLogs;
 
 namespace DMS.WebAPITest
 {

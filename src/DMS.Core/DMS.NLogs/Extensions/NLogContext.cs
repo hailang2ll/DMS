@@ -1,6 +1,6 @@
 ﻿using NLog;
 
-namespace DMS.NLog
+namespace DMS.NLogs
 {
     /// <summary>
     /// log4net 上下文

@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\DMS.Core\DMS.Log4net\DMS.Log4net.csproj" />
-    <ProjectReference Include="..\..\src\DMS.Core\DMS.NLog\DMS.NLog.csproj" />
+    <ProjectReference Include="..\..\src\DMS.Core\DMS.NLogs\DMS.NLogs.csproj" />
     <ProjectReference Include="..\..\src\DMS.Core\DMS.Redis\DMS.Redis.csproj" />
   </ItemGroup>
 

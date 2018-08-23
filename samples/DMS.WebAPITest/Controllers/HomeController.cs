@@ -1,36 +1,71 @@
-﻿using DMS.WebAPITest.Models;
+﻿using DMS.Log4net;
+using DMS.NLogs;
+using DMS.WebAPITest.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Diagnostics;
 
-//[assembly: Exceptionless("aMFZxvXEs0kWTR3gvfOsjMcwrHJcFHN7XSRNV65U", ServerUrl = "http://192.168.0.56:9002")]
 namespace DMS.BaseFramework.Common.APITest.Controllers
 {
 
-    public class User
-    {
-        public int ID { get; set; }
-        public string Name { get; set; }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     public class HomeController : Controller
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly NLog.Logger _log = NLog.LogManager.GetCurrentClassLogger();
+
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public IActionResult Index()
         {
-            #region redis缓存
+            TestLog();
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult<string> TestLog()
+        {
+            try
+            {
+                Logger.Debug($"Log4net调试日志：{Guid.NewGuid().ToString("N")}");
+                Logger.Info($"Log4net消息日志：{Guid.NewGuid().ToString("N")}");
+                Logger.Warn($"Log4net警告日志：{Guid.NewGuid().ToString("N")}");
+
+                NLogger.Debug($"NLog调试日志：{Guid.NewGuid().ToString("N")}");
+                NLogger.Info($"NLog消息日志：{Guid.NewGuid().ToString("N")}");
+                NLogger.Warn($"NLog警告日志：{Guid.NewGuid().ToString("N")}");
+                throw new NullReferenceException("空异常");
+            }
+            catch (Exception ex)
+            {
+                Log4net.Logger.Error($"Log4net异常日志：{Guid.NewGuid().ToString("N")}", ex);
+                NLogger.Error($"NLog异常日志：{Guid.NewGuid().ToString("N")}", ex);
+            }
+            return "";
+        }
+
+        [HttpGet]
+        public ActionResult<string> TestRedis()
+        {
             //RedisManager redisManager = new RedisManager(0);
             //redisManager.StringSet("key", "value1");
             //var key = redisManager.StringGet("key");
-            #endregion
-            return View();
+            return "";
         }
+
+
+
+
+
+
+
+
+
+
 
         /// <summary>
         /// 
@@ -42,25 +77,6 @@ namespace DMS.BaseFramework.Common.APITest.Controllers
             ViewData["Message"] = "Your application description page.";
 
             return View();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult<string> TestLog()
-        {
-            var ex = new ArgumentNullException("空异常");
-            Log4net.Logger.Info($"Log4net消息日志：{Guid.NewGuid().ToString("N")}", ex);
-            Log4net.Logger.Warn($"Log4net警告日志：{Guid.NewGuid().ToString("N")}", ex);
-            Log4net.Logger.Error($"Log4net异常日志：{Guid.NewGuid().ToString("N")}", ex);
-
-            NLog.NLogger.Debug($"NLog调试日志：{Guid.NewGuid().ToString("N")}", ex);
-            NLog.NLogger.Info($"NLog消息日志：{Guid.NewGuid().ToString("N")}", ex);
-            NLog.NLogger.Warn($"NLog警告日志：{Guid.NewGuid().ToString("N")}", ex);
-            NLog.NLogger.Error($"NLog异常日志：{Guid.NewGuid().ToString("N")}", ex);
-            return "";
         }
 
         /// <summary>
