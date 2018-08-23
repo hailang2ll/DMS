@@ -1,7 +1,7 @@
 ﻿using DMS.BaseFramework.Common.Helper;
 using DMS.Log4net.Param;
 
-namespace DMS.Log4net
+namespace DMS.Log4net.Helper
 {
     public class LogDBHelper
     {

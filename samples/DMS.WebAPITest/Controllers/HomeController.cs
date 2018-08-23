@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DMS.WebAPITest.Models;
 using Microsoft.AspNetCore.Mvc;
-using Exceptionless;
-using DMS.BaseFramework.Common.Helper;
-using System.Data;
-using DMS.BaseFramework.Common.Configuration;
-using DMS.BaseFramework.Common.Extension;
-using DMS.Redis;
-using DMS.WebAPITest.Models;
+using System;
+using System.Diagnostics;
 
 //[assembly: Exceptionless("aMFZxvXEs0kWTR3gvfOsjMcwrHJcFHN7XSRNV65U", ServerUrl = "http://192.168.0.56:9002")]
 namespace DMS.BaseFramework.Common.APITest.Controllers
@@ -21,42 +12,30 @@ namespace DMS.BaseFramework.Common.APITest.Controllers
         public int ID { get; set; }
         public string Name { get; set; }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class HomeController : Controller
     {
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
-
             #region redis缓存
             //RedisManager redisManager = new RedisManager(0);
             //redisManager.StringSet("key", "value1");
             //var key = redisManager.StringGet("key");
             #endregion
-
-
-
             return View();
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IActionResult About()
         {
 
@@ -65,18 +44,48 @@ namespace DMS.BaseFramework.Common.APITest.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult<string> TestLog()
+        {
+            var ex = new ArgumentNullException("空异常");
+            Log4net.Logger.Info($"Log4net消息日志：{Guid.NewGuid().ToString("N")}", ex);
+            Log4net.Logger.Warn($"Log4net警告日志：{Guid.NewGuid().ToString("N")}", ex);
+            Log4net.Logger.Error($"Log4net异常日志：{Guid.NewGuid().ToString("N")}", ex);
+
+            NLog.NLogger.Debug($"NLog调试日志：{Guid.NewGuid().ToString("N")}", ex);
+            NLog.NLogger.Info($"NLog消息日志：{Guid.NewGuid().ToString("N")}", ex);
+            NLog.NLogger.Warn($"NLog警告日志：{Guid.NewGuid().ToString("N")}", ex);
+            NLog.NLogger.Error($"NLog异常日志：{Guid.NewGuid().ToString("N")}", ex);
+            return "";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Privacy()
         {
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

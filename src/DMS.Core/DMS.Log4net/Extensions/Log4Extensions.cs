@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using DMS.Log4net;
 using System;
 using System.IO;
 
-namespace Stack.NLogs
+namespace DMS.Log4net
 {
     /// <summary>
     /// nlog扩展
