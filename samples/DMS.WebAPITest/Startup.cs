@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using DMS.BaseFramework.Common.DI;
+﻿using DMS.BaseFramework.Common.DI;
+using DMS.Consul;
+using DMS.Consul.Entity;
 using DMS.Exceptionless.Filters;
-using DMS.Log4net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NLogs;
+using System;
 
 namespace DMS.WebAPITest
 {
@@ -52,7 +46,7 @@ namespace DMS.WebAPITest
 
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -76,6 +70,21 @@ namespace DMS.WebAPITest
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+  
+            #region register this service
+            ConsulService consulService = new ConsulService()
+            {
+                IP = Configuration["Consul:IP"],
+                Port = Convert.ToInt32(Configuration["Consul:Port"])
+            };
+            HealthService healthService = new HealthService()
+            {
+                IP = Configuration["Service:IP"],
+                Port = Convert.ToInt32(Configuration["Service:Port"]),
+                Name = Configuration["Service:Name"],
+            };
+            //app.RegisterConsul(lifetime, healthService, consulService);
+            #endregion
         }
     }
 }

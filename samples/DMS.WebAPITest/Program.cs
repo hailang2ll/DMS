@@ -26,6 +26,7 @@ namespace DMS.WebAPITest
         /// <returns></returns>
         public static IWebHost CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+            .UseUrls("http://*:5001")
             .UseStartup<Startup>()
             .UseNLog("Config\\nlog.config")
             .UseLog4net("Config\\log4net.config")
