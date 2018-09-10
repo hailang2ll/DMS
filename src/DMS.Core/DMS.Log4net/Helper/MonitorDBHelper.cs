@@ -1,5 +1,4 @@
-﻿using DMS.BaseFramework.Common.Helper;
-using DMS.Log4net.Param;
+﻿using DMS.Log4net.Param;
 using System;
 
 namespace DMS.Log4net.Helper
@@ -38,7 +37,7 @@ namespace DMS.Log4net.Helper
                 QueryParams = queryParams,
                 RequesHead = requesHead,
                 HttpMethod = httpMethod,
-                IP = IPHelper.GetWebClientIp(),
+                IP = "",//IPHelper.GetWebClientIp(),
             };
             WriteLog(logMessage);
         }

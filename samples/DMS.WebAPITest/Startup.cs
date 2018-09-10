@@ -71,6 +71,7 @@ namespace DMS.WebAPITest
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
   
+
             #region register this service
             ConsulService consulService = new ConsulService()
             {

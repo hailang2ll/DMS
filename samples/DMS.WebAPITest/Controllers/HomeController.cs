@@ -22,8 +22,6 @@ namespace DMS.BaseFramework.Common.APITest.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-
-            //TestLog();
             return View();
         }
 
@@ -43,7 +41,7 @@ namespace DMS.BaseFramework.Common.APITest.Controllers
             }
             catch (Exception ex)
             {
-                Log4net.Logger.Error($"Log4net异常日志：{Guid.NewGuid().ToString("N")}", ex);
+                Logger.Error($"Log4net异常日志：{Guid.NewGuid().ToString("N")}", ex);
                 NLogger.Error($"NLog异常日志：{Guid.NewGuid().ToString("N")}", ex);
             }
             return "";

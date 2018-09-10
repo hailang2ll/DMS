@@ -1,5 +1,4 @@
-﻿using DMS.BaseFramework.Common.Helper;
-using DMS.Log4net.Param;
+﻿using DMS.Log4net.Param;
 
 namespace DMS.Log4net.Helper
 {
@@ -22,7 +21,7 @@ namespace DMS.Log4net.Helper
                 LogType = logType,
                 SubSysID = subSysId,
                 SubSysName = subSysName,
-                IP = IPHelper.GetWebClientIp(),
+                IP ="", //IPHelper.GetWebClientIp(),
                 //Url = RequestHelper.GetRawUrl()
             };
             WriteLog(logMessage);

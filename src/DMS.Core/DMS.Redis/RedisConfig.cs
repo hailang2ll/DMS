@@ -26,7 +26,7 @@ namespace DMS.Redis
 
         static RedisConfig()
         {
-            RedisEntityConfig redisConfig = AppSettings.GetCustomModel<RedisEntityConfig>("Redis.json");
+            RedisEntityConfig redisConfig = AppSettings.GetCustomValue<RedisEntityConfig>("Redis.json");
             if (redisConfig != null)
             {
                 SysCustomKey = redisConfig.RedisPrefixKey;

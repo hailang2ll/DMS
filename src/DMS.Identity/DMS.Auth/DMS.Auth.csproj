@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DMS.Core\DMS.Exceptionless\DMS.Exceptionless.csproj" />
     <ProjectReference Include="..\..\DMS.Core\DMS.Redis\DMS.Redis.csproj" />
   </ItemGroup>
 

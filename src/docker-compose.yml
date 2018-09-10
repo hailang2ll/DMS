@@ -1,8 +1,0 @@
-version: '3.4'
-
-services:
-  dms.baseframework.common.apitest:
-    image: ${DOCKER_REGISTRY}dmsbaseframeworkcommonapitest
-    build:
-      context: .
-      dockerfile: DMS.BASE/DMS.BaseFramework.Common.ApiTest/Dockerfile
