@@ -22,7 +22,8 @@ namespace DMS.BaseFramework.Common.APITest.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            TestLog();
+
+            //TestLog();
             return View();
         }
 

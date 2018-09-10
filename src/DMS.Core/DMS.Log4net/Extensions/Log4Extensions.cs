@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
 
@@ -22,6 +23,20 @@ namespace DMS.Log4net
         }
 
         /// <summary>
+        /// 使用log4net记录日志
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="configPath"></param>
+        /// <returns></returns>
+        public static IHostBuilder UseLog4net(this IHostBuilder builder, string configPath = "")
+        {
+            if (builder == null)
+                throw new ArgumentNullException(nameof(builder));
+
+            Configure(configPath);
+            return builder;
+        }
+        /// <summary>
         /// 使用Log4net
         /// </summary>
         /// <param name="builder"></param>
@@ -30,9 +45,8 @@ namespace DMS.Log4net
         public static IWebHostBuilder UseLog4net(this IWebHostBuilder builder, string configPath = "")
         {
             if (builder == null)
-            {
-                throw new ArgumentNullException("builder");
-            }
+                throw new ArgumentNullException(nameof(builder));
+
             Configure(configPath);
             return builder;
         }
@@ -49,7 +63,7 @@ namespace DMS.Log4net
             if (string.IsNullOrEmpty(configPath))
             {
                 var currentDir = Directory.GetCurrentDirectory();
-                configPath = $@"{currentDir}\nlog.config";
+                configPath = $@"{currentDir}\Config\log4net.config";
             }
             else
             {

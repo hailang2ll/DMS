@@ -24,7 +24,20 @@ namespace NLogs
             Configure(configPath);
         }
 
+        /// <summary>
+        /// 使用log4net记录日志
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="configPath"></param>
+        /// <returns></returns>
+        public static IHostBuilder UseNLog(this IHostBuilder builder, string configPath = "")
+        {
+            if (builder == null)
+                throw new ArgumentNullException(nameof(builder));
 
+            Configure(configPath);
+            return builder;
+        }
         /// <summary>
         ///  使用NLog
         /// </summary>
@@ -34,9 +47,8 @@ namespace NLogs
         public static IWebHostBuilder UseNLog(this IWebHostBuilder builder, string configPath = "")
         {
             if (builder == null)
-            {
-                throw new ArgumentNullException("builder");
-            }
+                throw new ArgumentNullException(nameof(builder));
+
             Configure(configPath);
             return builder;
         }
@@ -53,7 +65,7 @@ namespace NLogs
             if (string.IsNullOrEmpty(configPath))
             {
                 var currentDir = Directory.GetCurrentDirectory();
-                configPath = $@"{currentDir}\nlog.config";
+                configPath = $@"{currentDir}\Config\nlog.config";
             }
             else
             {
