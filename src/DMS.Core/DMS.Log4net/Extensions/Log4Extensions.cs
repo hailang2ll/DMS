@@ -65,10 +65,7 @@ namespace DMS.Log4net
                 var currentDir = Directory.GetCurrentDirectory();
                 configPath = $@"{currentDir}\Config\log4net.config";
             }
-            else
-            {
-                Log4Context.Configure(configPath);
-            }
+            Log4Context.Configure(configPath);
         }
     }
 }

@@ -33,18 +33,20 @@ namespace DMS.RabbitMQ.Context
         /// <summary>
         /// 审计队列名称
         /// </summary>
-        public const string AuditQueueName = "stack.rabbitmq.auditqueue";
+        public const string AuditQueueName = "dms.rabbitmq.auditqueue";
         /// <summary>
         /// 任务交换机
         /// 备注：任务交换机用来做，消息定时发送、消息重试
         /// </summary>
-        public const string TaskExchangeName = "stack.rabbitmq.direct.task";
+        public const string TaskExchangeName = "dms.rabbitmq.direct.task";
         /// <summary>
         /// 配置文件初始化
         /// </summary>
-        /// <param name="configPath">文件路径</param>
-        public static void Configure(string configPath = "")
+        /// <param name="fileDir"></param>
+        /// <param name="fileName"></param>
+        public static void Configure(string fileDir, string fileName)
         {
+            var configPath = Path.Combine(fileDir, fileName);
             if (!File.Exists(configPath))
             {
                 string errMsg = $"配置文件：{configPath}不存在！！！";
@@ -52,22 +54,24 @@ namespace DMS.RabbitMQ.Context
             }
 
             //加载配置文件
-            Config = null;//AppSettings.GetCustomModel<RabbitmqOptions>(fileDir, fileName);
+            Config = AppSettings.GetCustomValue<RabbitmqOptions>(fileDir, fileName);
             if (Config == null)
             {
                 string errMsg = $"配置文件：{configPath}初始化异常！！！";
-                throw new TypeInitializationException("RabbitmqConfig", null);
+                throw new Exception(errMsg);
             }
 
             //创建链接工厂
             var connectionStrings = Config.ConnectionString;
             ConnectionFactory = new ConnectionFactory()
             {
-                Port = connectionStrings.Port,
-                AutomaticRecoveryEnabled = true,
                 HostName = connectionStrings.Host,
-                Password = connectionStrings.Password,
+                Port = connectionStrings.Port,
                 UserName = connectionStrings.UserName,
+                Password = connectionStrings.Password,
+                //自动重新连接
+                AutomaticRecoveryEnabled = true, 
+                //心跳超时时间
                 RequestedHeartbeat = connectionStrings.TimeOut
             };
             //创建链接
@@ -77,22 +81,22 @@ namespace DMS.RabbitMQ.Context
         /// <summary>
         /// 创建链接
         /// </summary>
-        public static IModel GetModel()
-        {
-            try
-            {
-                if (!Connection.IsOpen)
-                {
-                    //创建链接
-                    Connection = ConnectionFactory.CreateConnection();
-                }
-            }
-            catch (Exception)
-            {
-                //创建链接
-                Connection = ConnectionFactory.CreateConnection();
-            }
-            return Connection.CreateModel();
-        }
+        //public static IModel GetModel()
+        //{
+        //    try
+        //    {
+        //        if (!Connection.IsOpen)
+        //        {
+        //            //创建链接
+        //            Connection = ConnectionFactory.CreateConnection();
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        //创建链接
+        //        Connection = ConnectionFactory.CreateConnection();
+        //    }
+        //    return Connection.CreateModel();
+        //}
     }
 }

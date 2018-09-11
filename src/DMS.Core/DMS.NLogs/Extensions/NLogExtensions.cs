@@ -67,11 +67,8 @@ namespace NLogs
                 var currentDir = Directory.GetCurrentDirectory();
                 configPath = $@"{currentDir}\Config\nlog.config";
             }
-            else
-            {
-                LogFactory factory = NLog.Web.NLogBuilder.ConfigureNLog(configPath);
-                NLogContext.Configure(factory);
-            }
+            LogFactory factory = NLog.Web.NLogBuilder.ConfigureNLog(configPath);
+            NLogContext.Configure(factory);
         }
     }
 }

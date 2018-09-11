@@ -11,6 +11,16 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\DMS.Core\DMS.Log4net\DMS.Log4net.csproj" />
+    <ProjectReference Include="..\..\src\DMS.Core\DMS.RabbitMQ\DMS.RabbitMQ.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Config\log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\rabbitmq.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

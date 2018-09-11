@@ -26,7 +26,7 @@ namespace DMS.Redis
 
         static RedisConfig()
         {
-            RedisEntityConfig redisConfig = AppSettings.GetCustomValue<RedisEntityConfig>("Redis.json");
+            RedisEntityConfig redisConfig = AppSettings.GetCustomValue<RedisEntityConfig>(AppSettings.GetConfigPath, "Redis.json");
             if (redisConfig != null)
             {
                 SysCustomKey = redisConfig.RedisPrefixKey;
@@ -55,7 +55,7 @@ namespace DMS.Redis
                             }
                             catch (Exception ex)
                             {
-                                LessExceptionLog.Submit("初始化Redis缓存错误,"+ex.Message);
+                                LessExceptionLog.Submit("初始化Redis缓存错误," + ex.Message);
                                 return null;
 
                             }
