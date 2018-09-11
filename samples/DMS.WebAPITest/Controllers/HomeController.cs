@@ -1,5 +1,6 @@
 ﻿using DMS.Log4net;
 using DMS.NLogs;
+using DMS.Redis;
 using DMS.WebAPITest.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -26,7 +27,7 @@ namespace DMS.BaseFramework.Common.APITest.Controllers
         }
 
         [HttpGet]
-        public ActionResult<string> TestLog()
+        public ActionResult<string> LogTest()
         {
             try
             {
@@ -47,14 +48,7 @@ namespace DMS.BaseFramework.Common.APITest.Controllers
             return "";
         }
 
-        [HttpGet]
-        public ActionResult<string> TestRedis()
-        {
-            //RedisManager redisManager = new RedisManager(0);
-            //redisManager.StringSet("key", "value1");
-            //var key = redisManager.StringGet("key");
-            return "";
-        }
+       
 
 
 
