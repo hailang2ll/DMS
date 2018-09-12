@@ -163,7 +163,7 @@ namespace DMS.RabbitMQ.Consumers
 
         /// <summary>
         /// 重试业务处理方法
-        /// </summary>
+        /// </summary> 
         /// <param name="retryCount">当前进行第几次重试</param>
         /// <param name="retryRoutingKey">重试队列路由Key</param>
         /// <param name="eventArgs"></param>
