@@ -21,7 +21,7 @@ namespace DMS.RabbitMQ.Consumers
     class BaseConsumer
     {
         /// <summary>
-        /// 消息连接通道
+        /// 消息连接通道 
         /// </summary>
         protected IModel _channel;
         /// <summary>
