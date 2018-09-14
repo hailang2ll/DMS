@@ -1,5 +1,6 @@
 ﻿using DMS.Auth.Tickets;
 using DMS.BaseFramework.Common.BaseResult;
+using DMS.BaseFramework.Common.Extension;
 using DMS.BaseFramework.Common.Serializer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -61,7 +62,7 @@ namespace DMS.Auth
                     errno = 30,
                     errmsg = "请重新登录",
                 };
-                context.Result = new ContentResult() { Content = SerializerJson.SerializeObject(result), StatusCode = 200 };
+                context.Result = new ContentResult() { Content = result.SerializeObject(), StatusCode = 200 };
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿using DMS.Log4net;
 using DMS.RabbitMQ.Context;
 using DMS.RabbitMQ.Options;
-using DMS.RabbitMQ.Consumers;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
 using System;
@@ -29,14 +28,14 @@ namespace DMS.RabbitMQ.Services
             if (config == null)
                 throw new TypeInitializationException("RabbitmqConfig", null);
 
-            foreach (RabbitmqServiceOptions service in config.Services)
-            {
-                service.QueueName = service.QueueName.ToLower();
-                var channel = ChannelDic.GetOrAdd(service.QueueName, RabbitMQContext.Connection.CreateModel());
-                var constructorArgs = new object[] { channel, service };
-                ConsumerFactory.GetInstance(service.QueueName, service.PatternType, constructorArgs).Start();
-                Logger.Info($"【业务主机】队列：{service.QueueName}启动成功！！！");
-            }
+            //foreach (ExchangeConfigOptions service in config.Services)
+            //{
+            //    service.QueueName = service.QueueName.ToLower();
+            //    var channel = ChannelDic.GetOrAdd(service.QueueName, RabbitMQContext.Connection.CreateModel());
+            //    var constructorArgs = new object[] { channel, service };
+            //    ConsumerFactory.GetInstance(service.QueueName, service.PatternType, constructorArgs).Start();
+            //    Logger.Info($"【业务主机】队列：{service.QueueName}启动成功！！！");
+            //}
             return Task.CompletedTask;
         }
 
@@ -50,7 +49,7 @@ namespace DMS.RabbitMQ.Services
             Dispose();//释放资源
             Logger.Info($"【业务主机】停止完成！！！");
             return Task.CompletedTask;
-        }
+        } 
 
         public void Dispose()
         {

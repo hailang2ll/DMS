@@ -7,7 +7,7 @@ namespace DMS.RabbitMQ.Options
     /// <summary>
     /// 连接字符串选项
     /// </summary>
-    class RabbitConnectionOptions
+    public class RabbitConnectionOptions
     {
         /// <summary>
         /// 主机地址

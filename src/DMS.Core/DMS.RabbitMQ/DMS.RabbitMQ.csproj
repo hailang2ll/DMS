@@ -9,13 +9,41 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DMS.BaseFramework.Common" Version="1.0.2.8" />
+    <Compile Remove="Attributes\ExchangeTypeAttribute.cs" />
+    <Compile Remove="Consumers\BaseConsumer.cs" />
+    <Compile Remove="Consumers\ConsumerFactory.cs" />
+    <Compile Remove="Consumers\RoutingConsumer.cs" />
+    <Compile Remove="Enums\ConsumerPatternType.cs" />
+    <Compile Remove="Enums\PublishPatternType.cs" />
+    <Compile Remove="Extensions\ConvertExtensions.cs" />
+    <Compile Remove="Extensions\EnumExtensions.cs" />
+    <Compile Remove="Extensions\EventArgsExtensions.cs" />
+    <Compile Remove="Interface\IConsumer.cs" />
+    <Compile Remove="Models\ConsumerContext.cs" />
+    <Compile Remove="Models\ResponseMQResult.cs" />
+    <Compile Remove="Producers\RabbitMQClient.cs" />
+    <Compile Remove="Producers\RoutingProducer.cs" />
+    <Compile Remove="Utils\ReflectionUtil.cs" />
+    <Compile Remove="Utils\SingletonUtil.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DMS.BaseFramework.Common" Version="1.0.2.9" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.1.0" />
     <PackageReference Include="RabbitMQ.Client" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DMS.Log4net\DMS.Log4net.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+    <Folder Include="Consumers\" />
+    <Folder Include="Enums\" />
+    <Folder Include="Interface\" />
+    <Folder Include="Models\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

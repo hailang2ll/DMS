@@ -2,6 +2,7 @@
 using DMS.RabbitMQ.Options;
 using RabbitMQ.Client;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -10,35 +11,16 @@ namespace DMS.RabbitMQ.Context
 {
     class RabbitMQContext
     {
-        /// <summary>
-        /// 私有构造函数，禁止外部使用new关键字创建对象
-        /// </summary>
-        private RabbitMQContext() { }
+        //RabbitMQ建议客户端线程之间不要共用Model，至少要保证共用Model的线程发送消息必须是串行的，但是建议尽量共用Connection。
+        private static readonly ConcurrentDictionary<string, IModel> ModelDic = new ConcurrentDictionary<string, IModel>();
         /// <summary>
         /// 配置文件
         /// </summary>
-        public static RabbitmqOptions Config;
+        public static RabbitOptions Config;
         /// <summary>
         /// Socket链接
         /// </summary>
         public static IConnection Connection;
-        /// <summary>
-        /// 链接工厂
-        /// </summary>
-        public static ConnectionFactory ConnectionFactory;
-        /// <summary>
-        /// 第几次重试变量名称
-        /// </summary>
-        public const string RetryCountKeyName = "RetryCount";
-        /// <summary>
-        /// 审计队列名称
-        /// </summary>
-        public const string AuditQueueName = "dms.rabbitmq.auditqueue";
-        /// <summary>
-        /// 任务交换机
-        /// 备注：任务交换机用来做，消息定时发送、消息重试
-        /// </summary>
-        public const string TaskExchangeName = "dms.rabbitmq.direct.task";
         /// <summary>
         /// 配置文件初始化
         /// </summary>
@@ -54,7 +36,7 @@ namespace DMS.RabbitMQ.Context
             }
 
             //加载配置文件
-            Config = AppSettings.GetCustomValue<RabbitmqOptions>(fileDir, fileName);
+            Config = AppSettings.GetCustomValue<RabbitOptions>(fileDir, fileName);
             if (Config == null)
             {
                 string errMsg = $"配置文件：{configPath}初始化异常！！！";
@@ -63,7 +45,7 @@ namespace DMS.RabbitMQ.Context
 
             //创建链接工厂
             var connectionStrings = Config.ConnectionString;
-            ConnectionFactory = new ConnectionFactory()
+            ConnectionFactory ConnectionFactory = new ConnectionFactory()
             {
                 HostName = connectionStrings.Host,
                 Port = connectionStrings.Port,
@@ -79,24 +61,19 @@ namespace DMS.RabbitMQ.Context
         }
 
         /// <summary>
-        /// 创建链接
+        /// 
         /// </summary>
-        //public static IModel GetModel()
-        //{
-        //    try
-        //    {
-        //        if (!Connection.IsOpen)
-        //        {
-        //            //创建链接
-        //            Connection = ConnectionFactory.CreateConnection();
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        //创建链接
-        //        Connection = ConnectionFactory.CreateConnection();
-        //    }
-        //    return Connection.CreateModel();
-        //}
+        /// <param name="queue"></param>
+        /// <returns></returns>
+        public static IModel GetModel(string queue)
+        {
+            return ModelDic.GetOrAdd(queue, value =>
+            {
+                var model = Connection.CreateModel();
+                ModelDic[queue] = model;
+                return model;
+            });
+        }
+
     }
 }

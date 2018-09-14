@@ -8,7 +8,7 @@ namespace DMS.RabbitMQ.Options
     /// <summary>
     /// RabbitMQ配置选项
     /// </summary>
-    class RabbitmqOptions
+    public class RabbitOptions
     {
         /// <summary>
         /// 链接字符串
@@ -17,10 +17,10 @@ namespace DMS.RabbitMQ.Options
 
 
         /// <summary>
-        /// 服务端节点配置
+        /// 节点配置
         /// </summary>
-        public List<RabbitmqServiceOptions> Services { get; set; }
+        public List<ExchangeConfigOptions> ExchangeConfig { get; set; }
 
-       
+
     }
 }

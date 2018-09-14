@@ -30,7 +30,7 @@ namespace DMS.RabbitMQ.Extensions
         public static string GetExchangeName(this Enum patternType, string exchangeName)
         {
             return string.IsNullOrEmpty(exchangeName) ?
-                $"stack.rabbitmq.{patternType.ToString().ToLower()}"
+                $"dms.rabbitmq.{patternType.ToString().ToLower()}"
                 : exchangeName.ToLower();
         }
         /// <summary>

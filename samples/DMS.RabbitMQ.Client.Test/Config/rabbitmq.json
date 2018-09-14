@@ -1,0 +1,26 @@
+﻿{
+  "ConnectionString": {
+    "Host": "192.168.0.102",
+    "Port": 5672,
+    "TimeOut": 60,
+    "UserName": "admin",
+    "Password": "admin123"
+  },
+  "ExchangeConfig": [
+    {
+      "ExchangeName": "DMS.Exchange",
+      "ExchangeType": "direct",
+      "Persistent": true,
+      "Queues": [
+        {
+          "Name": "DMS.QueueA",
+          "RoutingKeys": "DMS.RoutingKeyA"
+        },
+        {
+          "Name": "DMS.QueueB",
+          "RoutingKeys": "DMS.RoutingKeyB"
+        }
+      ]
+    }
+  ]
+}

@@ -19,7 +19,7 @@ namespace DMS.RabbitMQ.Consumers
         /// </summary>
         private static Dictionary<string, BaseConsumer> InstanceCacheDic = new Dictionary<string, BaseConsumer>();
         /// <summary>
-        /// 根据点赞类型获取对象实例
+        /// 根据配置类型获取对象实例
         /// </summary>
         /// <param name="queueName"></param>
         /// <param name="patternType">消费者类型</param>
@@ -34,13 +34,10 @@ namespace DMS.RabbitMQ.Consumers
             {
                 lock (locker)
                 {
-                    if (!InstanceCacheDic.ContainsKey(queueName))
-                    {
-                        string assemblyName = "Stack.RabbitMQ.Consumers";
-                        string className = $"{assemblyName}.{patternType.ToString()}Consumer";
-                        BaseConsumer instance = (BaseConsumer)Activator.CreateInstance(Type.GetType(className), constructorArgs);
-                        InstanceCacheDic.Add(queueName, instance);
-                    }
+                    string assemblyName = "DMS.RabbitMQ.Consumers";
+                    string className = $"{assemblyName}.{patternType.ToString()}Consumer";
+                    BaseConsumer instance = (BaseConsumer)Activator.CreateInstance(Type.GetType(className), constructorArgs);
+                    InstanceCacheDic.Add(queueName, instance);
                 }
             }
             return InstanceCacheDic[queueName];
