@@ -14,30 +14,22 @@
     "UserName": "admin",
     "Password": "admin123"
   },
-  //"Services": [
-  //  {
-  //    "Durable": true,
-  //    "PatternType": "Routing",
-  //    "RetryTimeRules": [ 1, 30, 10 ],
-  //    "QueueName": "queue.direct.routinghandler",
-  //    "AssemblyName": "DMS.RabbitMQ.Service.Test",
-  //    "NameSpace": "DMS.RabbitMQ.Service.Test.Consumers",
-  //    "ClassName": "RoutingHandler"
-  //  }
-  //],
-  "RabbitMQConfig": [
+  "ExchangeConfig": [
     {
       "ExchangeName": "DMS.Exchange",
       "ExchangeType": "direct",
       "Persistent": true,
       "Queues": [
         {
-          "Name": "DMS.QueueA",
-          "RoutingKeys": "DMS.RoutingKeyA"
+          "QueueName": "DMS.QueueA",
+          "RoutingKeys": "DMS.RoutingKeyA",
+          "expirationTime": "5000"
+
         },
         {
-          "Name": "DMS.QueueB",
-          "RoutingKeys": "DMS.RoutingKeyB"
+          "QueueName": "DMS.QueueB",
+          "RoutingKeys": "DMS.RoutingKeyB",
+          "expirationTime": "5000"
         }
       ]
     }

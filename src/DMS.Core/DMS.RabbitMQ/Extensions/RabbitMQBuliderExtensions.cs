@@ -1,5 +1,5 @@
-﻿using DMS.RabbitMQ.Context;
-using DMS.RabbitMQ.Services;
+﻿using DMS.RabbitMQ.Consumers;
+using DMS.RabbitMQ.Context;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -68,7 +68,7 @@ namespace DMS.RabbitMQ.Extensions
 
             builder.ConfigureServices((hostContext, services) =>
             {
-                services.AddHostedService<BusinessHostService>();//业务主机服务
+                services.AddHostedService<ConsumerHostService>();//业务主机服务
             });
             return builder;
         }
@@ -90,7 +90,7 @@ namespace DMS.RabbitMQ.Extensions
 
             builder.ConfigureServices((hostContext, services) =>
             {
-                services.AddHostedService<BusinessHostService>();//业务主机服务
+                services.AddHostedService<ConsumerHostService>();//业务主机服务
             });
             return builder;
         }

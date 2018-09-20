@@ -43,16 +43,18 @@ namespace DMS.RabbitMQ.Context
                 throw new Exception(errMsg);
             }
 
+
             //创建链接工厂
             var connectionStrings = Config.ConnectionString;
             ConnectionFactory ConnectionFactory = new ConnectionFactory()
             {
                 HostName = connectionStrings.Host,
                 Port = connectionStrings.Port,
+                //VirtualHost = "/",
                 UserName = connectionStrings.UserName,
                 Password = connectionStrings.Password,
                 //自动重新连接
-                AutomaticRecoveryEnabled = true, 
+                AutomaticRecoveryEnabled = true,
                 //心跳超时时间
                 RequestedHeartbeat = connectionStrings.TimeOut
             };

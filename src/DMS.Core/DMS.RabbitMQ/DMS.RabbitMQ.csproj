@@ -13,12 +13,9 @@
     <Compile Remove="Consumers\BaseConsumer.cs" />
     <Compile Remove="Consumers\ConsumerFactory.cs" />
     <Compile Remove="Consumers\RoutingConsumer.cs" />
-    <Compile Remove="Enums\ConsumerPatternType.cs" />
-    <Compile Remove="Enums\PublishPatternType.cs" />
     <Compile Remove="Extensions\ConvertExtensions.cs" />
     <Compile Remove="Extensions\EnumExtensions.cs" />
     <Compile Remove="Extensions\EventArgsExtensions.cs" />
-    <Compile Remove="Interface\IConsumer.cs" />
     <Compile Remove="Models\ConsumerContext.cs" />
     <Compile Remove="Models\ResponseMQResult.cs" />
     <Compile Remove="Producers\RabbitMQClient.cs" />
@@ -35,15 +32,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DMS.Log4net\DMS.Log4net.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Attributes\" />
-    <Folder Include="Consumers\" />
-    <Folder Include="Enums\" />
-    <Folder Include="Interface\" />
-    <Folder Include="Models\" />
-    <Folder Include="Utils\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

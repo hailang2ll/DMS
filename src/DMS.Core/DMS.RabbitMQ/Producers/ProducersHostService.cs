@@ -12,7 +12,7 @@ namespace DMS.RabbitMQ.Producers
     /// <summary>
     /// 消息生产者
     /// </summary>
-    public class ProducersService : IHostedService
+    public class ProducersHostService : IHostedService
     {
         /// <summary>
         /// 启动服务主机
@@ -27,19 +27,22 @@ namespace DMS.RabbitMQ.Producers
                 Name = "张三"
             };
 
-            var exchangeConfigs = RabbitMQContext.Config.ExchangeConfig;
-            if (exchangeConfigs == null)
-                throw new TypeInitializationException("ExchangeConfig", null);
+            //var exchangeConfigs = RabbitMQContext.Config.ExchangeConfig;
+            //if (exchangeConfigs == null)
+            //    throw new TypeInitializationException("ExchangeConfig", null);
 
-            foreach (var configItem in exchangeConfigs)
-            {
-                var channel = RabbitMQContext.GetModel(configItem.ExchangeName);
-                var constructorArgs = new object[] { channel, configItem };
 
-                BaseProducer baseProducer = new BaseProducer(channel, configItem);
 
-                Logger.Info($"【消费主机】交换器：{configItem.ExchangeName}配置成功！！！");
-            }
+            //foreach (var configItem in exchangeConfigs)
+            //{
+            //    var channel = RabbitMQContext.GetModel(configItem.ExchangeName);
+            //    var constructorArgs = new object[] { channel, configItem };
+
+            //    ProducerService baseProducer = new ProducerService(channel, configItem);
+            //    baseProducer.Publish("aaaaaaaaa");
+
+            //    Logger.Info($"【消费主机】交换器：{configItem.ExchangeName}配置成功！！！");
+            //}
 
             return Task.CompletedTask;
         }

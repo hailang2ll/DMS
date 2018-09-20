@@ -11,9 +11,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DMS.RabbitMQ.Services
+namespace DMS.RabbitMQ.Consumers
 {
-    class BusinessHostService : IHostedService, IDisposable
+    class ConsumerHostService : IHostedService, IDisposable
     {
         /// <summary>
         /// RabbitMQ建议客户端线程之间不要共用Model，至少要保证共用Model的线程发送消息必须是串行的，但是建议尽量共用Connection

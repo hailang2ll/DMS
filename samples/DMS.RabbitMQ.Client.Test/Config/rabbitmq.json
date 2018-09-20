@@ -13,12 +13,15 @@
       "Persistent": true,
       "Queues": [
         {
-          "Name": "DMS.QueueA",
-          "RoutingKeys": "DMS.RoutingKeyA"
+          "QueueName": "DMS.QueueA",
+          "RoutingKeys": "DMS.RoutingKeyA",
+          "expirationTime": "5000"
+
         },
         {
-          "Name": "DMS.QueueB",
-          "RoutingKeys": "DMS.RoutingKeyB"
+          "QueueName": "DMS.QueueB",
+          "RoutingKeys": "DMS.RoutingKeyB",
+          "expirationTime": "5000"
         }
       ]
     }

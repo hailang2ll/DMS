@@ -5,7 +5,7 @@ using System.Text;
 namespace DMS.RabbitMQ.Options
 {
     /// <summary>
-    /// 对列信息
+    /// 对列基本信息
     /// </summary>
     public class RabbitQueueOptions
     {
@@ -17,6 +17,11 @@ namespace DMS.RabbitMQ.Options
         /// 路由Key
         /// </summary>
         public string RoutingKeys { get; set; }
+        /// <summary>
+        /// 消息到期时间
+        /// </summary>
+        public string ExpirationTime { get; set; }
+
 
     }
 }

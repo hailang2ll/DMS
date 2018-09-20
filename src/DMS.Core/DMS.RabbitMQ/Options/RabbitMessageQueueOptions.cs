@@ -5,9 +5,9 @@ using System.Text;
 namespace DMS.RabbitMQ.Options
 {
     /// <summary>
-    ///  交换机信息
+    /// 对列信息
     /// </summary>
-    public class ExchangeConfigOptions
+    public class RabbitMessageQueueOptions : RabbitQueueOptions
     {
         /// <summary>
         /// 
@@ -21,9 +21,5 @@ namespace DMS.RabbitMQ.Options
         /// 插件的命名空间
         /// </summary>
         public bool Persistent { get; set; }
-        /// <summary>
-        /// 所有对列配置
-        /// </summary>
-        public List<RabbitQueueOptions> Queues { get; set; }
     }
 }

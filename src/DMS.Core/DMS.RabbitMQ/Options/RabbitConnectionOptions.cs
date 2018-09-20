@@ -5,7 +5,7 @@ using System.Text;
 namespace DMS.RabbitMQ.Options
 {
     /// <summary>
-    /// 连接字符串选项
+    /// 连接字符串
     /// </summary>
     public class RabbitConnectionOptions
     {
