@@ -1,4 +1,6 @@
 ﻿using DMS.RabbitMQ.Context;
+using DMS.RabbitMQ.Models;
+using DMS.RabbitMQ.Producers;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -20,22 +22,28 @@ namespace DMS.RabbitMQ.Client.Test
         /// <returns></returns>
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            var messageBody = new
+            ProducerService producerService = new ProducerService();
+            var input = Input();
+            while (input != "exit")
             {
-                Id = 001,
-                Name = "张三"
-            };
-            var headers = new Dictionary<string, object>()
-            {
-                { "TestKey001","测试头部Key001"},
-                { "TestKey002","测试头部Key002"}
-            };
+                var model = new MessageBModel
+                {
+                    CreateDateTime = DateTime.Now,
+                    Msg = input
+                };
 
-            //var config = RabbitMQContext.Config;
-            //if (config == null)
-            //    throw new TypeInitializationException("RabbitmqConfig", null);
+                producerService.Publish(model, "DMS.QueueA");
+
+                input = Input();
+            }
 
             return Task.CompletedTask;
+        }
+        private static string Input()
+        {
+            Console.WriteLine("请输入信息：");
+            var input = Console.ReadLine();
+            return input;
         }
 
         /// <summary>

@@ -12,16 +12,7 @@ namespace DMS.RabbitMQ.Service.Test
     {
         static void Main(string[] args)
         {
-            CreateDefaultHost(args);
-
-            //ConsumerService consumerService = new ConsumerService();
-            ConsumerRetryService consumerService = new ConsumerRetryService("DMS.QueueA");
-            consumerService.Subscribe<MessageBModel>(msg =>
-            {
-                throw new Exception("Always fails!");
-                //var json = SerializerJson.SerializeObject(msg);
-                //Console.WriteLine(json);
-            });
+            CreateDefaultHost(args).Run();
         }
 
         /// <summary>

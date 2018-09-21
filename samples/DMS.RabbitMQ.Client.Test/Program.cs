@@ -13,31 +13,7 @@ namespace DMS.RabbitMQ.Client.Test
     {
         static void Main(string[] args)
         {
-            CreateDefaultHost(args);
-            ProducerService producerService = new ProducerService();
-            var input = Input();
-            while (input != "exit")
-            {
-              
-                var model = new MessageBModel
-                {
-                    CreateDateTime = DateTime.Now,
-                    Msg = input
-                };
-
-
-                producerService.Publish(model, "DMS.QueueA");
-
-                input = Input();
-            }
-
-        }
-
-        private static string Input()
-        {
-            Console.WriteLine("请输入信息：");
-            var input = Console.ReadLine();
-            return input;
+            CreateDefaultHost(args).Run();
         }
 
         /// <summary>
@@ -48,6 +24,10 @@ namespace DMS.RabbitMQ.Client.Test
         static IHost CreateDefaultHost(string[] args) => new HostBuilder()
             .UseLog4net("Config\\log4net.config")
             .UseRabbitMQ("Config\\rabbitmq.json")
+            .ConfigureServices((hostContext, services) =>
+            {
+                services.AddHostedService<TestHostService>();
+            })
             .Build();
     }
 

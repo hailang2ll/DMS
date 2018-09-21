@@ -1,5 +1,7 @@
-﻿using DMS.Log4net;
+﻿using DMS.BaseFramework.Common.Extension;
+using DMS.Log4net;
 using DMS.RabbitMQ.Context;
+using DMS.RabbitMQ.Models;
 using DMS.RabbitMQ.Options;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
@@ -24,18 +26,30 @@ namespace DMS.RabbitMQ.Consumers
         /// </summary>
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            var config = RabbitMQContext.Config;
-            if (config == null)
-                throw new TypeInitializationException("RabbitmqConfig", null);
+            ConsumerService consumerService = new ConsumerService("DMS.QueueA");
 
-            //foreach (ExchangeConfigOptions service in config.Services)
+            //被动拉取对列消息，可以用定时任务来处理
+            consumerService.Pull<MessageBModel>(msg =>
+            {
+                //throw new Exception("Always fails!");
+                var json = SerializerJson.SerializeObject(msg);
+                Console.WriteLine(json);
+            });
+
+
+            //正常消费，不处理异常
+            //consumerService.Subscribe<MessageBModel>(msg =>
             //{
-            //    service.QueueName = service.QueueName.ToLower();
-            //    var channel = ChannelDic.GetOrAdd(service.QueueName, RabbitMQContext.Connection.CreateModel());
-            //    var constructorArgs = new object[] { channel, service };
-            //    ConsumerFactory.GetInstance(service.QueueName, service.PatternType, constructorArgs).Start();
-            //    Logger.Info($"【业务主机】队列：{service.QueueName}启动成功！！！");
-            //}
+            //    throw new Exception("Always fails!");
+            //});
+
+            //消费时异常，重新在次消费，可以设置消费的时间延迟消费
+            //consumerService.SubscribeRetry<MessageBModel>(msg =>
+            //{
+            //    throw new Exception("Always fails!");
+            //});
+
+
             return Task.CompletedTask;
         }
 
@@ -49,7 +63,7 @@ namespace DMS.RabbitMQ.Consumers
             Dispose();//释放资源
             Logger.Info($"【业务主机】停止完成！！！");
             return Task.CompletedTask;
-        } 
+        }
 
         public void Dispose()
         {
