@@ -3,8 +3,10 @@ using DMS.RabbitMQ.Context;
 using DMS.RabbitMQ.Options;
 using DMS.RabbitMQ.Utils;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace DMS.RabbitMQ.Producers
 {
@@ -114,5 +116,7 @@ namespace DMS.RabbitMQ.Producers
 
             channel.BasicPublish(exchangeName, routingKey, properties, messageBody);
         }
+
+
     }
 }
