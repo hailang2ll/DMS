@@ -40,6 +40,7 @@ namespace DMS.Auth
         /// <param name="type">0=检查登录，获取用户信息，不退出；1=检查登录，未登录直接退出</param>
         protected void CheckLogin(ActionExecutingContext context, int type)
         {
+            CurrentUserTicket = new TicketEntity();
             Microsoft.Extensions.Primitives.StringValues token = context.HttpContext.Request.Headers["AccessToken"];
             if (!string.IsNullOrWhiteSpace(token))
             {
