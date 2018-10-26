@@ -1,4 +1,5 @@
 ﻿using DMS.BaseFramework.Common.BaseResult;
+using DMS.BaseFramework.Common.Extension;
 using DMS.Exceptionless.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -52,21 +53,22 @@ namespace DMS.Exceptionless.Filters
             if (context.Exception.GetType() == typeof(UserOperationException))
             {
                 json.errmsg = context.Exception.Message;
-                if (_env.IsDevelopment())
-                {
-                    json.errmsg = "Development：" + context.Exception.StackTrace;//堆栈信息
-                }
-                context.Result = new BadRequestObjectResult(json);//返回异常数据
             }
             else
             {
                 json.errmsg = "发生了未知内部错误";
-                if (_env.IsDevelopment())
-                {
-                    json.errmsg = "Development：" + context.Exception.StackTrace;//堆栈信息
-                }
-                context.Result = new InternalServerErrorObjectResult(json);
             }
+
+            if (_env.IsDevelopment())
+            {
+                json.errmsg = "Development：" + json.errmsg;//堆栈信息
+            }
+            else
+            {
+                json.errmsg = "Production：" + json.errmsg;//堆栈信息
+            }
+            context.Result = new ContentResult() { Content = json.SerializeObject(), StatusCode = 200 };
+
 
             //采用log4net 进行错误日志记录
             context.Exception.Submit(json.errmsg);

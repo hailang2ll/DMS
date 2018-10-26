@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netcoreapp2.1\DMS.CommonWebApiTest.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
@@ -11,6 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +23,7 @@
     <ProjectReference Include="..\..\src\DMS.Core\DMS.Exceptionless\DMS.Exceptionless.csproj" />
     <ProjectReference Include="..\..\src\DMS.Core\DMS.Log4net\DMS.Log4net.csproj" />
     <ProjectReference Include="..\..\src\DMS.Core\DMS.NLogs\DMS.NLogs.csproj" />
+    <ProjectReference Include="..\..\src\DMS.Identity\DMS.Auth\DMS.Auth.csproj" />
   </ItemGroup>
 
   <ItemGroup>

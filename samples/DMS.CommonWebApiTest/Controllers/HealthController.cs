@@ -7,10 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DMS.CommonWebApiTest.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class HealthController : ControllerBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Get() => Ok("ok");
     }

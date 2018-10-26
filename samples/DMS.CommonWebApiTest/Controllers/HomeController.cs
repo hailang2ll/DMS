@@ -7,27 +7,44 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DMS.CommonWebApiTest.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class HomeController : Controller
     {
-        // GET: Home
+       /// <summary>
+       /// 
+       /// </summary>
+       /// <returns></returns>
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Home/Details/5
+       /// <summary>
+       /// 
+       /// </summary>
+       /// <param name="id"></param>
+       /// <returns></returns>
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Home/Create
+       /// <summary>
+       /// 
+       /// </summary>
+       /// <returns></returns>
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Home/Create
+       /// <summary>
+       /// 
+       /// </summary>
+       /// <param name="collection"></param>
+       /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -44,13 +61,22 @@ namespace DMS.CommonWebApiTest.Controllers
             }
         }
 
-        // GET: Home/Edit/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Home/Edit/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -67,13 +93,22 @@ namespace DMS.CommonWebApiTest.Controllers
             }
         }
 
-        // GET: Home/Delete/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Home/Delete/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

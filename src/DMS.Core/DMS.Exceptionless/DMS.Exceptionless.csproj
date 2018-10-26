@@ -6,6 +6,7 @@
     <Company>Dylan,hailang</Company>
     <Authors>Dylan,hailang</Authors>
     <Copyright>Copyright@2018 Dylan</Copyright>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
