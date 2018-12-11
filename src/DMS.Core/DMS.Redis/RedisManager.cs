@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
-using DMS.Exceptionless;
 using DMS.BaseFramework.Common.Extension;
 using DMS.BaseFramework.Common.Serializer;
 
@@ -1003,9 +1002,8 @@ namespace DMS.Redis
                 var database = _conn.GetDatabase(DbNum);
                 return func(database);
             }
-            catch (Exception ex)
+            catch 
             {
-                LessExceptionLog.Submit("操作Redis异常:", ex.Message);
                 return default(T);
             }
         }

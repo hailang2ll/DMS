@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using DMS.Exceptionless;
 using DMS.Redis;
 
 namespace DMS.Auth.Tickets
@@ -26,57 +25,53 @@ namespace DMS.Auth.Tickets
             {
                 string errMsg = "";
                 TicketEntity result = new TicketEntity();
-                if (!string.IsNullOrWhiteSpace(sid))
+                if (string.IsNullOrWhiteSpace(sid))
                 {
-                    if (memCached != null)
-                    {
-                        TicketEntity userTicket = memCached.StringGet<TicketEntity>(sid);
-                        if (userTicket != null)
-                        {
-                            if (!string.IsNullOrEmpty(userTicket.MemberName))
-                            {
-                                DateTime dateExp = userTicket.ExpDate;
-                                DateTime dateNow = DateTime.Now;
-                                TimeSpan diff = dateNow - dateExp;
-                                long days = diff.Days;
-                                if (days > 30)
-                                {
-                                    //APP用户票据缓存30天,用户票据缓存时间超时，重新登录
-                                    memCached.KeyDelete(sid);
-                                    errMsg = string.Format("用户票据缓存时间超时，sid={0},userid={1},username={2},days={3}", sid, userTicket.MemberID, userTicket.MemberName, days);
-                                    LessLog.Info(errMsg);
-                                }
-                                else
-                                {
-                                    //获取用户票据成功，正常票据
-                                    //errMsg = string.Format("获取用户票据成功，正常票据,sid={0},memberid={1},membername={2},days={3}", sid, userTicket.MemberID, userTicket.MemberName, days);
-                                    //Log.Logger.Info(errMsg);
-                                    return userTicket;
-                                }
-                            }
-                            else
-                            {
-                                //获取用户票据成功，但用户名称为空，重新登录
-                                errMsg = string.Format("获取用户票据成功，但用户名为空，sid={0}", sid);
-                                LessLog.Info(errMsg);
-                            }
-
-                        }
-                        else
-                        {
-                            //获取用户票据为空，重新登录
-                            errMsg = string.Format("获取用户票据为空，sid={0}", sid);
-                            LessLog.Info(errMsg);
-                        }
-                    }
-                    else
-                    {
-                        //初始缓存对象为空，重新登录
-                        errMsg = string.Format("初始缓存对象为空，sid={0}", sid);
-                        LessLog.Info(errMsg);
-                    }
+                    result.Msg = "获取sid为空";
+                    return result;
                 }
-                return result;
+
+                if (memCached == null)
+                {
+                    //初始缓存对象为空，重新登录
+                    result.Msg = string.Format("初始缓存对象为空，sid={0}", sid);
+                    return result;
+                }
+
+                TicketEntity userTicket = memCached.StringGet<TicketEntity>(sid);
+                if (userTicket == null)
+                {
+                    //获取用户票据为空，重新登录
+                    result.Msg = string.Format("获取用户票据为空，sid={0}", sid);
+                    return result;
+                }
+
+                if (!string.IsNullOrEmpty(userTicket.MemberName))
+                {
+                    //获取用户票据成功，但用户名称为空，重新登录
+                    result.Msg = string.Format("获取用户票据成功，但用户名为空，sid={0}", sid);
+                    return result;
+                }
+
+                DateTime dateExp = userTicket.ExpDate;
+                DateTime dateNow = DateTime.Now;
+                TimeSpan diff = dateNow - dateExp;
+                long days = diff.Days;
+                if (days > 30)
+                {
+                    //APP用户票据缓存30天,用户票据缓存时间超时，重新登录
+                    memCached.KeyDelete(sid);
+                    errMsg = string.Format("用户票据缓存时间超时，sid={0},userid={1},username={2},days={3}", sid, userTicket.MemberID, userTicket.MemberName, days);
+                    result.Msg = errMsg;
+                    return result;
+                }
+                else
+                {
+                    //获取用户票据成功，正常票据
+                    //errMsg = string.Format("获取用户票据成功，正常票据,sid={0},memberid={1},membername={2},days={3}", sid, userTicket.MemberID, userTicket.MemberName, days);
+                    //Log.Logger.Info(errMsg);
+                    return userTicket;
+                }
             }
         }
 

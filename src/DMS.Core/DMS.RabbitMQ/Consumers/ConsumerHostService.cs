@@ -1,5 +1,4 @@
 ﻿using DMS.BaseFramework.Common.Extension;
-using DMS.Log4net;
 using DMS.RabbitMQ.Context;
 using DMS.RabbitMQ.Models;
 using DMS.RabbitMQ.Options;
@@ -61,7 +60,7 @@ namespace DMS.RabbitMQ.Consumers
         public Task StopAsync(CancellationToken cancellationToken)
         {
             Dispose();//释放资源
-            Logger.Info($"【业务主机】停止完成！！！");
+            //Logger.Info($"【业务主机】停止完成！！！");
             return Task.CompletedTask;
         }
 
@@ -75,7 +74,7 @@ namespace DMS.RabbitMQ.Consumers
                     channel?.Dispose();
                 }
             }
-            Logger.Info($"【业务主机】资源释放完成！！！");
+            //Logger.Info($"【业务主机】资源释放完成！！！");
         }
     }
 }

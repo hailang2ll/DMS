@@ -1,10 +1,8 @@
 ﻿using DMS.BaseFramework.Common.Extension;
-using DMS.Log4net;
 using DMS.RabbitMQ.Context;
 using DMS.RabbitMQ.Extensions;
 using DMS.RabbitMQ.Options;
 using DMS.RabbitMQ.Utils;
-using log4net;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
@@ -151,7 +149,7 @@ namespace DMS.RabbitMQ.Consumers
                 {
                     retryCount = (int)headers[RetryCountKeyName]; retryCount++;
                     Console.WriteLine($"队列：{_queueName}，MessageId：{messageId}，第：{retryCount}次重试开始！！！");
-                    Logger.Info($"队列：{_queueName}，MessageId：{messageId}，第：{retryCount}次重试开始！！！");
+                    //Logger.Info($"队列：{_queueName}，MessageId：{messageId}，第：{retryCount}次重试开始！！！");
                 }
 
                 try
@@ -166,7 +164,7 @@ namespace DMS.RabbitMQ.Consumers
                 catch (Exception ex)
                 {
                     Console.WriteLine($"队列：{_queueName}，MessageId：{messageId}，第：{retryCount}次消费发生异常：", ex);
-                    Logger.Error($"队列：{_queueName}，MessageId：{messageId}，第：{retryCount}次消费发生异常：", ex);
+                    //Logger.Error($"队列：{_queueName}，MessageId：{messageId}，第：{retryCount}次消费发生异常：", ex);
                     if (CanRetry(retryCount))
                     {
                         RetryHandler(retryCount, queueOptions.ExchangeName.GetRetrySuffixName(), queueOptions.RoutingKeys.GetRetrySuffixName(), ea);
@@ -210,7 +208,7 @@ namespace DMS.RabbitMQ.Consumers
             {
                 string messageId = eventArgs.BasicProperties.MessageId;
                 Console.WriteLine($"MessageId：{messageId}，重试发生异常(RabbitMQ is Closed)：", ex);
-                Logger.Info($"MessageId：{messageId}，重试发生异常(RabbitMQ is Closed)：", ex);
+                //Logger.Info($"MessageId：{messageId}，重试发生异常(RabbitMQ is Closed)：", ex);
             }
         }
 
@@ -246,7 +244,7 @@ namespace DMS.RabbitMQ.Consumers
             catch (AlreadyClosedException ex)
             {
                 Console.WriteLine($"MessageId：{ea.BasicProperties.MessageId}重试发生异常(RabbitMQ is Closed)：", ex);
-                Logger.Info($"MessageId：{ea.BasicProperties.MessageId}重试发生异常(RabbitMQ is Closed)：", ex);
+                //Logger.Info($"MessageId：{ea.BasicProperties.MessageId}重试发生异常(RabbitMQ is Closed)：", ex);
             }
         }
     }

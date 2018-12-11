@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <Description>基于Exceptionless框架开发，依赖DMS中基础框架，主要用于分页式日志系统</Description>
     <Company>Dylan,hailang</Company>
     <Authors>Dylan,hailang</Authors>
@@ -12,7 +12,7 @@
   <ItemGroup>
     <PackageReference Include="DMS.BaseFramework.Common" Version="1.0.2.9" />
     <PackageReference Include="Exceptionless" Version="4.3.2004" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>

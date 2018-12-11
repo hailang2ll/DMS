@@ -1,5 +1,4 @@
-﻿using DMS.Log4net;
-using DMS.RabbitMQ.Extensions;
+﻿using DMS.RabbitMQ.Extensions;
 using DMS.RabbitMQ.Models;
 using DMS.RabbitMQ.Producers;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +21,7 @@ namespace DMS.RabbitMQ.Client.Test
         /// <param name="configDir"></param>
         /// <returns></returns>
         static IHost CreateDefaultHost(string[] args) => new HostBuilder()
-            .UseLog4net("Config\\log4net.config")
+            //.UseLog4net("Config\\log4net.config")
             .UseRabbitMQ("Config\\rabbitmq.json")
             .ConfigureServices((hostContext, services) =>
             {

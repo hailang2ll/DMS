@@ -1,5 +1,4 @@
-﻿using DMS.Log4net;
-using DMS.RabbitMQ.Context;
+﻿using DMS.RabbitMQ.Context;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;

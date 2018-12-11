@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <Description>基于RabbitMQ.Client框架开发，依赖DMS中基础框架，主要用于分布式消息对列系统</Description>
     <Company>Dylan,hailang</Company>
     <Authors>Dylan,hailang</Authors>
@@ -26,12 +26,8 @@
 
   <ItemGroup>
     <PackageReference Include="DMS.BaseFramework.Common" Version="1.0.2.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.0" />
     <PackageReference Include="RabbitMQ.Client" Version="5.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DMS.Log4net\DMS.Log4net.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
