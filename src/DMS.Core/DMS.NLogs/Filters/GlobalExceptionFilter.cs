@@ -1,6 +1,5 @@
 ﻿using DMS.BaseFramework.Common.BaseResult;
 using DMS.BaseFramework.Common.Extension;
-using DMS.Exceptionless.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DMS.Exceptionless.Filters
+namespace DMS.NLogs.Filters
 {
     /// <summary>
     /// 全局异常处理
@@ -70,7 +69,8 @@ namespace DMS.Exceptionless.Filters
             context.Result = new ContentResult() { Content = json.SerializeObject(), StatusCode = 200 };
 
 
-            context.Exception.Submit(json.errmsg);
+            //采用log4net 进行错误日志记录
+            NLogger.Error(json.errmsg, context.Exception);
 
         }
 
