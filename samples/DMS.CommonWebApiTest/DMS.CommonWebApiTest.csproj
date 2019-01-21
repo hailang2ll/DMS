@@ -20,9 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\DMS.Core\DMS.Consul\DMS.Consul.csproj" />
-    <ProjectReference Include="..\..\src\DMS.Core\DMS.Exceptionless\DMS.Exceptionless.csproj" />
     <ProjectReference Include="..\..\src\DMS.Core\DMS.Log4net\DMS.Log4net.csproj" />
-    <ProjectReference Include="..\..\src\DMS.Core\DMS.NLogs\DMS.NLogs.csproj" />
     <ProjectReference Include="..\..\src\DMS.Identity\DMS.Auth\DMS.Auth.csproj" />
   </ItemGroup>
 

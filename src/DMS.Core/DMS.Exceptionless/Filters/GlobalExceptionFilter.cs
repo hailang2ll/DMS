@@ -70,7 +70,7 @@ namespace DMS.Exceptionless.Filters
             context.Result = new ContentResult() { Content = json.SerializeObject(), StatusCode = 200 };
 
 
-            context.Exception.Submit(json.errmsg);
+            //context.Exception.Submit(json.errmsg);
 
         }
 

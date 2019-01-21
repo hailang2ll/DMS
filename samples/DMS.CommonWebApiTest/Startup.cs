@@ -1,5 +1,5 @@
 ﻿using DMS.BaseFramework.Common.DI;
-using DMS.Exceptionless.Filters;
+using DMS.Log4net.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
