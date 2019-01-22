@@ -36,8 +36,6 @@ namespace DMS.Log4net
         /// <param name="configPath"></param>
         public static void Configure(string configPath)
         {
-            var currentDir = AppContext.BaseDirectory;
-            configPath = $@"{currentDir}Config/log4net.config";
             FileInfo file = new FileInfo(configPath);
             if (file.Exists)
             {
@@ -46,13 +44,14 @@ namespace DMS.Log4net
 
                 SysLog = LogManager.GetLogger(repository.Name, "SystemLogger");
                 ExceptionLog = LogManager.GetLogger(repository.Name, "ExceptionLogger");
+
                 WaLiuBasicServiceLog = LogManager.GetLogger(repository.Name, "WaLiuBasicServiceLogger");
                 ApiMonitorLog = LogManager.GetLogger(repository.Name, "ApiMonitorLogger");
                 SysLog.Info($"初始化{configPath}完成。");
             }
             else
             {
-                throw new Exception($"未找到{configPath}文件");
+                throw new Exception($"未找到{file.FullName}文件");
             }
         }
     }

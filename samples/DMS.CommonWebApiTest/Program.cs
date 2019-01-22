@@ -1,6 +1,8 @@
 ﻿using DMS.Log4net;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace DMS.CommonWebApiTest
 {
@@ -27,8 +29,8 @@ namespace DMS.CommonWebApiTest
             WebHost.CreateDefaultBuilder(args)
                 .UseUrls("http://*:5001")
                 //.UseNLog()
-                .UseLog4net()
+                .UseLog4net("Config/log4net.config")
                 .UseStartup<Startup>();
-                
+
     }
 }

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DMS.Log4net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace DMS.CommonWebApiTest.Controllers
 {
@@ -12,39 +10,41 @@ namespace DMS.CommonWebApiTest.Controllers
     /// </summary>
     public class HomeController : Controller
     {
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <returns></returns>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
+            Logger.Info("日志记录成功");
+            Logger.Error("日志记录失败");
             return View();
         }
 
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <param name="id"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Details(int id)
         {
             return View();
         }
 
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <returns></returns>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
             return View();
         }
 
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <param name="collection"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
