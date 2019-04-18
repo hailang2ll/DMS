@@ -62,13 +62,21 @@ namespace NLogs
         /// <returns></returns>
         public static void Configure(string configPath)
         {
-            if (string.IsNullOrEmpty(configPath))
+            FileInfo file = new FileInfo(configPath);
+            if (file.Exists)
             {
-                var currentDir = Directory.GetCurrentDirectory();
-                configPath = $@"{currentDir}\Config\nlog.config";
+                LogFactory factory = NLog.Web.NLogBuilder.ConfigureNLog(configPath);
+                NLogContext.Configure(factory);
+                if (factory.IsLoggingEnabled())
+                {
+                    NLogger.Info($"初始化{configPath}完成。");
+                }
             }
-            LogFactory factory = NLog.Web.NLogBuilder.ConfigureNLog(configPath);
-            NLogContext.Configure(factory);
+            else
+            {
+                throw new Exception($"未找到{file.FullName}文件");
+            }
+           
         }
     }
 }

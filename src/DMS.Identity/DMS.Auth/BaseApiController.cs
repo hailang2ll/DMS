@@ -12,7 +12,7 @@ namespace DMS.Auth
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
-            CheckLogin(context, (int)EnumCheckLogin.CheckLogin_NoExit);
+            CheckLogin(context, 0);
 
         }
     }

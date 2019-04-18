@@ -8,6 +8,11 @@
     <Copyright>Copyright@2018 Dylan</Copyright>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Attributes\ExchangeTypeAttribute.cs" />
     <Compile Remove="Consumers\BaseConsumer.cs" />

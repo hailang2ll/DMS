@@ -20,6 +20,7 @@ namespace DMS.CommonWebApiTest.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            var ID = this.CurrentUserTicket.ID;
             string sid = this.Sid;
             //try
             //{

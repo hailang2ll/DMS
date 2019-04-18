@@ -1,4 +1,5 @@
 ﻿using DMS.Log4net;
+using DMS.NLogs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,6 +19,9 @@ namespace DMS.CommonWebApiTest.Controllers
         {
             Logger.Info("日志记录成功");
             Logger.Error("日志记录失败");
+
+            NLogger.Info("日志记录成功n");
+            NLogger.Error("日志记录失败n");
             return View();
         }
 

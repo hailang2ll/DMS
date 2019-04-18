@@ -8,6 +8,11 @@
     <DocumentationFile>bin\Debug\netcoreapp2.1\DMS.CommonWebApiTest.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
@@ -21,10 +26,14 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\DMS.Core\DMS.Consul\DMS.Consul.csproj" />
     <ProjectReference Include="..\..\src\DMS.Core\DMS.Log4net\DMS.Log4net.csproj" />
+    <ProjectReference Include="..\..\src\DMS.Core\DMS.NLogs\DMS.NLogs.csproj" />
     <ProjectReference Include="..\..\src\DMS.Identity\DMS.Auth\DMS.Auth.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="Config\log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

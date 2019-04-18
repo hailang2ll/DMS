@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using DMS.Auth.Tickets;
-using DMS.BaseFramework.Common.BaseResult;
-using DMS.BaseFramework.Common.Serializer;
+﻿using DMS.BaseFramework.Common.BaseResult;
 using DMS.BaseFramework.Common.Extension;
+using DMS.Redis.Tickets;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace DMS.Auth
 {
@@ -29,7 +28,7 @@ namespace DMS.Auth
                 //存在AccessToken值，进行验证
                 RedisCacheTicket authBase = new RedisCacheTicket(token);
                 TicketEntity userTicket = authBase.CurrentUserTicket;
-                if (userTicket != null && userTicket.MemberID > 0)
+                if (userTicket != null && userTicket.ID.ToLong() > 0)
                 {
                     CurrentUserTicket = userTicket;
                     return;
@@ -70,7 +69,7 @@ namespace DMS.Auth
                 //存在AccessToken值，进行验证
                 RedisCacheTicket authBase = new RedisCacheTicket(token);
                 TicketEntity userTicket = authBase.CurrentUserTicket;
-                if (userTicket != null && userTicket.MemberID > 0)
+                if (userTicket != null && userTicket.ID.ToLong() > 0)
                 {
                     CurrentUserTicket = userTicket;
                     return;

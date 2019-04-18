@@ -22,7 +22,7 @@ namespace DMS.Auth
         {
             base.OnActionExecuting(context);
 
-            CheckLogin(context, (int)EnumCheckLogin.CheckLogin_Exit);
+            CheckLogin(context, 1);
 
 
             //Microsoft.Extensions.Primitives.StringValues token = context.HttpContext.Request.Headers["AccessToken"];

@@ -17,27 +17,20 @@ namespace DMS.Redis
     /// </summary>
     public class RedisManager
     {
-        private int DbNum { get; }
-        private readonly ConnectionMultiplexer _conn;
-        public string CustomKey;
+        public int DbNum { get; }
+        public ConnectionMultiplexer _conn;
 
         #region 构造函数
-
         public RedisManager(int dbNum = 0)
-                : this(dbNum, null)
-        {
-        }
-
-        public RedisManager(int dbNum, string readWriteHosts)
         {
             DbNum = dbNum;
-            _conn = string.IsNullOrWhiteSpace(readWriteHosts) ? RedisConfig.Instance : RedisConfig.GetConnectionMultiplexer(readWriteHosts);
+            _conn = RedisConfig.Instance;
         }
-
         #endregion 构造函数
 
-        #region String
 
+
+        #region String
         #region 同步方法
 
         /// <summary>
@@ -975,23 +968,13 @@ namespace DMS.Redis
         {
             return _conn.GetServer(hostAndPort);
         }
-
-        /// <summary>
-        /// 设置前缀
-        /// </summary>
-        /// <param name="customKey"></param>
-        public void SetSysCustomKey(string customKey)
-        {
-            CustomKey = customKey;
-        }
-
         #endregion 其他
 
         #region 辅助方法
 
         private string AddSysCustomKey(string oldKey)
         {
-            var prefixKey = CustomKey ?? RedisConfig.SysCustomKey;
+            var prefixKey = RedisConfig.SysCustomKey;
             return prefixKey + oldKey;
         }
 
@@ -1002,7 +985,7 @@ namespace DMS.Redis
                 var database = _conn.GetDatabase(DbNum);
                 return func(database);
             }
-            catch 
+            catch
             {
                 return default(T);
             }
@@ -1017,7 +1000,10 @@ namespace DMS.Redis
         private T ConvertObj<T>(RedisValue value)
         {
             if (value.HasValue)
+            {
                 return SerializerJson.DeserializeObject<T>(value);
+                //return SerializerJson.DeserializeObject<T>(value);
+            }
             return default(T);
         }
 

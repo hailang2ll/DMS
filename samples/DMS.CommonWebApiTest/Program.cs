@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using NLogs;
 using System;
 
 namespace DMS.CommonWebApiTest
@@ -28,7 +29,7 @@ namespace DMS.CommonWebApiTest
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseUrls("http://*:5001")
-                //.UseNLog()
+                .UseNLog("Config/nlog.config")
                 .UseLog4net("Config/log4net.config")
                 .UseStartup<Startup>();
 
