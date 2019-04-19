@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DMS.BaseFramework.Common" Version="1.0.3.1" />
+    <PackageReference Include="DMS.BaseFramework.Common" Version="1.0.3.6" />
     <PackageReference Include="Exceptionless" Version="4.3.2004" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0" />
   </ItemGroup>
