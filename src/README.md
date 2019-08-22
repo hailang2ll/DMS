@@ -1,42 +1,18 @@
 # DMS
 
-### DMS是一个集中式的中间件框架，每一个小型中间件将会是完全独立的，都将以注册方式使用，主要为了快速开发项目而准备，如：DMS.Autofac，DMS.Consul，DMS.RabbitMQg，DMS.Swagger，GRPC，Thrift，Netty，DMS.Exceptionless，DMS.Log4net，DMS.NLogs，DMS.Consul，Ocelot，IdentityServer，Zookeeper等，Demo中会有每一个中间件的实例方便开发者了解 
+### DMS将会是一个集中式的中间件框架，每一个小型中间件将会是完全独立的，如：gRPC，Thrift，netty，Wcf，Exceptionless，Ocelot，RabbitMQ，Redis，IdentityServer，Consul，Zookeeper等，Demo中会有每一个中间件的实例方便开发者了解 
 qq交流群：18362376
-作者微信：tangguo_9669
 
 <br />
 
 ## 一.DMS.Autofac 依赖与注入
 基于Autofac框架，支持多种方式注入（构造函数注入，属性注入）
 
-### 1.示例调用
-需要先引用Nuget包，安装DMS.Autofac
-在Startup类的ConfigureServices方法中添加：
-
+### 1.示例调用，属性注入，需要传入接口与实现类名
 ```c# 
-第一种：
-public IServiceProvider ConfigureServices(IServiceCollection services)
-{
-
-    services.AddMvc().AddJsonOptions(options =>
-    {
-        options.SerializerSettings.DateFormatString = "yyyy-MM-dd";
-        options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-        options.SerializerSettings.MissingMemberHandling = MissingMemberHandling.Ignore;
-        options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-    });
-    services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-    services.AddSwaggerGenV2();
-
-    #region AddDbContext
-    var connectionStrings = Configuration.GetConnectionString("trydou_sys");
-    services.AddDbContext<trydou_sysContext>(options => options.UseSqlServer(connectionStrings));
-    #endregion
-
-    return AutofacService.RegisterAutofac(services);
-}
-
+在Startup类的ConfigureServices方法中添加：
+return AutofacService.RegisterAutofac(services, "项目接口名.Contracts", "项目服务名.Service");
+即可自动注入，方法返回类型为：IServiceProvider
 ```
 ### 2.使用示例
 ```c# 
