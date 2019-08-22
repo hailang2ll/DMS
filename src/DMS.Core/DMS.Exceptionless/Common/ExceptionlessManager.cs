@@ -1,5 +1,4 @@
-﻿using DMS.BaseFramework.Common.Configuration;
-using Exceptionless;
+﻿using Exceptionless;
 using Exceptionless.Logging;
 using System;
 using System.Collections.Generic;
@@ -27,8 +26,8 @@ namespace DMS.Exceptionless.Common
         /// </summary>
         static ExceptionlessManager()
         {
-            ExceptionlessClient.Default.Configuration.ApiKey = AppSettings.GetValue("Exceptionless:ApiKey");
-            ExceptionlessClient.Default.Configuration.ServerUrl = AppSettings.GetValue("Exceptionless:ServerUrl");
+            ExceptionlessClient.Default.Configuration.ApiKey = ""; //AppSettings.GetValue("Exceptionless:ApiKey");
+            ExceptionlessClient.Default.Configuration.ServerUrl = "";// AppSettings.GetValue("Exceptionless:ServerUrl");
             ExceptionlessClient.Default.SubmittingEvent += Default_SubmittingEvent; ;
         }
 
