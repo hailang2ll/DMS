@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-using DMS.BaseFramework.Common.Enums;
 
 namespace DMS.Auth
 {

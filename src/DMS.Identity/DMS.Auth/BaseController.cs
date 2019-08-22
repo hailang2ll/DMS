@@ -1,6 +1,6 @@
-﻿using DMS.BaseFramework.Common.BaseResult;
-using DMS.BaseFramework.Common.Extension;
-using DMS.Redis.Tickets;
+﻿using DMS.Auth.Tickets;
+using DMS.Common.BaseResult;
+using DMS.Common.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

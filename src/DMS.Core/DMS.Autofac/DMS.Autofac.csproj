@@ -4,9 +4,9 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <Authors>Dylan,hailang</Authors>
     <Company>Dylan,hailang</Company>
-    <Description>基于Autofac框架，完全自动注入，默认都是以构造函数来注入，在这里支持属性注入，简单代码方便调用
-修复了之前版本的注入问题</Description>
+    <Description>基于Autofac框架，完全自动注入，默认都是以构造函数来注入，在这里支持属性注入</Description>
     <Copyright>Copyright@2018 Dylan</Copyright>
+    <Version>1.1.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

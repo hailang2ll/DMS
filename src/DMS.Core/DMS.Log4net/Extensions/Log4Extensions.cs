@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.IO;
 
 namespace DMS.Log4net
 {
@@ -17,9 +16,9 @@ namespace DMS.Log4net
         /// <param name="configuration"></param>
         /// <param name="configPath">配置文件路径，默认调用当前项目执行目录下面的log4net.config作为配置文件</param>
         /// <returns></returns>
-        public static void ConfigureLog4net(this IConfiguration configuration, string configPath = "")
+        public static void ConfigureLog4net(this IConfiguration configuration, string configPath, string basePath = null)
         {
-            Configure(configPath);
+            Log4Context.Configure(configPath, basePath);
         }
 
         /// <summary>
@@ -28,12 +27,12 @@ namespace DMS.Log4net
         /// <param name="builder"></param>
         /// <param name="configPath"></param>
         /// <returns></returns>
-        public static IHostBuilder UseLog4net(this IHostBuilder builder, string configPath = "")
+        public static IHostBuilder UseLog4net(this IHostBuilder builder, string configPath, string basePath = null)
         {
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder));
 
-            Configure(configPath);
+            Log4Context.Configure(configPath, basePath);
             return builder;
         }
         /// <summary>
@@ -42,25 +41,14 @@ namespace DMS.Log4net
         /// <param name="builder"></param>
         /// <param name="configPath">配置文件路径，默认调用当前项目执行目录下面的log4net.config作为配置文件</param>
         /// <returns></returns>
-        public static IWebHostBuilder UseLog4net(this IWebHostBuilder builder, string configPath = "")
+        public static IWebHostBuilder UseLog4net(this IWebHostBuilder builder, string configPath, string basePath = null)
         {
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder));
 
-            Configure(configPath);
+            Log4Context.Configure(configPath, basePath);
             return builder;
         }
 
-
-        /// <summary>
-        /// 设置配置文件
-        /// </summary>
-        /// <param name="configuration"></param>
-        /// <param name="configPath">配置文件路径，默认调用当前项目执行目录下面的log4net.config作为配置文件</param>
-        /// <returns></returns>
-        public static void Configure(string configPath)
-        {
-            Log4Context.Configure(configPath);
-        }
     }
 }

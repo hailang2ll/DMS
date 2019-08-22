@@ -34,8 +34,16 @@ namespace DMS.Log4net
         /// 
         /// </summary>
         /// <param name="configPath"></param>
-        public static void Configure(string configPath)
+        public static void Configure(string configPath, string basePath)
         {
+            if (!string.IsNullOrEmpty(basePath))
+            {
+                configPath = Path.Combine(basePath, configPath);
+            }
+            else
+            {
+                configPath = Path.Combine(AppContext.BaseDirectory, configPath);
+            }
             FileInfo file = new FileInfo(configPath);
             if (file.Exists)
             {

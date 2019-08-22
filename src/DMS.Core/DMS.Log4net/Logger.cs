@@ -8,6 +8,7 @@ namespace DMS.Log4net
     /// </summary>
     public class Logger
     {
+       
         /// <summary>
         /// 
         /// </summary>

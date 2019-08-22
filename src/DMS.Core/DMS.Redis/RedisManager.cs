@@ -1,11 +1,10 @@
-﻿using StackExchange.Redis;
+﻿using DMS.Common.Extensions;
+using Newtonsoft.Json;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
-using DMS.BaseFramework.Common.Extension;
-using DMS.BaseFramework.Common.Serializer;
 
 namespace DMS.Redis
 {
@@ -27,8 +26,6 @@ namespace DMS.Redis
             _conn = RedisConfig.Instance;
         }
         #endregion 构造函数
-
-
 
         #region String
         #region 同步方法
@@ -372,6 +369,30 @@ namespace DMS.Redis
             });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public List<T> HashValues<T>(string key)
+        {
+            var result = new List<T>();
+            key = AddSysCustomKey(key);
+            return Do(db =>
+            {
+                HashEntry[] arr = db.HashGetAll(key);
+                foreach (var item in arr)
+                {
+                    if (!item.Value.IsNullOrEmpty)
+                    {
+                        result.Add(JsonConvert.DeserializeObject<T>(item.Value));
+                    }
+                }
+                return result;
+            });
+        }
+
         #endregion 同步方法
 
         #region 异步方法
@@ -483,6 +504,28 @@ namespace DMS.Redis
             key = AddSysCustomKey(key);
             RedisValue[] values = await Do(db => db.HashKeysAsync(key));
             return ConvetList<T>(values);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<List<T>> HashValuesAsync<T>(string key)
+        {
+            var result = new List<T>();
+            key = AddSysCustomKey(key);
+            HashEntry[] arr = await Do(db => db.HashGetAllAsync(key));
+            foreach (var item in arr)
+            {
+                string values = item.Name;
+                if (!item.Value.IsNullOrEmpty)
+                {
+                    result.Add(JsonConvert.DeserializeObject<T>(item.Value));
+                }
+            }
+            return result;
         }
 
         #endregion 异步方法
@@ -993,19 +1036,30 @@ namespace DMS.Redis
 
         private string ConvertJson<T>(T value)
         {
-            string result = value is string ? value.ToString() : SerializerJson.SerializeObject(value);
+            string result = value is string ? value.ToString() : value.SerializeObject();
             return result;
         }
 
+        //private T ConvertObj<T>(RedisValue value)
+        //{
+        //    if (value.HasValue)
+        //    {
+        //        // return SerializerJson.DeserializeObject<T>(value);
+        //        return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(value);
+        //        //return SerializerJson.DeserializeObject<T>(value);
+        //    }
+        //    return default(T);
+        //}
+
         private T ConvertObj<T>(RedisValue value)
         {
-            if (value.HasValue)
+            if (typeof(T).Name.Equals(typeof(string).Name))
             {
-                return SerializerJson.DeserializeObject<T>(value);
-                //return SerializerJson.DeserializeObject<T>(value);
+                return JsonConvert.DeserializeObject<T>($"'{value}'");
             }
-            return default(T);
+            return JsonConvert.DeserializeObject<T>(value);
         }
+
 
         private List<T> ConvetList<T>(RedisValue[] values)
         {

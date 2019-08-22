@@ -1,13 +1,7 @@
-﻿using StackExchange.Redis;
+﻿using DMS.Redis.Configurations;
+using StackExchange.Redis;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DMS.BaseFramework.Common.Configuration;
 
 namespace DMS.Redis
 {
@@ -25,12 +19,16 @@ namespace DMS.Redis
 
         static RedisConfig()
         {
-            RedisEntityConfig redisConfig = AppSettings.GetValue<RedisEntityConfig>("RedisConfig");
-            if (redisConfig != null)
+            RedisOption option = AppConfig.RedisOption;
+            if (option != null)
             {
-                SysCustomKey = redisConfig.RedisPrefixKey;
-                RedisConnectionString = redisConfig.RedisConnectionString;
-                RedisPwd = redisConfig.RedisConnectionPwd;
+                SysCustomKey = option.RedisPrefixKey;
+                RedisConnectionString = option.RedisConnectionString;
+                RedisPwd = option.RedisConnectionPwd;
+            }
+            else
+            {
+                throw new Exception($"未加载redis.json文件");
             }
         }
 

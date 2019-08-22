@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Configs\domain.json" />
+    <None Remove="Configs\rabbitmq.json" />
+    <None Remove="Configs\redis.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Configs\domain.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Configs\rabbitmq.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Configs\redis.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\DMS.Common\DMS.Common.csproj" />
+    <ProjectReference Include="..\..\src\DMS.Core\DMS.Exceptionless\DMS.Exceptionless.csproj" />
+    <ProjectReference Include="..\..\src\DMS.Core\DMS.Redis\DMS.Redis.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,12 +1,10 @@
-﻿using DMS.BaseFramework.Common.BaseResult;
-using DMS.BaseFramework.Common.Extension;
+﻿using DMS.Common.BaseResult;
+using DMS.Common.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DMS.NLogs.Filters
 {
@@ -70,7 +68,7 @@ namespace DMS.NLogs.Filters
 
 
             //采用log4net 进行错误日志记录
-            NLogger.Error(json.errmsg, context.Exception);
+            Logger.Error(json.errmsg, context.Exception);
 
         }
 

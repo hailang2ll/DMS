@@ -19,9 +19,9 @@ namespace NLogs
         /// <param name="configuration"></param>
         /// <param name="configPath">配置文件路径，默认调用当前项目执行目录下面的log4net.config作为配置文件</param>
         /// <returns></returns>
-        public static void ConfigureNLog(this IConfiguration configuration, string configPath = "")
+        public static void ConfigureNLog(this IConfiguration configuration, string configPath, string basePath = null)
         {
-            Configure(configPath);
+            NLogContext.Configure(configPath, basePath);
         }
 
         /// <summary>
@@ -30,12 +30,12 @@ namespace NLogs
         /// <param name="builder"></param>
         /// <param name="configPath"></param>
         /// <returns></returns>
-        public static IHostBuilder UseNLog(this IHostBuilder builder, string configPath = "")
+        public static IHostBuilder UseNLog(this IHostBuilder builder, string configPath, string basePath = null)
         {
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder));
 
-            Configure(configPath);
+            NLogContext.Configure(configPath, basePath);
             return builder;
         }
         /// <summary>
@@ -44,39 +44,15 @@ namespace NLogs
         /// <param name="builder"></param>
         /// <param name="configPath">配置文件路径，默认调用当前项目执行目录下面的log4net.config作为配置文件</param>
         /// <returns></returns>
-        public static IWebHostBuilder UseNLog(this IWebHostBuilder builder, string configPath = "")
+        public static IWebHostBuilder UseNLog(this IWebHostBuilder builder, string configPath, string basePath = null)
         {
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder));
 
-            Configure(configPath);
+            NLogContext.Configure(configPath, basePath);
             return builder;
         }
 
 
-        /// <summary>
-        /// 设置配置文件
-        /// </summary>
-        /// <param name="configuration"></param>
-        /// <param name="configPath">配置文件路径，默认调用当前项目执行目录下面的log4net.config作为配置文件</param>
-        /// <returns></returns>
-        public static void Configure(string configPath)
-        {
-            FileInfo file = new FileInfo(configPath);
-            if (file.Exists)
-            {
-                LogFactory factory = NLog.Web.NLogBuilder.ConfigureNLog(configPath);
-                NLogContext.Configure(factory);
-                if (factory.IsLoggingEnabled())
-                {
-                    NLogger.Info($"初始化{configPath}完成。");
-                }
-            }
-            else
-            {
-                throw new Exception($"未找到{file.FullName}文件");
-            }
-           
-        }
     }
 }

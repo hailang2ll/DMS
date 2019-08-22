@@ -1,0 +1,77 @@
+{
+  "SmsSetting": {
+    "ConnectionStrings": "Integrated Security=False;server=192.168.0.50;database=trydou_member;User ID=sa;Password=123456;Connect Timeout=30;",
+    //"ConnectionStrings": "Integrated Security=False;server=rm-wz9s208agklf3697f.sqlserver.rds.aliyuncs.com,3433;database=trydou_member;User ID=appadministrator;Password=appRd&strydou!@;Connect Timeout=30;",
+    "DefaultSmsProviderName": "ALY",
+    "MAX_SMS_IN_HOURS": 5,
+    "MAX_SMS_IN_TODAY": 10,
+    "SMS_SEND_INTERVEL_SECONDS": 60,
+    "VALIDATECODE_LENGTH": 6,
+    "SMSCodeWhite": [
+      "0086",
+      "0082"
+    ],
+    "SmsProviders": [
+      {
+        "Name": "JZW",
+        "UserAccount": "Cst88888",
+        "UserPassword": "jrcs-8888880",
+        "FactoryName": "JzwSender",
+        "ServiceUrl": "http://222.73.117.158"
+      },
+      {
+        "Name": "ALY",
+        "UserAccount": "LTAIkET9v7oBhm9Z",
+        "UserPassword": "jWJHlGmikeYdGVfh8sKndDRfPXokrB",
+        "FactoryName": "AlySender",
+        "ServiceUrl": ""
+      },
+      {
+        "Name": "YXT_1",
+        "UserAccount": "2002149",
+        "UserPassword": "?,6w4DZl",
+        "FactoryName": "",
+        "ServiceUrl": "http://www.yxuntong.com/emmpdata/sms"
+      },
+      {
+        "Name": "YXT_2",
+        "UserAccount": "",
+        "UserPassword": "",
+        "FactoryName": "",
+        "ServiceUrl": "http://www.yxuntong.com/emmpdata/sms"
+      }
+    ],
+    "SMSTemplates": [
+      {
+        "TemplateId": "001000",
+        "List": [
+          {
+            "AreaCode": "0086",
+            "ALYContent": "SMS_163725256",
+            "Content": "您的验证码是{0}。为了保护您的账号安全，请勿将验证码透露给他人。"
+          },
+          {
+            "AreaCode": "9999",
+            "ALYContent": "SMS_164825698",
+            "Content": ""
+          }
+        ]
+      },
+      {
+        "TemplateId": "001001",
+        "List": [
+          {
+            "AreaCode": "0086",
+            "ALYContent": "SMS_163850363",
+            "Content": "您的验证码是{0}。为了保护您的账号安全，请勿将验证码透露给他人。"
+          },
+          {
+            "AreaCode": "9999",
+            "ALYContent": "SMS_164830693",
+            "Content": ""
+          }
+        ]
+      }
+    ]
+  }
+}
