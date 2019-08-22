@@ -18,10 +18,6 @@
     <PackageReference Include="StackExchange.Redis" Version="1.2.6" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\DMS.Common\DMS.Common.csproj" />
-  </ItemGroup>
-
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="if &quot;$(ConfigurationName)&quot; == &quot;Release&quot; (&#xD;&#xA; dotnet pack --no-build --configuration Release  --output $(SolutionDir)\nupkg&#xD;&#xA;)" />
   </Target>

@@ -15,10 +15,6 @@
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.6.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\DMS.Common\DMS.Common.csproj" />
-  </ItemGroup>
-
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="if &quot;$(ConfigurationName)&quot; == &quot;Release&quot; (&#xD;&#xA; dotnet pack --no-build --configuration Release  --output $(SolutionDir)\nupkg&#xD;&#xA;)" />
   </Target>

@@ -33,7 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DMS.Common\DMS.Common.csproj" />
     <ProjectReference Include="..\..\src\DMS.Core\DMS.Exceptionless\DMS.Exceptionless.csproj" />
     <ProjectReference Include="..\..\src\DMS.Core\DMS.Redis\DMS.Redis.csproj" />
   </ItemGroup>
