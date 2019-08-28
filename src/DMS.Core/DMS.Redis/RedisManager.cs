@@ -393,6 +393,16 @@ namespace DMS.Redis
             });
         }
 
+        public HashEntry[] HashValueAll(string key)
+        {
+            key = AddSysCustomKey(key);
+            return Do(db =>
+            {
+                HashEntry[] arr = db.HashGetAll(key);
+                return arr;
+            });
+        }
+
         #endregion 同步方法
 
         #region 异步方法
@@ -527,7 +537,18 @@ namespace DMS.Redis
             }
             return result;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<HashEntry[]> HashValueAllAsync(string key)
+        {
+            key = AddSysCustomKey(key);
+            HashEntry[] arr = await Do(db => db.HashGetAllAsync(key));
+            return arr;
+        }
         #endregion 异步方法
 
         #endregion Hash
@@ -732,7 +753,7 @@ namespace DMS.Redis
         public bool SortedSetAdd<T>(string key, T value, double score)
         {
             key = AddSysCustomKey(key);
-            return Do(redis => redis.SortedSetAdd(key, ConvertJson<T>(value), score));
+            return Do(redis =>redis.SortedSetAdd(key, ConvertJson<T>(value), score));
         }
 
         /// <summary>
@@ -1028,7 +1049,7 @@ namespace DMS.Redis
                 var database = _conn.GetDatabase(DbNum);
                 return func(database);
             }
-            catch
+            catch(Exception ex)
             {
                 return default(T);
             }

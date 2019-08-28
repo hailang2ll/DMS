@@ -1,5 +1,6 @@
 ﻿using DMS.Redis;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace DMS.XUnitTest
@@ -38,21 +39,21 @@ namespace DMS.XUnitTest
 
 
             #region 发布订阅
-            redisManager.Subscribe("dylan", (channel, value) =>
-            {
-                Console.WriteLine(channel.ToString() + ":" + value.ToString());
-            });
+            //redisManager.Subscribe("dylan", (channel, value) =>
+            //{
+            //    Console.WriteLine(channel.ToString() + ":" + value.ToString());
+            //});
 
 
-            for (int i = 0; i < 50; i++)
-            {
-                var data = new
-                {
-                    name= "dylan",
-                    code = "sharecore"
-                };
-                redisManager.Publish("dylan", data);
-            };
+            //for (int i = 0; i < 50; i++)
+            //{
+            //    var data = new
+            //    {
+            //        name= "dylan",
+            //        code = "sharecore"
+            //    };
+            //    redisManager.Publish("dylan", data);
+            //};
             #endregion
 
 
@@ -68,23 +69,69 @@ namespace DMS.XUnitTest
 
         }
 
+
+
+        public class queuea
+        {
+            public string videoKey { get; set; }
+            public string Keywords { get; set; }
+        }
+
         [Fact]
         public void HashTest()
         {
-            RedisManager redisManager = new RedisManager(5);
-            var data = new
+            RedisManager redisManager2 = new RedisManager(2);
+            //var data = new
+            //{
+            //    name = "dylan",
+            //    code = "sharecore",
+            //};
+            //bool flag = redisManager2.HashExists("dylan", "key1");
+            //if (!flag)
+            //{
+            //    redisManager2.HashSet<object>("dylan", "key1", data);
+            //    redisManager2.HashSet<object>("dylan", "key2", data);
+            //}
+
+            //var value = redisManager2.HashValues<QueueValue>("dylan");
+
+
+
+
+            List<QueueValue> list0 = redisManager2.HashValues<QueueValue>("1000_wx7250ec58129a26f1");
+            //var data = new
+            //{
+            //    name = "dylan",
+            //    code = "sharecore",
+            //};
+            //redisManager.SortedSetAdd("dylan", data, 1.0);//添加
+            //redisManager.SortedSetRemove("dylan",data);//删除
+            //redisManager.SortedSetRangeByRank<QueueValue>("dylan");//获取全部
+            //redisManager.SortedSetLength("dylan");//获取数量
+        }
+
+
+
+
+        public class SortedSetParam
+        {
+            public string name { get; set; }
+            public string code { get; set; }
+        }
+
+        [Fact]
+        public void SortedSetTest()
+        {
+            RedisManager redisManager = new RedisManager(2);
+            var data = new SortedSetParam()
             {
                 name = "dylan",
-                code = "sharecore",
+                code = "sharecore2",
             };
-            bool flag = redisManager.HashExists("dylan", "key1");
-            if (!flag)
-            {
-                redisManager.HashSet<object>("dylan", "key1", data);
-                redisManager.HashSet<object>("dylan", "key2", data);
-            }
 
-            var value = redisManager.HashValues<QueueValue>("dylan");
+            var value = redisManager.SortedSetAdd("dylan", data, 1);
+
+            var r = redisManager.SortedSetRangeByRank<SortedSetParam>("dylan");
 
             //var data = new
             //{
