@@ -81,6 +81,7 @@ namespace DMS.XUnitTest
         public void HashTest()
         {
             RedisManager redisManager2 = new RedisManager(2);
+
             //var data = new
             //{
             //    name = "dylan",

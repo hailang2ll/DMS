@@ -17,8 +17,15 @@ namespace DMS.Swagger
             var basePath = AppContext.BaseDirectory;
             var commentsFileName = AppDomain.CurrentDomain.FriendlyName + ".xml";
             var xmlPath = Path.Combine(basePath, commentsFileName);
+
+            string serviceName = AppDomain.CurrentDomain.FriendlyName.Replace(".Api", "").Replace("Api", "").Replace(".API", "").Replace("API", "");
+            var contractPath = Path.Combine(basePath, serviceName + ".Contracts.xml");
+
+            Console.WriteLine($"SwaggerGen.api开始加载，{xmlPath}");
+            Console.WriteLine($"SwaggerGen.contracts开始加载，{contractPath}");
             if (File.Exists(xmlPath))
             {
+               
                 services.AddSwaggerGen(options =>
                 {
                     options.SwaggerDoc("v1", new Info
@@ -32,12 +39,16 @@ namespace DMS.Swagger
                     });
 
                     options.IncludeXmlComments(xmlPath);
-
+                    
+                    if (File.Exists(contractPath))
+                    {
+                        options.IncludeXmlComments(contractPath);
+                    }
                     options.OperationFilter<AssignOperationVendorExtensions>();
                 });
             }
-
             return services;
+
         }
 
 

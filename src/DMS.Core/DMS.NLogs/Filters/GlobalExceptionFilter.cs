@@ -26,49 +26,28 @@ namespace DMS.NLogs.Filters
                 errmsg = "系统异常，请联系客服",//系统异常信息
             };
 
-            /// <summary>
-            /// 当系统发生异常时调用，旧版本
-            /// </summary>
-            /// <param name="context"></param>
-            //public void OnException(ExceptionContext context)
-            //{
-            //    var result = new DataResultBase()
-            //    {
-            //        errno = 500,//系统异常代码
-            //        errmsg = "系统异常，请联系客服",//系统异常信息
-            //    };
-            //    Exception ex = context.Exception;
-            //    context.ExceptionHandled = true;
-            //    context.Result = new ObjectResult(result);
-            //    context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
-            //    ex.Submit("系统异常");//提交异常
-            //}
-
-
 
             //这里面是自定义的操作记录日志
             if (context.Exception.GetType() == typeof(UserOperationException))
             {
-                json.errmsg = context.Exception.Message;
+                json.errmsg = "用户自定义错误，Message:" + context.Exception.Message;
+                if (_env.IsDevelopment())
+                {
+                    json.errmsg += ",StackTrace:" + context.Exception.StackTrace;
+                }
+                Logger.Error(json.errmsg);
+                context.Result = new BadRequestObjectResult(json);
             }
             else
             {
-                json.errmsg = "发生了未知内部错误";
+                json.errmsg = "内部错误，Message:" + context.Exception.Message;
+                if (_env.IsDevelopment())
+                {
+                    json.errmsg += ",StackTrace:" + context.Exception.StackTrace;//堆栈信息
+                }
+                Logger.Error(json.errmsg);
+                context.Result = new InternalServerErrorObjectResult(json);
             }
-
-            if (_env.IsDevelopment())
-            {
-                json.errmsg = "Development：" + json.errmsg;//堆栈信息
-            }
-            else
-            {
-                json.errmsg = "Production：" + json.errmsg;//堆栈信息
-            }
-            context.Result = new ContentResult() { Content = json.SerializeObject(), StatusCode = 200 };
-
-
-            //采用log4net 进行错误日志记录
-            Logger.Error(json.errmsg, context.Exception);
 
         }
 
