@@ -46,6 +46,7 @@ namespace DMS.Auth
                 //存在AccessToken值，进行验证，以后升级方法
                 RedisCacheTicket authBase = new RedisCacheTicket(token);
                 TicketEntity userTicket = authBase.CurrentUserTicket;
+                System.Console.WriteLine($"获取redis信息：{userTicket.Code},{userTicket.Msg}");
                 if (userTicket != null && userTicket.ID.ToLong() > 0)
                 {
                     CurrentUserTicket = userTicket;

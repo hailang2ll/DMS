@@ -6,7 +6,7 @@
     <Company>Dylan,hailang</Company>
     <Authors>Dylan,hailang</Authors>
     <Description>主要用于token头部权限验证，需要在请求头加入AccessToken信息才能进行验证</Description>
-    <Version>1.1.0.0</Version>
+    <Version>1.2.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
