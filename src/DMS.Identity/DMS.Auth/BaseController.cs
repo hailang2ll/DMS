@@ -39,6 +39,8 @@ namespace DMS.Auth
         /// <param name="type">0=检查登录，获取用户信息，不退出；1=检查登录，未登录直接退出</param>
         protected void CheckLogin(ActionExecutingContext context, int type)
         {
+            var controllerName = context.RouteData.Values["Controller"].ToString();
+            var actionName = context.RouteData.Values["Action"].ToString();
             CurrentUserTicket = new TicketEntity();
             Microsoft.Extensions.Primitives.StringValues token = context.HttpContext.Request.Headers["AccessToken"];
             if (!string.IsNullOrWhiteSpace(token))
@@ -46,11 +48,14 @@ namespace DMS.Auth
                 //存在AccessToken值，进行验证，以后升级方法
                 RedisCacheTicket authBase = new RedisCacheTicket(token);
                 TicketEntity userTicket = authBase.CurrentUserTicket;
-                System.Console.WriteLine($"获取redis信息：{userTicket.Code},{userTicket.Msg}");
                 if (userTicket != null && userTicket.ID.ToLong() > 0)
                 {
                     CurrentUserTicket = userTicket;
                     return;
+                }
+                else
+                {
+                    System.Console.WriteLine($"获取缓存身份信息：{userTicket.Msg}，{controllerName}/{actionName}");
                 }
             }
 
@@ -62,7 +67,7 @@ namespace DMS.Auth
                 ResponseResult result = new ResponseResult()
                 {
                     errno = 30,
-                    errmsg = "请重新登录",
+                    errmsg = "身份过期，请重新登录",
                 };
                 context.Result = new ContentResult() { Content = result.SerializeObject(), StatusCode = 200 };
             }
