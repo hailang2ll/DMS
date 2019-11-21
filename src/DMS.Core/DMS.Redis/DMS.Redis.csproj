@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DMS.Common" Version="1.2.0" />
+    <PackageReference Include="DMS.Common" Version="1.2.2" />
     <PackageReference Include="StackExchange.Redis" Version="1.2.6" />
   </ItemGroup>
 
