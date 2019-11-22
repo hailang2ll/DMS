@@ -12,7 +12,7 @@ namespace DMS.Swagger
 {
     public static class SwaggerGenServiceCollectionExtensions
     {
-        public static IServiceCollection AddSwaggerGenV2(this IServiceCollection services)
+        public static IServiceCollection AddSwaggerGenV2(this IServiceCollection services, string pathName = "")
         {
             var basePath = AppContext.BaseDirectory;
             var commentsFileName = AppDomain.CurrentDomain.FriendlyName + ".xml";
@@ -25,7 +25,7 @@ namespace DMS.Swagger
             Console.WriteLine($"SwaggerGen.contracts开始加载，{contractPath}");
             if (File.Exists(xmlPath))
             {
-               
+
                 services.AddSwaggerGen(options =>
                 {
                     options.SwaggerDoc("v1", new Info
@@ -39,10 +39,18 @@ namespace DMS.Swagger
                     });
 
                     options.IncludeXmlComments(xmlPath);
-                    
+
                     if (File.Exists(contractPath))
                     {
                         options.IncludeXmlComments(contractPath);
+                    }
+                    if (!string.IsNullOrEmpty(pathName))
+                    {
+                        var convergePath = Path.Combine(basePath, pathName);
+                        if (File.Exists(convergePath))
+                        {
+                            options.IncludeXmlComments(contractPath);
+                        }
                     }
                     options.OperationFilter<AssignOperationVendorExtensions>();
                 });
