@@ -49,6 +49,7 @@ namespace DMS.Swagger
                         var convergePath = Path.Combine(basePath, pathName);
                         if (File.Exists(convergePath))
                         {
+                            Console.WriteLine($"SwaggerGen.converge开始加载，{convergePath}");
                             options.IncludeXmlComments(contractPath);
                         }
                     }
