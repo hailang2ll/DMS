@@ -16,8 +16,10 @@ namespace DMS.XUnitTest
         public void Test1()
         {
             RedisManager redisManager = new RedisManager(0);
+
             RedisCacheTicket authBase = new RedisCacheTicket("1F5A707995391AD7DFE50709A54E264C");
             TicketEntity userTicket = authBase.CurrentUserTicket;
+
             //var all = redisManager.GetAll();
             //foreach (var item in all)
             //{
