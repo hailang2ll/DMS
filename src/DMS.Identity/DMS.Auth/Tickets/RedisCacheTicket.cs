@@ -9,7 +9,7 @@ namespace DMS.Auth.Tickets
         public string sid = null;
         public RedisCacheTicket(string sid)
         {
-            this.sid = sid;
+            this.sid = sid.Trim();
             if (memCached == null)
             {
                 memCached = new RedisManager(0);
@@ -46,7 +46,7 @@ namespace DMS.Auth.Tickets
                     {
                         //获取用户票据为空，重新登录
                         var option = AppConfig.RedisOption;
-                        result.Msg = $"未找到SID，sid={sid},{option.RedisConnectionString}";
+                        result.Msg = $"未找到SID，sid={sid},{memCached._conn.IsConnected},{option.RedisConnectionString}";
                         result.Code = 3;
                         return result;
                     }

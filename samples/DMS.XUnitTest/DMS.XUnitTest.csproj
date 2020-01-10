@@ -34,7 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\DMS.Core\DMS.Exceptionless\DMS.Exceptionless.csproj" />
-    <ProjectReference Include="..\..\src\DMS.Core\DMS.Redis\DMS.Redis.csproj" />
+    <ProjectReference Include="..\..\src\DMS.Identity\DMS.Auth\DMS.Auth.csproj" />
   </ItemGroup>
 
 </Project>

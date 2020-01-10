@@ -1,4 +1,5 @@
-﻿using DMS.Redis;
+﻿using DMS.Auth.Tickets;
+using DMS.Redis;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -14,7 +15,9 @@ namespace DMS.XUnitTest
         [Fact]
         public void Test1()
         {
-            RedisManager redisManager = new RedisManager(2);
+            RedisManager redisManager = new RedisManager(0);
+            RedisCacheTicket authBase = new RedisCacheTicket("1F5A707995391AD7DFE50709A54E264C");
+            TicketEntity userTicket = authBase.CurrentUserTicket;
             //var all = redisManager.GetAll();
             //foreach (var item in all)
             //{

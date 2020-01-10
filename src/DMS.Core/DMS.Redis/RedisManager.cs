@@ -753,7 +753,7 @@ namespace DMS.Redis
         public bool SortedSetAdd<T>(string key, T value, double score)
         {
             key = AddSysCustomKey(key);
-            return Do(redis =>redis.SortedSetAdd(key, ConvertJson<T>(value), score));
+            return Do(redis => redis.SortedSetAdd(key, ConvertJson<T>(value), score));
         }
 
         /// <summary>
@@ -1049,8 +1049,9 @@ namespace DMS.Redis
                 var database = _conn.GetDatabase(DbNum);
                 return func(database);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
+                Console.WriteLine($"reids.do:{ex.Message}");
                 return default(T);
             }
         }
@@ -1078,7 +1079,15 @@ namespace DMS.Redis
             {
                 return JsonConvert.DeserializeObject<T>($"'{value}'");
             }
-            return JsonConvert.DeserializeObject<T>(value);
+            else
+            {
+                T t = JsonConvert.DeserializeObject<T>(value);
+                if (t == null)
+                {
+                    Console.WriteLine($"reids.ConvertObj.t:{null}");
+                }
+                return t;
+            }
         }
 
 
