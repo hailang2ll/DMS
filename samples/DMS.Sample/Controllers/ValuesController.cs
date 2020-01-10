@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DMS.Common.Encrypt;
+using DMS.Common.Helper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DMS.Sample.Controllers
@@ -20,7 +22,12 @@ namespace DMS.Sample.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            CookieHelper.SetSOSCookie("key1", "key123", 1);
+            var key1 = CookieHelper.GetSOSCookie("key1");
+            //CookieHelper.Delete("key1");
+            string v = EncryptHelper.Encrypt("hailang123");
+            string d = EncryptHelper.Decrypt(v);
+            return new string[] { "value1-" + key1, "value2" };
         }
 
         /// <summary>

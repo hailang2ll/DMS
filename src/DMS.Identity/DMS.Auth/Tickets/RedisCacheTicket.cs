@@ -45,7 +45,8 @@ namespace DMS.Auth.Tickets
                     if (userTicket == null)
                     {
                         //获取用户票据为空，重新登录
-                        result.Msg = string.Format("未找到SID，sid={0}", sid);
+                        var option = AppConfig.RedisOption;
+                        result.Msg = $"未找到SID，sid={sid},{option.RedisConnectionString}";
                         result.Code = 3;
                         return result;
                     }
