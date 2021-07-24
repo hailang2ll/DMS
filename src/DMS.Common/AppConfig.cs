@@ -17,7 +17,7 @@ namespace DMS.Common
         {
             return GetSection(name).Get<T>();
         }
-        public static string GetConnectionString(string name)
+        public static string GetConnectionString(string name) 
         {
             return Configuration.GetConnectionString(name);
         }
