@@ -1,5 +1,4 @@
 using Autofac;
-using DMS.Auth;
 using DMS.Autofac;
 using DMS.Common.Configurations;
 using DMS.Common.Serialization.JsonConverters;
@@ -12,7 +11,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Rong.EasyExcel.EpPlus;
 
 namespace DMS.Sample31
 {
@@ -64,7 +62,6 @@ namespace DMS.Sample31
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSwaggerGenV2();
-            services.AddEpPlusExcel();
         }
 
        /// <summary>
