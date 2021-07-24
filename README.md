@@ -3,7 +3,7 @@
 ### DMS是一个集中式的中间件框架，每一个小型中间件将会是完全独立的，都将以注册方式使用，主要为了快速开发项目而准备，如：DMS.Autofac，DMS.Consul，DMS.RabbitMQg，DMS.Swagger，GRPC，Thrift，Netty，DMS.Exceptionless，DMS.Log4net，DMS.NLogs，DMS.Consul，Ocelot，IdentityServer，Zookeeper等，Demo中会有每一个中间件的实例方便开发者了解 
 qq交流群：18362376
 <br />
-作者微信：tangguo_9669
+作者微信：hailang2ll
 
 ![运营公众号](https://github.com/hailang2ll/DMS.EntityFrameworkCore/blob/master/gzh02.jpg)
 <br />
