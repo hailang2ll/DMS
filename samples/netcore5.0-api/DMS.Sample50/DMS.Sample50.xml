@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DMS.Sample50</name>
+    </assembly>
+    <members>
+        <member name="T:DMS.Sample50.Controllers.WeatherForecastController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample50.Controllers.WeatherForecastController.#ctor(Microsoft.Extensions.Logging.ILogger{DMS.Sample50.Controllers.WeatherForecastController})">
+            <summary>
+            
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:DMS.Sample50.Controllers.WeatherForecastController.Get">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:DMS.Sample50.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample50.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:DMS.Sample50.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DMS.Sample50.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample50.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:DMS.Sample50.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample50.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:DMS.Sample50.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+        <member name="T:DMS.Sample50.WeatherForecast">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample50.WeatherForecast.Date">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample50.WeatherForecast.TemperatureC">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample50.WeatherForecast.TemperatureF">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample50.WeatherForecast.Summary">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

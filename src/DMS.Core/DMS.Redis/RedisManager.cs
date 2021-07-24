@@ -1,4 +1,4 @@
-﻿using DMS.Common.Extensions;
+﻿using DMS.Common.Serialization;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 using System;
@@ -930,31 +930,32 @@ namespace DMS.Redis
         }
 
         /// <summary>
+        /// 不要用此方法
         /// 获取所有KEY-Value
         /// </summary>
         /// <returns></returns>
-        public IDictionary<string, object> GetAll()
-        {
-            try
-            {
-                var result = new Dictionary<string, object>();
-                IDatabase idb = _conn.GetDatabase(DbNum);
-                var endpoints = _conn.GetEndPoints(true);
-                foreach (var endpoint in endpoints)
-                {
-                    var server = _conn.GetServer(endpoint);
-                    foreach (var item in server.Keys(DbNum))
-                    {
-                        result.Add(item.ToString(), idb.StringGet(item.ToString()));
-                    }
-                }
-                return result;
-            }
-            catch
-            {
-                return null;
-            }
-        }
+        //public IDictionary<string, object> GetAll()
+        //{
+        //    try
+        //    {
+        //        var result = new Dictionary<string, object>();
+        //        IDatabase idb = _conn.GetDatabase(DbNum);
+        //        var endpoints = _conn.GetEndPoints(true);
+        //        foreach (var endpoint in endpoints)
+        //        {
+        //            var server = _conn.GetServer(endpoint);
+        //            foreach (var item in server.Keys(DbNum))
+        //            {
+        //                result.Add(item.ToString(), idb.StringGet(item.ToString()));
+        //            }
+        //        }
+        //        return result;
+        //    }
+        //    catch
+        //    {
+        //        return null;
+        //    }
+        //}
 
 
         #endregion key
@@ -1075,19 +1076,23 @@ namespace DMS.Redis
 
         private T ConvertObj<T>(RedisValue value)
         {
-            if (typeof(T).Name.Equals(typeof(string).Name))
+            if (value.HasValue)
             {
-                return JsonConvert.DeserializeObject<T>($"'{value}'");
-            }
-            else
-            {
-                T t = JsonConvert.DeserializeObject<T>(value);
-                if (t == null)
+                if (typeof(T).Name.Equals(typeof(string).Name))
                 {
-                    Console.WriteLine($"reids.ConvertObj.t:{null}");
+                    return JsonConvert.DeserializeObject<T>($"'{value}'");
                 }
-                return t;
+                else
+                {
+                    T t = JsonConvert.DeserializeObject<T>(value);
+                    if (t == null)
+                    {
+                        Console.WriteLine($"reids.ConvertObj.t:{null}");
+                    }
+                    return t;
+                }
             }
+            return default(T);
         }
 
 

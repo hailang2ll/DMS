@@ -1,0 +1,489 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DMS.Sample31</name>
+    </assembly>
+    <members>
+        <member name="T:DMS.Sample31.Controllers.CommonController">
+            <summary>
+            Common api 测试
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Controllers.CommonController._userService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Controllers.CommonController._productservice">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.#ctor(DMS.Sample31.Contracts.IProductService)">
+            <summary>
+            
+            </summary>
+            <param name="productservice"></param>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.GetShopLogo(DMS.Sample31.Contracts.UserEntity)">
+            <summary>
+            测试IOC，测试token验证，测试属性认证
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.GetLog4net">
+            <summary>
+            日志处理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.GetAppConfig">
+            <summary>
+            读取appsettings.json和自定义配置文件
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.AttributeExtension">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.EnumExtensions">
+            <summary>
+            枚举扩展
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.SerializerExtensions">
+            <summary>
+            序列化/反序列化
+            ConfigureServices=>AddJsonOptions{ options.SerializerSettings.Converters.Add(new CustomStringConverter());}
+            [ColumnMapping(Name = "ShopMemberID"), JsonConverter(typeof(CustomStringConverter))]
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.ExportFS">
+            <summary>
+            excel导出
+            请求方式：http://localhost:5000/api/Common/ExportFS
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.ExportBuilderFS">
+            <summary>
+            excel导出
+            请求方式：http://localhost:5000/api/Common/ExportBuilderFS
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.Export">
+            <summary>
+            API导出数据
+            请求方式：API接口，地址浏览
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.ExportToExcel">
+            <summary>
+            API导出数据
+            请求方式：API接口，地址浏览
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.ImportToExcel">
+            <summary>
+            根据文件导入
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.ImportToExcelV2(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            上传文件流导入
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.GetHttpClientHelper">
+            <summary>
+            HttpClientHelper=>get请求
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.PostHttpClientHelper">
+            <summary>
+            HttpClientHelper=>Post请求
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.GetHttpWebHelper">
+            <summary>
+            HttpWebHelper=>get请求
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.PostHttpWebHelper">
+            <summary>
+            HttpWebHelper=>Post请求
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.CommonController.StringConvertAll">
+            <summary>
+            StringConvertAll
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:DMS.Sample31.Controllers.ExcelController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:DMS.Sample31.Controllers.ExcelController._excelImportManager">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.ExcelController.#ctor(Rong.EasyExcel.IExcelImportManager)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:DMS.Sample31.Controllers.ExcelController.Importer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.ExcelController.Import">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:DMS.Sample31.Controllers.ImportTest">
+            <summary>
+            导入类
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Controllers.ImportTest.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Controllers.ImportTest.Phone">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Controllers.ImportTest.Age">
+            <summary>
+            年龄
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Controllers.ImportTest.Score">
+            <summary>
+            成绩
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Controllers.ImportTest.Date">
+            <summary>
+            日期
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Controllers.ImportTest.Time">
+            <summary>
+            时间
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Controllers.ImportTest.Edu">
+            <summary>
+            学历
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Controllers.ImportTest.EduText">
+            <summary>
+            学历文本（忽略）
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Controllers.ImportTest.NoDisplayName">
+            <summary>
+            无 DisplayName
+            </summary>
+        </member>
+        <member name="T:DMS.Sample31.Controllers.TestEnum">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:DMS.Sample31.Controllers.TestEnum.小学">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:DMS.Sample31.Controllers.TestEnum.中学">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:DMS.Sample31.Controllers.TestEnum.大学">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:DMS.Sample31.Controllers.WeatherForecastController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.WeatherForecastController.#ctor(Microsoft.Extensions.Logging.ILogger{DMS.Sample31.Controllers.WeatherForecastController})">
+            <summary>
+            
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:DMS.Sample31.Controllers.WeatherForecastController.Get">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:DMS.Sample31.Model.ProductEntityResult">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.RetailPrice">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.ProductCount">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.SkuAttrValueStr">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.SkuAttrValueIDs">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.SkuAttrIDs">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.ProductDetail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.BrandName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.SpikePrice">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.BrandID">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.CountryName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.ProductImages">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.CategoryNamePath">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.CategoryCodePath">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.CategoryID">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.ProductName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.ProductID">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.CountryImage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.ProductEntityResult.SortOrder">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:DMS.Sample31.Model.SearchProductParam">
+            <summary>
+            产品搜索
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.SearchProductParam.SearchKey">
+            <summary>
+            关键词
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.SearchProductParam.MemberName">
+            <summary>
+            发布人ID
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.SearchProductParam.AttrParam">
+            <summary>
+            属性集合
+            </summary>
+        </member>
+        <member name="T:DMS.Sample31.Model.SearchProductAttrParam">
+            <summary>
+             私募股权，阳光私募，私募债权，信托，资管,银行理财
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.SearchProductAttrParam.CodeName">
+            <summary>
+            产品分类
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.SearchProductAttrParam.ProductStatusType">
+            <summary>
+            产品销售状态
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.SearchProductAttrParam.IncomeRange1">
+            <summary>
+            年化收益率
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.SearchProductAttrParam.BonusRatio">
+            <summary>
+            奖金费率
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.SearchProductAttrParam.ProductTerm">
+            <summary>
+            投资期限
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.SearchProductAttrParam.PaymentType">
+            <summary>
+            付息方式
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.SearchProductAttrParam.BonusType">
+            <summary>
+            结算方式
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Model.SearchProductAttrParam.InvestmentStart">
+            <summary>
+            认购金额
+            </summary>
+        </member>
+        <member name="T:DMS.Sample31.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample31.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:DMS.Sample31.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DMS.Sample31.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample31.Startup.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="env"></param>
+        </member>
+        <member name="M:DMS.Sample31.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:DMS.Sample31.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+        <member name="M:DMS.Sample31.Startup.ConfigureContainer(Autofac.ContainerBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="containerBuilder"></param>
+        </member>
+        <member name="T:DMS.Sample31.WeatherForecast">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.WeatherForecast.Date">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.WeatherForecast.TemperatureC">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.WeatherForecast.TemperatureF">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.WeatherForecast.Summary">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -15,7 +15,7 @@ namespace DMS.Swagger
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", AppDomain.CurrentDomain.FriendlyName);
-                c.DocExpansion(DocExpansion.None);
+                //c.DocExpansion(DocExpansion.None);
             });
             return app;
         }

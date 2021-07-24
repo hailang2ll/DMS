@@ -1,12 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Reflection;
-using System.Text;
 
 namespace DMS.Swagger
 {
@@ -14,6 +12,7 @@ namespace DMS.Swagger
     {
         public static IServiceCollection AddSwaggerGenV2(this IServiceCollection services, string pathName = "")
         {
+
             var basePath = AppContext.BaseDirectory;
             var commentsFileName = AppDomain.CurrentDomain.FriendlyName + ".xml";
             var xmlPath = Path.Combine(basePath, commentsFileName);
@@ -21,66 +20,80 @@ namespace DMS.Swagger
             string serviceName = AppDomain.CurrentDomain.FriendlyName.Replace(".Api", "").Replace("Api", "").Replace(".API", "").Replace("API", "");
             var contractPath = Path.Combine(basePath, serviceName + ".Contracts.xml");
 
-            Console.WriteLine($"SwaggerGen.api开始加载，{xmlPath}");
-            Console.WriteLine($"SwaggerGen.contracts开始加载，{contractPath}");
+
             if (File.Exists(xmlPath))
             {
-
-                services.AddSwaggerGen(options =>
+                Console.WriteLine($"SwaggerGen.api开始加载，{xmlPath}");
+                // 添加Swagger
+                services.AddSwaggerGen(option =>
                 {
-                    options.SwaggerDoc("v1", new Info
+                    option.SwaggerDoc("v1", new OpenApiInfo
                     {
-                        Version = "Version 1.0",
-                        Title = AppDomain.CurrentDomain.FriendlyName,
-                        Description = "框架说明文档",
-                        TermsOfService = "None",
-                        Contact = new Swashbuckle.AspNetCore.Swagger.Contact { Name = "Learn.Swagger", Email = "79522860@qq.com", Url = "https://www.trydou.com" }
+                        Title = "API Demo",
+                        Version = "v1",
+                        Description = "API文档描述",
+                        Contact = new OpenApiContact
+                        {
+                            Email = "79522860@qq.com",
+                            Name = "github",
+                            Url = new Uri("https://github.com/hailang2ll")
+                        },
+                        License = new OpenApiLicense
+                        {
+                            Name = "许可证名称",
+                            Url = new Uri("https://github.com/hailang2ll")
+                        }
 
                     });
-
-                    options.IncludeXmlComments(xmlPath);
-
+                    // 获取xml文件名
+                    //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                    // 获取xml文件路径
+                    //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                    // 添加控制器层注释，true表示显示控制器注释
+                    option.IncludeXmlComments(xmlPath, true);
                     if (File.Exists(contractPath))
                     {
-                        options.IncludeXmlComments(contractPath);
+                        Console.WriteLine($"SwaggerGen.contracts开始加载，{contractPath}");
+                        option.IncludeXmlComments(contractPath, true);
                     }
-                    if (!string.IsNullOrEmpty(pathName))
-                    {
-                        var convergePath = Path.Combine(basePath, pathName);
-                        if (File.Exists(convergePath))
-                        {
-                            Console.WriteLine($"SwaggerGen.converge开始加载，{convergePath}");
-                            options.IncludeXmlComments(contractPath);
-                        }
-                    }
-                    options.OperationFilter<AssignOperationVendorExtensions>();
+                    option.OperationFilter<AddRequiredHeaderParameter>("Tenant ID example");
                 });
             }
-            return services;
+            else
+            {
+                Console.WriteLine($"SwaggerGen.api加载失败，{xmlPath}", ConsoleColor.Red);
+            }
 
+            return services;
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public class AssignOperationVendorExtensions : IOperationFilter
+        public class AddRequiredHeaderParameter : IOperationFilter
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="operation"></param>
-            /// <param name="context"></param>
-            public void Apply(Operation operation, OperationFilterContext context)
+            private string _tenantIdExample;
+
+            public AddRequiredHeaderParameter(string tenantIdExample)
             {
-                operation.Parameters = operation.Parameters ?? new List<IParameter>();
-                operation.Parameters.Add(new NonBodyParameter()
+                if (string.IsNullOrEmpty(tenantIdExample))
+                    throw new ArgumentNullException(nameof(tenantIdExample));
+
+                _tenantIdExample = tenantIdExample;
+            }
+
+            public void Apply(OpenApiOperation operation, OperationFilterContext context)
+            {
+
+                if (operation.Parameters == null)
+                    operation.Parameters = new List<OpenApiParameter>();
+
+                operation.Parameters.Add(new OpenApiParameter()
                 {
-                    In = "header",
-                    Type = "string",
-                    Required = false,
                     Name = "AccessToken",
-                    Description = "访问令牌"
+                    Description = "访问令牌",
+                    In = ParameterLocation.Header,
+                    Schema = new OpenApiSchema() { Type = "String" },
+                    Required = false,
+                    Example = new OpenApiString(_tenantIdExample)
                 });
             }
         }

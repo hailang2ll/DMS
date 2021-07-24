@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DMS.Sample31.Contracts</name>
+    </assembly>
+    <members>
+        <member name="T:DMS.Sample31.Contracts.EnumMemUserType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:DMS.Sample31.Contracts.EnumMemUserType.Nornm">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:DMS.Sample31.Contracts.EnumMemUserType.QQType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:DMS.Sample31.Contracts.EnumMemUserType.Test">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:DMS.Sample31.Contracts.IProductService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample31.Contracts.IProductService.Add">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:DMS.Sample31.Contracts.IUserService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample31.Contracts.IUserService.Add">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:DMS.Sample31.Contracts.UserEntity">
+            <summary>
+            用户实体
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Contracts.UserEntity.UserID">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Contracts.UserEntity.UserName">
+            <summary>
+            用户名称
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Contracts.UserEntity.Pwd">
+            <summary>
+            用户密码
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Contracts.UserEntity.Time">
+            <summary>
+            用户时间
+            </summary>
+        </member>
+    </members>
+</doc>

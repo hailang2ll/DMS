@@ -1,76 +1,80 @@
 ﻿using DMS.Auth.Tickets;
 using DMS.Common.BaseResult;
-using DMS.Common.Extensions;
+using DMS.Redis;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
+using System.Threading.Tasks;
 
 namespace DMS.Auth
 {
-    /// <summary>
-    /// 验证登录的情况
-    /// </summary>
-    public class BaseController : Controller
+    public class BaseController : ControllerBase
     {
-        /// <summary>
-        /// 当前会话Id
-        /// </summary>
-        public string Sid
+        public RedisManager redisManager { get; set; }
+        public RedisManager RedisManager
         {
             get
             {
-                string sId = string.Empty;
-                if (Request.Headers.ContainsKey("AccessToken"))
+                if (redisManager == null)
                 {
-                    sId = Request.Headers["AccessToken"];
+                    redisManager = new RedisManager(0);
                 }
-                return sId;
+                return redisManager;
             }
         }
-
-        /// <summary>
-        /// 用户票据
-        /// </summary>
-        public TicketEntity CurrentUserTicket { get; private set; }
-
-        /// <summary>
-        /// 验证登录的情况
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="type">0=检查登录，获取用户信息，不退出；1=检查登录，未登录直接退出</param>
-        protected void CheckLogin(ActionExecutingContext context, int type)
+        public UserTicket UserTicket
         {
-            var controllerName = context.RouteData.Values["Controller"].ToString();
-            var actionName = context.RouteData.Values["Action"].ToString();
-            CurrentUserTicket = new TicketEntity();
-            Microsoft.Extensions.Primitives.StringValues token = context.HttpContext.Request.Headers["AccessToken"];
-            if (!string.IsNullOrWhiteSpace(token))
+            get
             {
-                //存在AccessToken值，进行验证，以后升级方法
-                RedisCacheTicket authBase = new RedisCacheTicket(token);
-                TicketEntity userTicket = authBase.CurrentUserTicket;
-                if (userTicket != null && userTicket.ID.ToLong() > 0)
+                var token = HttpContext.Request.Headers["AccessToken"].ToString();
+                var userTicket = RedisManager.StringGet<UserTicket>(token);
+                if (userTicket != null && userTicket.ID > 0)
                 {
-                    CurrentUserTicket = userTicket;
-                    return;
+                    return userTicket;
                 }
-                else
-                {
-                    System.Console.WriteLine($"获取缓存身份信息：{userTicket.Msg}，{controllerName}/{actionName}");
-                }
+                return new UserTicket() { Msg = "get userticket fail" };
             }
-
-
-            if (type == 1)
+        }
+        [NonAction]
+        public (bool, ResponseResult) ChenkLogin(UserTicket userTicket)
+        {
+            if (userTicket.ID <= 0)
             {
-                //以上检查未登录，直接退出
-                //直接输出结果，不经过Controller
-                ResponseResult result = new ResponseResult()
+                var response = new ResponseResult()
                 {
                     errno = 30,
-                    errmsg = "身份过期，请重新登录",
+                    errmsg = "请先登录"
                 };
-                context.Result = new ContentResult() { Content = result.SerializeObject(), StatusCode = 200 };
+                return (false, response);
             }
+            return (true, new ResponseResult() { errmsg = "success" });
         }
+        [NonAction]
+        public (bool, ResponseResult<T>) ChenkLogin<T>(UserTicket userTicket)
+        {
+            if (userTicket.ID <= 0)
+            {
+                var response = new ResponseResult<T>()
+                {
+                    errno = 30,
+                    errmsg = "请先登录"
+                };
+                return (false, response);
+            }
+            return (true, new ResponseResult<T>() { errmsg = "success" });
+        }
+
+        //public Task<(bool, ResponseResult<T>)> ChenkLoginTask<T>(UserTicket userTicket)
+        //{
+        //    if (userTicket.ID <= 0)
+        //    {
+        //        var response = new ResponseResult<T>()
+        //        {
+        //            errno = 30,
+        //            errmsg = "请先登录"
+        //        };
+        //        return Task.FromResult((false, response));
+        //    }
+        //    return Task.FromResult((true, new ResponseResult<T>() { errmsg = "success" }));
+        //}
+
     }
 }

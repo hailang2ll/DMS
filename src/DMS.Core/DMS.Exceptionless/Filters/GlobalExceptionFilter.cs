@@ -1,5 +1,4 @@
 ﻿using DMS.Common.BaseResult;
-using DMS.Common.Extensions;
 using DMS.Exceptionless.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

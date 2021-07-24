@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;net5.0</TargetFrameworks>
     <Description>基于StackExchange.Redis框架开发，注入redis可用，依赖DMS中基础框架，主要用于分布式缓存系统</Description>
     <Company>Dylan,hailang</Company>
     <Authors>Dylan,hailang</Authors>
-    <Copyright>Copyright@2018 Dylan</Copyright>
-    <Version>1.3.2.0</Version>
+    <Copyright>Copyright@2016-2022 Dylan</Copyright>
+    <Version>1.4.8.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -15,12 +16,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DMS.Common" Version="1.2.2" />
+    <PackageReference Include="DMS.Common" Version="2.1.112" />
     <PackageReference Include="StackExchange.Redis" Version="2.0.601" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="if &quot;$(ConfigurationName)&quot; == &quot;Release&quot; (&#xD;&#xA; dotnet pack --no-build --configuration Release  --output $(SolutionDir)\nupkg&#xD;&#xA;)" />
+  <ItemGroup>
+    <ProjectReference Include="..\DMS.Log4net\DMS.Log4net.csproj" />
+    <ProjectReference Include="..\DMS.NLogs\DMS.NLogs.csproj" />
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="If $(ConfigurationName) == Release (&#xD;&#xA;del $(ProjectDir)$(OutDir)..\*.nupkg /s/q&#xD;&#xA;exit 0&#xD;&#xA;)ELSE (echo &quot;Not Debug mode, no file del from nupkg&quot;)" />
   </Target>
 
 </Project>

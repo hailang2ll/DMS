@@ -29,13 +29,13 @@ namespace DMS.NLogs.Filters
             //这里面是自定义的操作记录日志
             if (context.Exception.GetType() == typeof(UserOperationException))
             {
-                json.errmsg = "用户自定义错误，Message:" + context.Exception.Message;
+                json.errmsg = "custom error:" + context.Exception.Message;
                 Logger.Error(json.errmsg + ",StackTrace:" + context.Exception.StackTrace);
                 context.Result = new BadRequestObjectResult(json);
             }
             else
             {
-                json.errmsg = "内部错误，Message:" + context.Exception.Message;
+                json.errmsg = "internal error:" + context.Exception.Message;
                 Logger.Error(json.errmsg + ",StackTrace:" + context.Exception.StackTrace);
                 context.Result = new InternalServerErrorObjectResult(json);
             }

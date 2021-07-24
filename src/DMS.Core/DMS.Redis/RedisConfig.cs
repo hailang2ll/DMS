@@ -1,4 +1,5 @@
 ﻿using DMS.Redis.Configurations;
+using Microsoft.Extensions.Configuration;
 using StackExchange.Redis;
 using System;
 using System.Collections.Concurrent;

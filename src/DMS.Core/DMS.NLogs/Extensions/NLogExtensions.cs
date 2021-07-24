@@ -1,9 +1,8 @@
 ﻿using DMS.NLogs;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using NLog;
+using Microsoft.Extensions.Hosting;
 using System;
-using System.IO;
 
 namespace NLogs
 {
