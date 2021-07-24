@@ -35,7 +35,7 @@ namespace DMS.Sample31
             .AddRedisFile($"Configs/redis.json", optional: false, reloadOnChange: true)
             .AddJsonFile($"Configs/domain.json", optional: false, reloadOnChange: true)
             .AddJsonFile($"appsettings.json", optional: true, reloadOnChange: true)
-            .AddAppSettingsFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+            .AddAppSettingsFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true); 
             Configuration = builder.Build();
         }
 
