@@ -1,1 +1,0 @@
-dotnet nuget push *.nupkg -k 123456a -s http://192.168.31.211:8022
