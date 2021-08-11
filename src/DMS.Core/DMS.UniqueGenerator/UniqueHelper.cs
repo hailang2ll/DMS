@@ -1,11 +1,15 @@
 ﻿using DMS.UniqueGenerator.Snowflake;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace DMS.UniqueGenerator
 {
+
     /// <summary>
     /// UID生成
     /// </summary>
-    public class UIDGenerator
+    public class UniqueHelper
     {
         //大并发的情况下，减少new的次数可以有效避免重复的可能
         private static IdWorker worker = new IdWorker(1, 1);
