@@ -4,12 +4,10 @@ using DMS.Common.Extensions;
 using DMS.Common.Helper;
 using DMS.Common.Serialization;
 using DMS.Sample31.Contracts;
-using DMS.Sample31.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Threading.Tasks;
 
@@ -321,107 +319,6 @@ namespace DMS.Sample31.Controllers
         }
         #endregion
         #endregion
-
-        #region HttpClientHelper
-        /// <summary>
-        /// HttpClientHelper=>get请求
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("GetHttpClientHelper")]
-        public ActionResult GetHttpClientHelper()
-        {
-            string url = "https://productapi.trydou.com/api/product/GetProductEntity";
-            Dictionary<string, string> dic = new Dictionary<string, string>()
-            {
-                { "ProductID", "1123955947824353280" }
-            };
-            ResponseResult<ProductEntityResult> responseResult = HttpClientHelper.GetResponse<ResponseResult<ProductEntityResult>>(url, dic);
-            return Content("");
-        }
-
-        /// <summary>
-        /// HttpClientHelper=>Post请求
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("PostHttpClientHelper")]
-        public ActionResult PostHttpClientHelper()
-        {
-            SearchProductParam dict = new SearchProductParam()
-            {
-                SearchKey = "国元信托",
-                AttrParam = new SearchProductAttrParam() { CodeName = "xintuo1" },
-            };
-            //第一种
-            for (int i = 0; i <= 100; i++)
-            {
-                var result = HttpClientHelper.PostResponse<SearchProductParam>("http://productapi.jinglih.com/api/Product/GetProductList", dict);
-                Console.WriteLine(i + "====" + result);
-            }
-
-
-            //第二种
-            var jsonStr = Newtonsoft.Json.JsonConvert.SerializeObject(dict);
-            for (int i = 0; i <= 100; i++)
-            {
-                var result = HttpClientHelper.PostResponse("http://productapi.jinglih.com/api/Product/GetProductList", jsonStr);
-                Console.WriteLine(i + "====" + result);
-            }
-            //第三种
-            for (int i = 0; i <= 100; i++)
-            {
-                var result = HttpClientHelper.PostResponse<ResponseResult>("http://productapi.jinglih.com/api/Product/GetProductList", jsonStr);
-                Console.WriteLine(i + "====" + result);
-            }
-            return Content("");
-        }
-        #endregion
-
-        #region HttpWebHelper
-        /// <summary>
-        /// HttpWebHelper=>get请求
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("GetHttpWebHelper")]
-        public ActionResult GetHttpWebHelper()
-        {
-            Dictionary<string, string> dict = new Dictionary<string, string>()
-            {
-                { "SearchKey","国元信托"},
-                { "AttrParam.CodeName","xintuo"},
-                { "AttrParam.ProductStatusType","1"},
-            };
-
-            for (int i = 0; i <= 100; i++)
-            {
-                var result = HttpWebHelper.GetRequest<ResponseResult>("http://productapi.jinglih.com/api/Product/GetProductList", dict);
-                Console.WriteLine(i + "====" + result);
-            }
-            return Content("");
-        }
-
-        /// <summary>
-        /// HttpWebHelper=>Post请求
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("PostHttpWebHelper")]
-        public ActionResult PostHttpWebHelper()
-        {
-            SearchProductParam dict = new SearchProductParam()
-            {
-                SearchKey = "国元信托1",
-                AttrParam = new SearchProductAttrParam() { CodeName = "xintuo", ProductStatusType = 1 },
-            };
-            var jsonStr = Newtonsoft.Json.JsonConvert.SerializeObject(dict);
-
-            for (int i = 0; i <= 100; i++)
-            {
-                var result = HttpWebHelper.PostRequest<ResponseResult>("http://productapi.jinglih.com/api/Product/GetProductList", jsonStr);
-                Console.WriteLine(i + "====" + result);
-            }
-            return Content("");
-        }
-        #endregion
-
 
         /// <summary>
         /// StringConvertAll
