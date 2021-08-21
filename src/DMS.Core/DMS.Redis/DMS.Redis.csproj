@@ -6,7 +6,7 @@
     <Company>Dylan,hailang</Company>
     <Authors>Dylan,hailang</Authors>
     <Copyright>Copyright@2016-2022 Dylan</Copyright>
-    <Version>1.4.8.0</Version>
+    <Version>1.4.8.3</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
@@ -18,11 +18,6 @@
   <ItemGroup>
     <PackageReference Include="DMSN.Common" Version="3.2.7.5" />
     <PackageReference Include="StackExchange.Redis" Version="2.0.601" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DMS.Log4net\DMS.Log4net.csproj" />
-    <ProjectReference Include="..\DMS.NLogs\DMS.NLogs.csproj" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
