@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DMSN.Common" Version="3.2.7.5" />
+    <PackageReference Include="DMSN.Common" Version="3.2.7.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.6.0" />
   </ItemGroup>

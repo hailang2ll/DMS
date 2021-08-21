@@ -1,4 +1,5 @@
 using DMS.Swagger;
+using DMSN.Common.Helper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -53,7 +54,7 @@ namespace DMS.Sample50
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseSwaggerUIV2();
+            app.UseSwaggerUIV2(DebugHelper.IsDebug(GetType()));
 
             app.UseRouting();
 

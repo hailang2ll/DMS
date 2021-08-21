@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,23 @@ namespace DMS.Swagger
 {
     public static class SwaggerUIBuilderExtensions
     {
-        public static IApplicationBuilder UseSwaggerUIV2(this IApplicationBuilder app)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="isDebug"></param>
+        /// <returns></returns>
+        public static IApplicationBuilder UseSwaggerUIV2(this IApplicationBuilder app, bool isDebug)
         {
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            if (isDebug)
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", AppDomain.CurrentDomain.FriendlyName);
-                //c.DocExpansion(DocExpansion.None);
-            });
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", AppDomain.CurrentDomain.FriendlyName);
+                    //c.DocExpansion(DocExpansion.None);
+                });
+            }
             return app;
         }
     }

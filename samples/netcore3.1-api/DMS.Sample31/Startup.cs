@@ -5,6 +5,7 @@ using DMS.Redis.Configurations;
 
 using DMS.Swagger;
 using DMSN.Common.Configurations;
+using DMSN.Common.Helper;
 using DMSN.Common.JsonHandler.JsonConverters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -76,7 +77,7 @@ namespace DMS.Sample31
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseSwaggerUIV2();
+            app.UseSwaggerUIV2(DebugHelper.IsDebug(GetType()));
             app.UseStaticHttpContext();
 
             app.UseRouting();
