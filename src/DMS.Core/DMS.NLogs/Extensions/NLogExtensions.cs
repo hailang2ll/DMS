@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
 
-namespace NLogs
+namespace DMS.NLogs
 {
     /// <summary>
     /// nlog扩展

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DMS.Log4netfx;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,8 @@ namespace DMS.Sample461.Controllers
     {
         public ActionResult Index()
         {
+            Logger.Info("111");
+            Logger.Error("2222222");
             ViewBag.Title = "Home Page";
 
             return View();

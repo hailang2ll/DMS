@@ -1,4 +1,4 @@
-﻿using DMS.Common.Serialization;
+﻿using DMSN.Common.JsonHandler;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 using System;

@@ -1,11 +1,8 @@
-﻿using DMS.Common.Encrypt;
-using DMS.Common.Helper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace DMS.Sample31.Controllers
 {

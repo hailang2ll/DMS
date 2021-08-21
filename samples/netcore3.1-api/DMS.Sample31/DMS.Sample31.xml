@@ -44,66 +44,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:DMS.Sample31.Controllers.CommonController.AttributeExtension">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:DMS.Sample31.Controllers.CommonController.EnumExtensions">
-            <summary>
-            枚举扩展
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:DMS.Sample31.Controllers.CommonController.SerializerExtensions">
-            <summary>
-            序列化/反序列化
-            ConfigureServices=>AddJsonOptions{ options.SerializerSettings.Converters.Add(new CustomStringConverter());}
-            [ColumnMapping(Name = "ShopMemberID"), JsonConverter(typeof(CustomStringConverter))]
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:DMS.Sample31.Controllers.CommonController.ExportFS">
-            <summary>
-            excel导出
-            请求方式：http://localhost:5000/api/Common/ExportFS
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:DMS.Sample31.Controllers.CommonController.ExportBuilderFS">
-            <summary>
-            excel导出
-            请求方式：http://localhost:5000/api/Common/ExportBuilderFS
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:DMS.Sample31.Controllers.CommonController.Export">
-            <summary>
-            API导出数据
-            请求方式：API接口，地址浏览
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:DMS.Sample31.Controllers.CommonController.ExportToExcel">
-            <summary>
-            API导出数据
-            请求方式：API接口，地址浏览
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:DMS.Sample31.Controllers.CommonController.ImportToExcel">
-            <summary>
-            根据文件导入
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:DMS.Sample31.Controllers.CommonController.ImportToExcelV2(Microsoft.AspNetCore.Http.IFormFile)">
-            <summary>
-            上传文件流导入
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:DMS.Sample31.Controllers.CommonController.StringConvertAll">
             <summary>
             StringConvertAll

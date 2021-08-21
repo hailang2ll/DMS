@@ -4,26 +4,6 @@
         <name>DMS.Sample31.Contracts</name>
     </assembly>
     <members>
-        <member name="T:DMS.Sample31.Contracts.EnumMemUserType">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:DMS.Sample31.Contracts.EnumMemUserType.Nornm">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:DMS.Sample31.Contracts.EnumMemUserType.QQType">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:DMS.Sample31.Contracts.EnumMemUserType.Test">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:DMS.Sample31.Contracts.IProductService">
             <summary>
             

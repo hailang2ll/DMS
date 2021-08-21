@@ -1,10 +1,8 @@
 using Autofac.Extensions.DependencyInjection;
-using DMS.Common.Configurations;
 using DMS.Log4net;
+using DMS.NLogs;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using NLogs;
 
 namespace DMS.Sample31
 {
