@@ -136,6 +136,10 @@ namespace DMS.Sample31.Controllers
             strArray = string.Join(",", List);
             list = Array.ConvertAll<string, int>(strArray.Split(','), s => int.Parse(s));
 
+            List<Guid?> ids = List.ConvertAll<Guid?>(q => { return q.ToGuid(); });
+            //Guid?[] strategyKeys = Array.ConvertAll<string, Guid?>(param.ToArray(), item => TryParse.StrToGuid(item));
+            //Array.ConvertAll<string, Guid?>(StrategyKeys.ToArray(), item => { return TryParse.StrToGuid(item); });
+            
             return Ok();
         }
     }
