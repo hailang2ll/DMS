@@ -1,6 +1,8 @@
-﻿using System;
+﻿using DMSN.Common.BaseResult;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DMS.Sample31.Contracts
 {
@@ -13,6 +15,6 @@ namespace DMS.Sample31.Contracts
         /// 
         /// </summary>
         /// <returns></returns>
-        public int Add();
+        Task<ResponseResult<UserEntity>> GetProductAsync(long jobLogID);
     }
 }

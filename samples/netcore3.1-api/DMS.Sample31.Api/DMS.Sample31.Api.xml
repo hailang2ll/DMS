@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DMS.Sample31.Api</name>
+    </assembly>
+    <members>
+        <member name="T:DMS.Sample31.Api.Controllers.ValuesController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.#ctor(DMS.Sample31.Contracts.IProductService,DMS.Redis.IRedisRepository)">
+            <summary>
+            
+            </summary>
+            <param name="productService"></param>
+            <param name="redisRepository"></param>
+        </member>
+        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.GetProductAsync(System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="productID"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DMS.Sample31.Api.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample31.Api.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:DMS.Sample31.Api.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Api.Startup.ConfigureContainer(Autofac.ContainerBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="builder"></param>
+        </member>
+    </members>
+</doc>

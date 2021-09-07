@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DMSN.Common" Version="3.4.7.8" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="DMS.Sample31.Contracts.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

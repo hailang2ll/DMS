@@ -2,7 +2,6 @@ using Autofac;
 using DMS.Autofac;
 using DMS.NLogs.Filters;
 using DMS.Redis.Configurations;
-
 using DMS.Swagger;
 using DMSN.Common.Configurations;
 using DMSN.Common.Helper;
@@ -10,25 +9,21 @@ using DMSN.Common.JsonHandler.JsonConverters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace DMS.Sample31
+namespace DMS.Sample31.Api
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class Startup
     {
-        /// <summary>
-        /// 
-        /// </summary>
         public IConfiguration Configuration { get; }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="env"></param>
         public Startup(IWebHostEnvironment env)
         {
             var path = env.ContentRootPath;
@@ -37,23 +32,19 @@ namespace DMS.Sample31
             .AddRedisFile($"Configs/redis.json", optional: false, reloadOnChange: true)
             .AddJsonFile($"Configs/domain.json", optional: false, reloadOnChange: true)
             .AddJsonFile($"appsettings.json", optional: true, reloadOnChange: true)
-            .AddAppSettingsFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true); 
+            .AddAppSettingsFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
             Configuration = builder.Build();
         }
 
+    
 
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <param name="services"></param>
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers(option =>
             {
                 option.Filters.Add<GlobalExceptionFilter>();
                 //option.Filters.Add(typeof(LoginFilter));
-                
 
             }).AddJsonOptions(options =>
             {
@@ -62,17 +53,12 @@ namespace DMS.Sample31
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 options.JsonSerializerOptions.DictionaryKeyPolicy = null;
             });
-           
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSwaggerGenV2();
-            //services.AddRedisSetup();
+            services.AddRedisSetup();
         }
 
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <param name="app"></param>
-       /// <param name="env"></param>
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -80,42 +66,24 @@ namespace DMS.Sample31
                 app.UseDeveloperExceptionPage();
                 app.UseSwaggerUIV2(DebugHelper.IsDebug(GetType()));
             }
-            app.UseStaticHttpContext();
 
             app.UseRouting();
+
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
-
-            #region register this service
-            //ConsulService consulService = new ConsulService()
-            //{
-            //    IP = Configuration["Consul:IP"],
-            //    Port = Convert.ToInt32(Configuration["Consul:Port"])
-            //};
-            //HealthService healthService = new HealthService()
-            //{
-            //    IP = Configuration["Service:IP"],
-            //    Port = Convert.ToInt32(Configuration["Service:Port"]),
-            //    Name = Configuration["Service:Name"],
-            //};
-            //app.RegisterConsul(lifetime, healthService, consulService);
-            #endregion
         }
+
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="containerBuilder"></param>
-        public void ConfigureContainer(ContainerBuilder containerBuilder)
+        /// <param name="builder"></param>
+        public void ConfigureContainer(ContainerBuilder builder)
         {
-            containerBuilder.RegisterAutofac31();
+            builder.RegisterAutofac31();
         }
-
-
     }
-
-    
 }

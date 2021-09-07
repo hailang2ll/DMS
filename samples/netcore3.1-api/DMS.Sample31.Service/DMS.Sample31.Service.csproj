@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\DMS.Core\DMS.NLogs\DMS.NLogs.csproj" />
     <ProjectReference Include="..\DMS.Sample31.Contracts\DMS.Sample31.Contracts.csproj" />
   </ItemGroup>
 

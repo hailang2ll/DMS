@@ -9,18 +9,7 @@
             
             </summary>
         </member>
-        <member name="M:DMS.Sample31.Contracts.IProductService.Add">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:DMS.Sample31.Contracts.IUserService">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:DMS.Sample31.Contracts.IUserService.Add">
+        <member name="M:DMS.Sample31.Contracts.IProductService.GetProductAsync(System.Int64)">
             <summary>
             
             </summary>

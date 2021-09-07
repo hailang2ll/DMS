@@ -8,7 +8,7 @@ namespace DMS.Redis.Configurations
 {
     public static class RedisServiceCollectionExtensions
     {
-        public static IServiceCollection AddRedisSetup(this IServiceCollection services, string pathName = "")
+        public static IServiceCollection AddRedisSetup(this IServiceCollection services)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 

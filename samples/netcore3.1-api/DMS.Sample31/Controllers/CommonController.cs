@@ -1,8 +1,7 @@
-﻿using DMS.Auth;
+﻿using DMS.Redis;
 using DMS.Sample31.Contracts;
 using DMSN.Common.BaseResult;
 using DMSN.Common.Extensions;
-using DMSN.Common.Helper;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,42 +14,41 @@ namespace DMS.Sample31.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class CommonController : BaseController
+    public class CommonController : ControllerBase
     {
         /// <summary>
         /// 
         /// </summary>
-        public IUserService _userService { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-
-        public IProductService _productservice { get; set; }
+        private readonly IProductService _productservice;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="productservice"></param>
         public CommonController(IProductService productservice)
         {
-            _productservice = productservice;
+            this._productservice = productservice;
         }
 
         /// <summary>
-        /// 测试IOC，测试token验证，测试属性认证
+        /// accesstoken=dylan 测试IOC，测试token验证，测试属性认证
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpGet("GetShopLogo")]
-        public Task<ResponseResult<UserEntity>> GetShopLogo([FromQuery]UserEntity param)
+        public async Task<ResponseResult<UserEntity>> GetShopLogo([FromQuery] UserEntity param)
         {
-            var (loginFlag, result) = ChenkLogin<UserEntity>(UserTicket);
-            if (!loginFlag)
-            {
-                return Task.FromResult(result);
-            }
+            //var (loginFlag, result) = await ChenkLoginAsync<UserEntity>();
+            //if (!loginFlag)
+            //{
+            //    return result;
+            //}
 
-            var b = _productservice.Add();
+            var result = await _productservice.GetProductAsync(10);
             //var i = _userService.Add();//未构造，验证属性注入
+
+
+            //var redisValue = await _redisRepository.GetValue("dylan");
+            //var id = redisValue.ID;
 
             UserEntity user = new UserEntity()
             {
@@ -59,57 +57,13 @@ namespace DMS.Sample31.Controllers
                 Pwd = "123456",
                 Time = DateTime.Now,
             };
-            result.data = user;
-            return Task.FromResult(result);
+
+            return result;
         }
 
-        #region GetLog4net
-        /// <summary>
-        /// 日志处理
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("GetLog4net")]
-        public ActionResult GetLog4net()
-        {
-            DMS.Log4net.Logger.Info("这是log4net的日志");
-            DMS.Log4net.Logger.Error("这是log4net的异常日志");
-
-            DMS.NLogs.Logger.Debug("这是nlog的Debug日志");
-            DMS.NLogs.Logger.Info("这是nlog的日志");
-            DMS.NLogs.Logger.Error("这是nlog的异常日志");
-            var result = new
-            {
-                data = "成功"
-            };
-            return Ok(result);
-        }
-        #endregion
-
-        /// <summary>
-        /// 读取appsettings.json和自定义配置文件
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("GetAppConfig")]
-        public ActionResult GetAppConfig()
-        {
-            string memberApi = DMSN.Common.AppConfig.GetVaule<string>("MemberUrl");
-            memberApi = DMSN.Common.AppConfig.GetVaule("MemberUrl");
-            var ip = $"获取IP：{IPHelper.GetWebClientIp()}";
-            var dev = DMSN.Common.AppConfig.GetVaule("dev");
-            var redisOption = DMS.Redis.AppConfig.RedisOption;
 
 
-            var result = new
-            {
-                memberApi,
-                ip,
-                dev,
-                redisOption
-            };
-            return Ok(result);
-        }
 
-       
 
         /// <summary>
         /// StringConvertAll
@@ -139,7 +93,7 @@ namespace DMS.Sample31.Controllers
             List<Guid?> ids = List.ConvertAll<Guid?>(q => { return q.ToGuid(); });
             //Guid?[] strategyKeys = Array.ConvertAll<string, Guid?>(param.ToArray(), item => TryParse.StrToGuid(item));
             //Array.ConvertAll<string, Guid?>(StrategyKeys.ToArray(), item => { return TryParse.StrToGuid(item); });
-            
+
             return Ok();
         }
     }

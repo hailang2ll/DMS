@@ -1,9 +1,15 @@
 using Autofac.Extensions.DependencyInjection;
 using DMS.NLogs;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace DMS.Sample31
+namespace DMS.Sample31.Api
 {
     /// <summary>
     /// 
@@ -26,17 +32,11 @@ namespace DMS.Sample31
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
             .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureAppConfiguration(builder =>
-                {
-                    //builder.SetBasePath("");
-                    //builder.AddAppSettingsFile("");
-                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseUrls("http://*:5001");
+                    webBuilder.UseUrls("http://*:20300");
                     webBuilder.UseNLog($"Configs/nlog.config");
                     webBuilder.UseStartup<Startup>();
                 });
-
     }
 }
