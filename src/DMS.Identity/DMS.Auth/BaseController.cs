@@ -31,7 +31,7 @@ namespace DMS.Auth
             {
                 var token = HttpContext.Request.Headers["AccessToken"].ToString();
 
-                var userTicket = _redisRepository.GetValue<UserTicket>(token).Result;// RedisManager.StringGet<UserTicket>(token);
+                var userTicket = _redisRepository.GetValueAsync<UserTicket>(token).Result;// RedisManager.StringGet<UserTicket>(token);
                 if (userTicket != null && userTicket.ID > 0)
                 {
                     return userTicket;

@@ -8,18 +8,19 @@ namespace DMS.Redis
 {
     public interface IRedisRepository
     {
-        Task<bool> Set(string key, object value, TimeSpan? expiry = default(TimeSpan?));
-        Task<bool> Set(List<KeyValuePair<RedisKey, RedisValue>> keyValues);
-        Task<string> GetValue(string key);
+        Task<bool> SetAsync(string key, object value, DateTime expiry);
+        Task<bool> SetAsync(string key, object value, TimeSpan? expiry = default(TimeSpan?));
+        Task<bool> SetAsync(List<KeyValuePair<RedisKey, RedisValue>> keyValues);
+        Task<string> GetValueAsync(string key);
         //获取值，并序列化
-        Task<T> GetValue<T>(string key);
-        Task<RedisValue[]> GetValue(List<string> listKey);
+        Task<T> GetValueAsync<T>(string key);
+        Task<RedisValue[]> GetValueAsync(List<string> listKey);
         //判断是否存在
-        Task<bool> Exist(string key);
+        Task<bool> ExistAsync(string key);
         //移除某一个缓存值
-        Task<bool> Remove(string key);
+        Task<bool> RemoveAsync(string key);
         //全部清除
-        Task Clear();
+        Task ClearAsync();
 
         Task<bool> HashExistsAsync(string key, string dataKey);
         Task<bool> HashSetAsync<T>(string key, string dataKey, T t);

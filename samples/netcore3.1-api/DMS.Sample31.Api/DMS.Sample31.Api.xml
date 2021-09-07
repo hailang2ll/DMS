@@ -16,11 +16,34 @@
             <param name="productService"></param>
             <param name="redisRepository"></param>
         </member>
+        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.SetRedis">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:DMS.Sample31.Api.Controllers.ValuesController.GetProductAsync(System.Int64)">
             <summary>
             
             </summary>
             <param name="productID"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DMS.Sample31.Api.Controllers.WeatherForecastController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample31.Api.Controllers.WeatherForecastController.#ctor(Microsoft.Extensions.Logging.ILogger{DMS.Sample31.Api.Controllers.WeatherForecastController})">
+            <summary>
+            
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:DMS.Sample31.Api.Controllers.WeatherForecastController.Get">
+            <summary>
+            
+            </summary>
             <returns></returns>
         </member>
         <member name="T:DMS.Sample31.Api.Program">
@@ -41,11 +64,65 @@
             <param name="args"></param>
             <returns></returns>
         </member>
+        <member name="T:DMS.Sample31.Api.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Api.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample31.Api.Startup.#ctor(Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="env"></param>
+        </member>
+        <member name="M:DMS.Sample31.Api.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:DMS.Sample31.Api.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
         <member name="M:DMS.Sample31.Api.Startup.ConfigureContainer(Autofac.ContainerBuilder)">
             <summary>
             
             </summary>
             <param name="builder"></param>
+        </member>
+        <member name="T:DMS.Sample31.Api.WeatherForecast">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Api.WeatherForecast.Date">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Api.WeatherForecast.TemperatureC">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Api.WeatherForecast.TemperatureF">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DMS.Sample31.Api.WeatherForecast.Summary">
+            <summary>
+            
+            </summary>
         </member>
     </members>
 </doc>

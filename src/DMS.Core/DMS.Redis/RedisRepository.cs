@@ -19,14 +19,25 @@ namespace DMS.Redis
             _database = _conn.GetDatabase();
         }
 
+
         private IServer GetServer()
         {
             var endpoint = _conn.GetEndPoints();
             return _conn.GetServer(endpoint.First());
         }
 
-
-        public async Task<bool> Set(string key, object value, TimeSpan? expiry = null)
+        public async Task<bool> SetAsync(string key, object value, DateTime expiry)
+        {
+            if (value is string cacheValue)
+            {
+                return await _database.StringSetAsync(key, cacheValue, expiry - DateTime.Now);
+            }
+            else
+            {
+                return await _database.StringSetAsync(key, value.SerializeObject(), expiry - DateTime.Now);
+            }
+        }
+        public async Task<bool> SetAsync(string key, object value, TimeSpan? expiry = null)
         {
             if (value is string cacheValue)
             {
@@ -37,7 +48,7 @@ namespace DMS.Redis
                 return await _database.StringSetAsync(key, value.SerializeObject(), expiry);
             }
         }
-        public async Task<bool> Set(List<KeyValuePair<RedisKey, RedisValue>> keyValues)
+        public async Task<bool> SetAsync(List<KeyValuePair<RedisKey, RedisValue>> keyValues)
         {
             List<KeyValuePair<RedisKey, RedisValue>> newkeyValues =
                 keyValues.Select(p => new KeyValuePair<RedisKey, RedisValue>(p.Key, p.Value)).ToList();
@@ -48,11 +59,11 @@ namespace DMS.Redis
         /// </summary>
         /// <param name="key">Redis Key</param>
         /// <returns></returns>
-        public async Task<string> GetValue(string key)
+        public async Task<string> GetValueAsync(string key)
         {
             return await _database.StringGetAsync(key);
         }
-        public async Task<T> GetValue<T>(string key)
+        public async Task<T> GetValueAsync<T>(string key)
         {
             var value = await _database.StringGetAsync(key);
             if (value.HasValue)
@@ -64,21 +75,21 @@ namespace DMS.Redis
                 return default(T);
             }
         }
-        public async Task<RedisValue[]> GetValue(List<string> listKey)
+        public async Task<RedisValue[]> GetValueAsync(List<string> listKey)
         {
             List<string> newKeys = listKey.ToList();
             var keys = newKeys.Select(redisKey => (RedisKey)redisKey).ToArray();
             return await _database.StringGetAsync(keys);
         }
-        public async Task<bool> Exist(string key)
+        public async Task<bool> ExistAsync(string key)
         {
             return await _database.KeyExistsAsync(key);
         }
-        public async Task<bool> Remove(string key)
+        public async Task<bool> RemoveAsync(string key)
         {
             return await _database.KeyDeleteAsync(key);
         }
-        public async Task Clear()
+        public async Task ClearAsync()
         {
             foreach (var endPoint in _conn.GetEndPoints())
             {
@@ -263,7 +274,6 @@ namespace DMS.Redis
         {
             return await _database.ListLeftPushAsync(key, ConvertJson(value));
         }
-
         /// <summary>
         /// 出栈
         /// </summary>
