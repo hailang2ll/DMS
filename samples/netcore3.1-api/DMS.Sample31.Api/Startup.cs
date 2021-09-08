@@ -2,22 +2,16 @@ using Autofac;
 using DMS.Autofac;
 using DMS.NLogs.Filters;
 using DMS.Redis.Configurations;
+using DMS.Auth;
 using DMS.Swagger;
-using DMSN.Common.Configurations;
+using DMSN.Common.CoreExtensions.ConfigExtensions;
 using DMSN.Common.Helper;
 using DMSN.Common.JsonHandler.JsonConverters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DMS.Sample31.Api
 {
@@ -46,7 +40,7 @@ namespace DMS.Sample31.Api
             Configuration = builder.Build();
         }
 
-    
+
 
         /// <summary>
         /// 
@@ -66,9 +60,10 @@ namespace DMS.Sample31.Api
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 options.JsonSerializerOptions.DictionaryKeyPolicy = null;
             });
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSwaggerGenV2();
             services.AddRedisSetup();
+            services.AddHttpContextSetup();
+
         }
 
         /// <summary>
@@ -85,9 +80,7 @@ namespace DMS.Sample31.Api
             }
 
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -15,6 +15,29 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:DMS.Sample31.Contracts.IProductService.TestRedis0(System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Contracts.IProductService.TestRedis1(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Contracts.IProductService.Publish">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample31.Contracts.IProductService.Subscribe">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:DMS.Sample31.Contracts.UserEntity">
             <summary>
             用户实体

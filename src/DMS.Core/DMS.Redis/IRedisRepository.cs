@@ -8,6 +8,7 @@ namespace DMS.Redis
 {
     public interface IRedisRepository
     {
+        void ChangeDatabase(int dbNum = -1);
         Task<bool> SetAsync(string key, object value, DateTime expiry);
         Task<bool> SetAsync(string key, object value, TimeSpan? expiry = default(TimeSpan?));
         Task<bool> SetAsync(List<KeyValuePair<RedisKey, RedisValue>> keyValues);
@@ -47,5 +48,14 @@ namespace DMS.Redis
         Task<bool> SortedSetRemoveAsync<T>(string key, T value);
         Task<List<T>> SortedSetRangeByRankAsync<T>(string key);
         Task<long> SortedSetLengthAsync(string key);
+
+        void Subscribe(string subChannel, Action<RedisChannel, RedisValue> handler = null);
+        void SubscribeAsync(string subChannel, Action<RedisChannel, RedisValue> handler = null);
+        long Publish<T>(string channel, T msg);
+        Task<long> PublishAsync<T>(string channel, T msg);
+        void Unsubscribe(string channel);
+        void UnsubscribeAsync(string channel);
+        void UnsubscribeAll();
+        void UnsubscribeAllAsync();
     }
 }

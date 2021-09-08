@@ -9,14 +9,38 @@
             
             </summary>
         </member>
-        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.#ctor(DMS.Sample31.Contracts.IProductService,DMS.Redis.IRedisRepository)">
+        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.#ctor(DMS.Sample31.Contracts.IProductService,DMS.Auth.IUserAuth)">
             <summary>
             
             </summary>
             <param name="productService"></param>
-            <param name="redisRepository"></param>
+            <param name="userAuth"></param>
         </member>
-        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.SetRedis">
+        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.TestRedis0(System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.TestRedis1(System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.Subscribe">
+            <summary>
+            订阅
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.Publish">
+            <summary>
+            发布
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.CheckAuth">
             <summary>
             
             </summary>

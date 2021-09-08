@@ -12,7 +12,7 @@ namespace DMS.Redis
     public class RedisRepository : IRedisRepository
     {
         private readonly ConnectionMultiplexer _conn;
-        private readonly IDatabase _database;
+        private IDatabase _database;
         public RedisRepository(ConnectionMultiplexer conn)
         {
             _conn = conn;
@@ -24,6 +24,10 @@ namespace DMS.Redis
         {
             var endpoint = _conn.GetEndPoints();
             return _conn.GetServer(endpoint.First());
+        }
+        public void ChangeDatabase(int dbNum = -1)
+        {
+            _database = _conn.GetDatabase(dbNum);
         }
 
         public async Task<bool> SetAsync(string key, object value, DateTime expiry)
@@ -337,10 +341,93 @@ namespace DMS.Redis
         }
 
 
+        #region 发布订阅
+        /// <summary>
+        /// Redis发布订阅  订阅
+        /// </summary>
+        /// <param name="subChannel"></param>
+        /// <param name="handler"></param>
+        public void Subscribe(string subChannel, Action<RedisChannel, RedisValue> handler = null)
+        {
+            ISubscriber sub = _conn.GetSubscriber();
+            sub.Subscribe(subChannel, (channel, message) =>
+            {
+                if (handler == null)
+                {
+                    Console.WriteLine(subChannel + " 订阅收到消息：" + message);
+                }
+                else
+                {
+                    handler(channel, message);
+                }
+            });
+        }
+        public void SubscribeAsync(string subChannel, Action<RedisChannel, RedisValue> handler = null)
+        {
+            ISubscriber sub = _conn.GetSubscriber();
+            sub.SubscribeAsync(subChannel, (channel, message) =>
+            {
+                if (handler == null)
+                {
+                    Console.WriteLine(subChannel + " 订阅收到消息：" + message);
+                }
+                else
+                {
+                    handler(channel, message);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Redis发布订阅  发布
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="channel"></param>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public long Publish<T>(string channel, T msg)
+        {
+            ISubscriber sub = _conn.GetSubscriber();
+            return sub.Publish(channel, ConvertJson(msg));
+        }
+        public Task<long> PublishAsync<T>(string channel, T msg)
+        {
+            ISubscriber sub = _conn.GetSubscriber();
+            return sub.PublishAsync(channel, ConvertJson(msg));
+        }
+
+        /// <summary>
+        /// Redis发布订阅  取消订阅
+        /// </summary>
+        /// <param name="channel"></param>
+        public void Unsubscribe(string channel)
+        {
+            ISubscriber sub = _conn.GetSubscriber();
+            sub.Unsubscribe(channel);
+        }
+        public void UnsubscribeAsync(string channel)
+        {
+            ISubscriber sub = _conn.GetSubscriber();
+            sub.UnsubscribeAsync(channel);
+        }
+
+        /// <summary>
+        /// Redis发布订阅  取消全部订阅
+        /// </summary>
+        public void UnsubscribeAll()
+        {
+            ISubscriber sub = _conn.GetSubscriber();
+            sub.UnsubscribeAll();
+        }
+        public void UnsubscribeAllAsync()
+        {
+            ISubscriber sub = _conn.GetSubscriber();
+            sub.UnsubscribeAllAsync();
+        }
+        #endregion
 
 
         #region private
-
         private string ConvertJson<T>(T value)
         {
             string result = value is string ? value.ToString() : value.SerializeObject();

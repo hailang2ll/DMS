@@ -19,8 +19,11 @@
     <Compile Remove="bak\BaseApiController.cs" />
     <Compile Remove="bak\BaseController.cs" />
     <Compile Remove="bak\BaseLoginApiController.cs" />
+    <Compile Remove="bak\CheckLoginAttribute.cs" />
     <Compile Remove="BaseApiController.cs" />
+    <Compile Remove="BaseController.cs" />
     <Compile Remove="BaseLoginApiController.cs" />
+    <Compile Remove="Tickets\BaseController.cs" />
     <Compile Remove="Tickets\RedisToken.cs" />
   </ItemGroup>
 
