@@ -30,6 +30,11 @@ namespace DMS.Sample31.Contracts
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        Task RedisPublish();
+        /// <summary>
+        /// 
+        /// </summary>
         void Publish();
         /// <summary>
         /// 

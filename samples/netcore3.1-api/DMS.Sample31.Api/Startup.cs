@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using DMS.Sample31.Service.RedisEvBus;
 
 namespace DMS.Sample31.Api
 {
@@ -63,6 +64,7 @@ namespace DMS.Sample31.Api
             services.AddSwaggerGenV2();
             services.AddRedisSetup();
             services.AddHttpContextSetup();
+            services.AddRedisInitMqSetup();
 
         }
 

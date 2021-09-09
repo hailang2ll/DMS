@@ -40,6 +40,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.RedisPublish">
+            <summary>
+            发布
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:DMS.Sample31.Api.Controllers.ValuesController.CheckAuth">
             <summary>
             

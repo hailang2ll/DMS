@@ -75,6 +75,16 @@ namespace DMS.Sample31.Api.Controllers
         {
             productService.Publish();
         }
+
+        /// <summary>
+        /// 发布
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("RedisPublish")]
+        public void RedisPublish()
+        {
+            productService.RedisPublish();
+        }
         #endregion
 
         /// <summary>

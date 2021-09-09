@@ -28,6 +28,12 @@
             <param name="msg"></param>
             <returns></returns>
         </member>
+        <member name="M:DMS.Sample31.Contracts.IProductService.RedisPublish">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:DMS.Sample31.Contracts.IProductService.Publish">
             <summary>
             

@@ -11,8 +11,7 @@ namespace DMS.Redis
         //系统自定义Key前缀
         public static string SysCustomKey = "";
         //"127.0.0.1:6379,allowadmin=true
-        private static string RedisConnectionString = "192.168.0.167:6340,allowadmin=true";
-        private static string RedisPwd = "redis123";
+        private static string RedisConnectionString = "192.168.0.167:6340,allowadmin=true,password=123456";
 
         private static readonly ConcurrentDictionary<string, ConnectionMultiplexer> ConnectionCache = new ConcurrentDictionary<string, ConnectionMultiplexer>();
         private static readonly object Locker = new object();
@@ -25,7 +24,6 @@ namespace DMS.Redis
             {
                 SysCustomKey = option.RedisPrefixKey;
                 RedisConnectionString = option.RedisConnectionString;
-                RedisPwd = option.RedisConnectionPwd;
             }
             else
             {
@@ -89,7 +87,6 @@ namespace DMS.Redis
             var options = ConfigurationOptions.Parse(connectionString);
             //options.ClientName = "root";
             options.AbortOnConnectFail = false;
-            options.Password = RedisPwd;
             var connect = ConnectionMultiplexer.Connect(options);
 
             //注册如下事件

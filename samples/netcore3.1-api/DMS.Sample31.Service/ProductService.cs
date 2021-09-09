@@ -1,6 +1,7 @@
 ﻿using DMS.Auth.Tickets;
 using DMS.Redis;
 using DMS.Sample31.Contracts;
+using DMS.Sample31.Service.RedisEvBus;
 using DMSN.Common.BaseResult;
 using DMSN.Common.JsonHandler;
 using System;
@@ -121,6 +122,12 @@ namespace DMS.Sample31.Service
 
             redisRepository.ChangeDatabase(1);
             var setAsync = await redisRepository.SetAsync("string1", msg, DateTime.Now.AddDays(1));
+        }
+
+        public async Task RedisPublish()
+        {
+            var msg = $"这里是一条日志{DateTime.Now}";
+            await redisRepository.ListLeftPushAsync(RedisUtil.QueueLoging, msg);
         }
 
 
