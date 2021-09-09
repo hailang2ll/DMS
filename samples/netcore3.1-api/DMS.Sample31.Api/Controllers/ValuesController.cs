@@ -95,6 +95,7 @@ namespace DMS.Sample31.Api.Controllers
         [TypeFilter(typeof(CheckLoginAttribute))]
         public async Task<ResponseResult> CheckAuth()
         {
+            var a = DMSN.Common.CoreExtensions.AppConfig.GetVaule("AllowedHosts");
             var ip = IPHelper.GetCurrentIp();
             var (loginFlag, result) = await userAuth.ChenkLoginAsync();
             if (!loginFlag)

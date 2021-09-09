@@ -6,7 +6,7 @@
     <Company>Dylan,hailang</Company>
     <Authors>Dylan,hailang</Authors>
     <Description>主要用于token头部权限验证，需要在请求头加入AccessToken信息才能进行验证</Description>
-    <Version>1.2.6.3</Version>
+    <Version>1.3.5</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 

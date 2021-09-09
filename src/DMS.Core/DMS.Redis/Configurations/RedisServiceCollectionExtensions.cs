@@ -14,31 +14,23 @@ namespace DMS.Redis.Configurations
 
             services.AddTransient<IRedisRepository, RedisRepository>();
 
+            //获取连接字符串
+            RedisOption option = AppConfig.RedisOption;
+            var options = ConfigurationOptions.Parse(option.RedisConnectionString, true);
+            options.AbortOnConnectFail = false;//服务器上停止redis service，即便后来redis服务端修好能够接通时，也不会自动连接。
+                                               //options.Password = option.RedisConnectionPwd;
+                                               //options.ResolveDns = true;
+            var connect = ConnectionMultiplexer.Connect(options);
+            //注册如下事件
+            connect.ConnectionFailed += MuxerConnectionFailed;
+            connect.ConnectionRestored += MuxerConnectionRestored;
+            connect.ErrorMessage += MuxerErrorMessage;
+            connect.ConfigurationChanged += MuxerConfigurationChanged;
+            connect.HashSlotMoved += MuxerHashSlotMoved;
+            connect.InternalError += MuxerInternalError;
+
             // 配置启动Redis服务，虽然可能影响项目启动速度，但是不能在运行的时候报错，所以是合理的
-            services.AddSingleton<ConnectionMultiplexer>(sp =>
-            {
-                //获取连接字符串
-                RedisOption option = AppConfig.RedisOption;
-                if (option == null)
-                {
-                    throw new Exception($"未加载redis.json文件");
-                }
-
-                var options = ConfigurationOptions.Parse(option.RedisConnectionString, true);
-                options.AbortOnConnectFail = false;//服务器上停止redis service，即便后来redis服务端修好能够接通时，也不会自动连接。
-                //options.Password = option.RedisConnectionPwd;
-                //options.ResolveDns = true;
-                var connect = ConnectionMultiplexer.Connect(options);
-
-                //注册如下事件
-                connect.ConnectionFailed += MuxerConnectionFailed;
-                connect.ConnectionRestored += MuxerConnectionRestored;
-                connect.ErrorMessage += MuxerErrorMessage;
-                connect.ConfigurationChanged += MuxerConfigurationChanged;
-                connect.HashSlotMoved += MuxerHashSlotMoved;
-                connect.InternalError += MuxerInternalError;
-                return connect;
-            });
+            services.AddSingleton<ConnectionMultiplexer>(connect);
 
             return services;
         }

@@ -15,8 +15,14 @@ namespace DMS.Redis
         private IDatabase _database;
         public RedisRepository(ConnectionMultiplexer conn)
         {
+            if (conn == null || conn.IsConnected == false)
+            {
+                throw new Exception($"未加载redis.json文件，连接失败");
+            }
+            Console.WriteLine($"RedisRepository:{conn}");
             _conn = conn;
             _database = _conn.GetDatabase();
+            Console.WriteLine($"RedisRepository.1:{conn}");
         }
 
 

@@ -20,8 +20,10 @@ namespace DMS.Auth
         private readonly IRedisRepository redisRepository;
         public UserAuth(IHttpContextAccessor httpContextAccessor, IRedisRepository redisRepository)
         {
+            Console.WriteLine($"UserAuth:{redisRepository}");
             this._accessor = httpContextAccessor;
             this.redisRepository = redisRepository;
+            Console.WriteLine($"UserAuth.1:{redisRepository}");
         }
 
         public string Name => UserTicket.Name;

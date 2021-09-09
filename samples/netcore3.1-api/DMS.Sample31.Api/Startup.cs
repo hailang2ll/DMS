@@ -64,6 +64,7 @@ namespace DMS.Sample31.Api
             services.AddSwaggerGenV2();
             services.AddRedisSetup();
             services.AddHttpContextSetup();
+            //用户服务自定义
             services.AddRedisInitMqSetup();
 
         }
