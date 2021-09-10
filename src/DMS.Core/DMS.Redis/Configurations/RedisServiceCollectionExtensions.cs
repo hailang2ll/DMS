@@ -28,8 +28,7 @@ namespace DMS.Redis.Configurations
             connect.ConfigurationChanged += MuxerConfigurationChanged;
             connect.HashSlotMoved += MuxerHashSlotMoved;
             connect.InternalError += MuxerInternalError;
-
-            // 配置启动Redis服务，虽然可能影响项目启动速度，但是不能在运行的时候报错，所以是合理的
+            DMSN.Common.Helper.ConsoleHelper.WriteInfoLine($"AddRedisSetup:IsConnected={connect.IsConnected},RedisOption={option.RedisConnectionString}");
             services.AddSingleton<ConnectionMultiplexer>(connect);
 
             return services;

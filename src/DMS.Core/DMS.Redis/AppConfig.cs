@@ -18,7 +18,7 @@ namespace DMS.Redis
                 IConfigurationSection configurationSection = Configuration.GetSection("RedisConfig");
                 if (configurationSection == null)
                 {
-                    throw new Exception($"未加载redis.json文件");
+                    throw new Exception($"no load redis.json file");
                 }
                 return configurationSection.Get<RedisOption>();
             }

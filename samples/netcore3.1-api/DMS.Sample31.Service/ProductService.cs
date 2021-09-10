@@ -1,4 +1,4 @@
-﻿using DMS.Auth.Tickets;
+﻿using DMS.Auth;
 using DMS.Redis;
 using DMS.Sample31.Contracts;
 using DMS.Sample31.Service.RedisEvBus;

@@ -17,7 +17,7 @@ namespace DMS.Redis
         {
             if (conn == null || conn.IsConnected == false)
             {
-                throw new Exception($"未加载redis.json文件，连接失败");
+                throw new Exception($"no load redis.json file，connection fail");
             }
             Console.WriteLine($"RedisRepository:{conn}");
             _conn = conn;

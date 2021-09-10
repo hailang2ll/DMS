@@ -16,13 +16,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DMSN.Common" Version="3.5.2" />
     <PackageReference Include="Exceptionless" Version="4.3.2004" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Result\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DMS.Extensions\DMS.Extensions.csproj" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

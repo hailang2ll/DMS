@@ -2,16 +2,15 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DMS.Sample31.Service.RedisEvBus
 {
     /// <summary>
     /// Redis 消息队列 启动服务
     /// </summary>
-    public static class RedisInitMqSetup
+    public static class RedisMqSetup
     {
-        public static void AddRedisInitMqSetup(this IServiceCollection services)
+        public static void AddRedisMqSetup(this IServiceCollection services)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 

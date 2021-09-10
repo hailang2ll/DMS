@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DMSN.Common.Helper;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -23,7 +24,7 @@ namespace DMS.Swagger
 
             if (File.Exists(xmlPath))
             {
-                Console.WriteLine($"SwaggerGen.api开始加载，{xmlPath}");
+                ConsoleHelper.WriteSuccessLine($"SwaggerGen.api load success:path={xmlPath}");
                 // 添加Swagger
                 services.AddSwaggerGen(option =>
                 {
@@ -53,15 +54,19 @@ namespace DMS.Swagger
                     option.IncludeXmlComments(xmlPath, true);
                     if (File.Exists(contractPath))
                     {
-                        Console.WriteLine($"SwaggerGen.contracts开始加载，{contractPath}");
+                        ConsoleHelper.WriteSuccessLine($"SwaggerGen.contracts load success:path={contractPath}");
                         option.IncludeXmlComments(contractPath, true);
+                    }
+                    else
+                    {
+                        ConsoleHelper.WriteErrorLine($"SwaggerGen.contracts load fail;path={contractPath}");
                     }
                     option.OperationFilter<AddRequiredHeaderParameter>("Tenant ID example");
                 });
             }
             else
             {
-                Console.WriteLine($"SwaggerGen.api加载失败，{xmlPath}", ConsoleColor.Red);
+                ConsoleHelper.WriteErrorLine($"SwaggerGen.api load fail;path={xmlPath}");
             }
 
             return services;

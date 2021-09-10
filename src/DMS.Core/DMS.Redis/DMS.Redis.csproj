@@ -16,8 +16,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DMSN.Common" Version="3.5.2" />
     <PackageReference Include="StackExchange.Redis" Version="2.2.50" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DMS.Extensions\DMS.Extensions.csproj" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

@@ -1,8 +1,10 @@
 using Autofac;
+using DMS.Auth;
 using DMS.Autofac;
+using DMS.Extensions.ServiceExtensions;
 using DMS.NLogs.Filters;
 using DMS.Redis.Configurations;
-using DMS.Auth;
+using DMS.Sample31.Service.RedisEvBus;
 using DMS.Swagger;
 using DMSN.Common.CoreExtensions.ConfigExtensions;
 using DMSN.Common.Helper;
@@ -12,7 +14,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using DMS.Sample31.Service.RedisEvBus;
 
 namespace DMS.Sample31.Api
 {
@@ -62,10 +63,12 @@ namespace DMS.Sample31.Api
                 options.JsonSerializerOptions.DictionaryKeyPolicy = null;
             });
             services.AddSwaggerGenV2();
-            services.AddRedisSetup();
             services.AddHttpContextSetup();
+            services.AddRedisSetup();
+            services.AddAuthSetup();
             //用户服务自定义
-            services.AddRedisInitMqSetup();
+            services.AddRedisMqSetup();
+            services.AddCorsSetup();
 
         }
 
@@ -79,8 +82,10 @@ namespace DMS.Sample31.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwaggerUIV2(DebugHelper.IsDebug(GetType()));
             }
+            app.UseSwaggerUIV2(DebugHelper.IsDebug(GetType()));
+            // CORS跨域
+            app.UseCors(DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Cors", "PolicyName" }));
 
             app.UseRouting();
             app.UseAuthorization();

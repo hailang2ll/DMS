@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DMS.Auth
 {
-    public class BaseController : ControllerBase
+    public class Basev2Controller : ControllerBase
     {
         private readonly IRedisRepository _redisRepository;
-        public BaseController(IRedisRepository redisRepository)
+        public Basev2Controller(IRedisRepository redisRepository)
         {
             _redisRepository = redisRepository;
         }
