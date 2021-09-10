@@ -164,11 +164,11 @@ namespace DMS.Auth
     /// 属性检查登录
     /// [HttpGet("GetShopLogo"), CheckLogin]
     /// </summary>
-    public class CheckLoginAttribute : ActionFilterAttribute
+    public class CheckLoginAttributebak : ActionFilterAttribute
     {
         private readonly IRedisRepository redisRepository;
 
-        public CheckLoginAttribute(IRedisRepository redisRepository)
+        public CheckLoginAttributebak(IRedisRepository redisRepository)
         {
             this.redisRepository = redisRepository;
         }

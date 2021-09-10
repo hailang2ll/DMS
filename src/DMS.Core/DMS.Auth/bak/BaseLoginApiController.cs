@@ -17,34 +17,34 @@ namespace DMS.Auth
         //    private set;
         //}
 
-        public override void OnActionExecuting(ActionExecutingContext context)
-        {
-            base.OnActionExecuting(context);
+        //public override void OnActionExecuting(ActionExecutingContext context)
+        //{
+        //    //base.OnActionExecuting(context);
 
-            CheckLogin(context, 1);
+        //    //CheckLogin(context, 1);
 
 
-            //Microsoft.Extensions.Primitives.StringValues token = context.HttpContext.Request.Headers["AccessToken"];
-            //if (!string.IsNullOrWhiteSpace(token))
-            //{
-            //    //存在AccessToken值，进行验证
-            //    RedisCacheTicket authBase = new RedisCacheTicket(token);
-            //    TicketEntity userTicket = authBase.CurrentUserTicket;
-            //    if (userTicket != null && userTicket.MemberID > 0)
-            //    {
-            //        CurrentUserTicket = userTicket;
-            //        return;
-            //    }
-            //}
+        //    //Microsoft.Extensions.Primitives.StringValues token = context.HttpContext.Request.Headers["AccessToken"];
+        //    //if (!string.IsNullOrWhiteSpace(token))
+        //    //{
+        //    //    //存在AccessToken值，进行验证
+        //    //    RedisCacheTicket authBase = new RedisCacheTicket(token);
+        //    //    TicketEntity userTicket = authBase.CurrentUserTicket;
+        //    //    if (userTicket != null && userTicket.MemberID > 0)
+        //    //    {
+        //    //        CurrentUserTicket = userTicket;
+        //    //        return;
+        //    //    }
+        //    //}
 
-            ////直接输出结果，不经过Controller
-            //ResponseResult result = new ResponseResult()
-            //{
-            //    errno = 30,
-            //    errmsg = "请重新登录",
-            //};
-            //context.Result = new ContentResult() { Content = SerializerJson.SerializeObject(result), StatusCode = 200 };
+        //    ////直接输出结果，不经过Controller
+        //    //ResponseResult result = new ResponseResult()
+        //    //{
+        //    //    errno = 30,
+        //    //    errmsg = "请重新登录",
+        //    //};
+        //    //context.Result = new ContentResult() { Content = SerializerJson.SerializeObject(result), StatusCode = 200 };
 
-        }
+        //}
     }
 }

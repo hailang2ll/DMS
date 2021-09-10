@@ -8,11 +8,11 @@ namespace DMS.Auth
     public class BaseApiController : BaseController
     {
 
-        public override void OnActionExecuting(ActionExecutingContext context)
-        {
-            base.OnActionExecuting(context);
-            CheckLogin(context, 0);
+        //public override void OnActionExecuting(ActionExecutingContext context)
+        //{
+        //    base.OnActionExecuting(context);
+        //    CheckLogin(context, 0);
 
-        }
+        //}
     }
 }
