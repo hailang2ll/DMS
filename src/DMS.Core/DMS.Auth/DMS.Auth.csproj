@@ -15,16 +15,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="bak\BaseApiController.cs" />
+    <Compile Include="bak\BaseController.cs" />
+    <Compile Include="bak\BaseLoginApiController.cs" />
+    <Compile Include="bak\Basev2Controller.cs" />
+    <Compile Include="bak\CheckLoginAttribute.cs" />
+    <Compile Include="bak\RedisToken.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DMS.Extensions\DMS.Extensions.csproj" />
     <ProjectReference Include="..\DMS.Redis\DMS.Redis.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="bak\" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
