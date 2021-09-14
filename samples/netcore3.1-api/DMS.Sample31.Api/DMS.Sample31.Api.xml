@@ -16,6 +16,12 @@
             <param name="productService"></param>
             <param name="userAuth"></param>
         </member>
+        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.Get">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:DMS.Sample31.Api.Controllers.ValuesController.TestRedis0(System.String)">
             <summary>
             

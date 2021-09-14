@@ -4,6 +4,17 @@
         <name>DMS.Sample50</name>
     </assembly>
     <members>
+        <member name="T:DMS.Sample50.Controllers.ProductController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample50.Controllers.ProductController.Get">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:DMS.Sample50.Controllers.WeatherForecastController">
             <summary>
             

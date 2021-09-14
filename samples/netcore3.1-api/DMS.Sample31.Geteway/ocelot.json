@@ -1,0 +1,41 @@
+{
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/s1/{url}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post",
+        "Put",
+        "Delete"
+      ],
+      "DownstreamPathTemplate": "/api/{url}", // DMS.Sample31.Api
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 20300
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/product/{url}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post",
+        "Put",
+        "Delete"
+      ],
+      "DownstreamPathTemplate": "/api/{url}", //DMS.Sample50
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 20400
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+
+  }
+}

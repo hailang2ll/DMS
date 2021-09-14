@@ -4,6 +4,7 @@ using DMS.Sample31.Contracts;
 using DMSN.Common.BaseResult;
 using DMSN.Common.Helper;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DMS.Sample31.Api.Controllers
@@ -27,6 +28,16 @@ namespace DMS.Sample31.Api.Controllers
         {
             this.productService = productService;
             this.userAuth = userAuth;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "0Catcher Wong", "James Li" };
         }
 
         #region redis
