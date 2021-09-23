@@ -4,6 +4,29 @@
         <name>DMS.Sample31.Api</name>
     </assembly>
     <members>
+        <member name="T:DMS.Sample31.Api.Controllers.LoginController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DMS.Sample31.Api.Controllers.LoginController.GetToken">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Api.Controllers.LoginController.Login">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DMS.Sample31.Api.Controllers.LoginController.Login2">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:DMS.Sample31.Api.Controllers.ValuesController">
             <summary>
             

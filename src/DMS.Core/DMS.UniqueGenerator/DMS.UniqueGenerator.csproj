@@ -9,10 +9,6 @@
     <Version>1.1</Version>
   </PropertyGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="If $(ConfigurationName) == Release (&#xD;&#xA;del $(ProjectDir)$(OutDir)..\*.nupkg /s/q&#xD;&#xA;exit 0&#xD;&#xA;)ELSE (echo &quot;Not Debug mode, no file del from nupkg&quot;)" />
-  </Target>
-
   <ItemGroup>
     <ProjectReference Include="..\DMS.Exceptionless\DMS.Exceptionless.csproj" />
   </ItemGroup>

@@ -1,8 +1,8 @@
 ﻿using DMS.Auth;
-using DMS.Auth.FilterAttribute;
 using DMS.Sample31.Contracts;
 using DMSN.Common.BaseResult;
 using DMSN.Common.Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,6 +14,13 @@ namespace DMS.Sample31.Api.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(Roles = "admin")]
+    //[Authorize(Roles = "user")]
+    //[Authorize(Roles = "admin,user")]
+    //[Authorize(Policy = "BaseRole")]
+    //[Authorize(Policy = "MoreBaseRole")]
+    //[Authorize(Policy = "customizePermisson")]
+    [Authorize]
     public class ValuesController : ControllerBase
     {
         private readonly IProductService productService;
@@ -97,9 +104,13 @@ namespace DMS.Sample31.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("CheckAuth")]
-        [TypeFilter(typeof(CheckLoginAttribute))]
+        //[TypeFilter(typeof(CheckLoginAttribute))]
         public async Task<ResponseResult> CheckAuth()
         {
+            var token = userAuth.GetToken();
+            var isAuth = userAuth.IsAuthenticated();
+            var id2 = userAuth.ID2;
+            var name2 = userAuth.Name2;
             var a = DMSN.Common.CoreExtensions.AppConfig.GetVaule("AllowedHosts");
             var ip = IPHelper.GetCurrentIp();
             var (loginFlag, result) = await userAuth.ChenkLoginAsync();
@@ -109,7 +120,7 @@ namespace DMS.Sample31.Api.Controllers
             }
             var id = userAuth.ID;
             var name = userAuth.Name;
-            return new ResponseResult();
+            return new ResponseResult() { data = new { isAuth, id2, name2 } };
         }
 
         /// <summary>
@@ -118,11 +129,14 @@ namespace DMS.Sample31.Api.Controllers
         /// <param name="productID"></param>
         /// <returns></returns>
         [HttpGet("GetProduct")]
+        [AllowAnonymous]
         public async Task<ResponseResult<UserEntity>> GetProductAsync(long productID)
         {
             var ip = IPHelper.GetCurrentIp();
             return await productService.GetProductAsync(productID);
         }
+
+
 
     }
 }

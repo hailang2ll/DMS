@@ -70,6 +70,12 @@ namespace DMS.Sample31.Api
             services.AddRedisMqSetup();
             services.AddCorsSetup();
 
+
+        
+            //»œ÷§jwt
+            services.AddAuthenticationJWTSetup();
+            services.AddAuthorizationSetup();
+
         }
 
         /// <summary>
@@ -86,8 +92,9 @@ namespace DMS.Sample31.Api
             app.UseSwaggerUIV2(DebugHelper.IsDebug(GetType()));
             // CORSøÁ”Ú
             app.UseCors(DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Cors", "PolicyName" }));
-
+            app.UseStaticFiles();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

@@ -18,17 +18,17 @@ namespace DMS.Sample31.Geteway
 {
     public class Startup
     {
-        public Startup(IWebHostEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            //Configuration = configuration;
+            Configuration = configuration;
 
-            var builder = new Microsoft.Extensions.Configuration.ConfigurationBuilder();
-            builder.SetBasePath(env.ContentRootPath)
-                   .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
-                   .AddEnvironmentVariables();
+            //var builder = new Microsoft.Extensions.Configuration.ConfigurationBuilder();
+            //builder.SetBasePath(env.ContentRootPath)
+            //       .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
+            //       .AddEnvironmentVariables();
 
 
-            Configuration = builder.Build();
+            //Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -48,7 +48,7 @@ namespace DMS.Sample31.Geteway
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseOcelot();
+            app.UseOcelot().Wait();
 
             app.UseRouting();
             app.UseAuthorization();

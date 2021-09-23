@@ -14,5 +14,9 @@
     <ProjectReference Include="..\DMS.Sample31.Service\DMS.Sample31.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 
 </Project>

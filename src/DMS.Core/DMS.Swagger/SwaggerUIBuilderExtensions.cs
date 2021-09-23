@@ -24,7 +24,9 @@ namespace DMS.Swagger
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", AppDomain.CurrentDomain.FriendlyName);
-                    //c.DocExpansion(DocExpansion.None);
+                    // 路径配置，设置为空，表示直接在根域名（localhost:8001）访问该文件,注意localhost:8001/swagger是访问不到的，去launchSettings.json把launchUrl去掉，如果你想换一个路径，直接写名字即可，比如直接写c.RoutePrefix = "doc";
+                    //c.RoutePrefix = "";
+                   
                 });
             }
             return app;

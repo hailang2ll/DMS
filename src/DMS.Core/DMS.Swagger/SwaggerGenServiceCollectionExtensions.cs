@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,20 @@ namespace DMS.Swagger
                     {
                         ConsoleHelper.WriteErrorLine($"SwaggerGen.contracts load fail;path={contractPath}");
                     }
-                    option.OperationFilter<AddRequiredHeaderParameter>("Tenant ID example");
+                    
+
+                    option.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                    {
+                        Description = "JWT认证授权，使用直接在下框中输入Bearer {token}（注意两者之间是一个空格）\"",
+                        Name = "Authorization",  //jwt 默认参数名称
+                        In = ParameterLocation.Header,  //jwt默认存放Authorization信息的位置（请求头）
+                        Type = SecuritySchemeType.ApiKey
+                    });
+                    //开启加权小锁
+                    option.OperationFilter<AddResponseHeadersFilter>();
+                    option.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+                    //在header中添加token，传递到后台
+                    option.OperationFilter<SecurityRequirementsOperationFilter>();
                 });
             }
             else
