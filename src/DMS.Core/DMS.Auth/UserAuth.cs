@@ -75,6 +75,8 @@ namespace DMS.Auth
         }
 
 
+
+
         public string GetToken()
         {
             return _accessor.HttpContext?.Request?.Headers["Authorization"].ToStringDefault().Replace("Bearer ", "");
@@ -90,13 +92,14 @@ namespace DMS.Auth
         {
             if (IsAuthenticated() && !_accessor.HttpContext.User.Identity.Name.IsNullOrEmpty())
             {
+                //var v = _accessor.HttpContext.User.Claims.Where(q => q.Type == System.Security.Claims.ClaimTypes.PrimarySid).FirstOrDefault().Value;
                 return _accessor.HttpContext.User.Identity.Name;
             }
             else
             {
                 if (!string.IsNullOrEmpty(GetToken()))
                 {
-                    var getNameType =  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name";
+                    var getNameType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name";
                     return GetUserInfoFromToken(getNameType).FirstOrDefault().ToStringDefault();
                 }
             }

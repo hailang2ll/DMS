@@ -1,6 +1,9 @@
 ﻿using DMS.Extensions.Authorizations;
+using DMSN.Common.BaseResult;
 using DMSN.Common.Encrypt;
 using IdentityModel;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -154,6 +157,41 @@ namespace DMS.Sample31.Api.Controllers
                 token = token
             };
             return Ok(result);
+        }
+
+        /// <summary>
+        /// LoginByCookies 认证
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("LoginByCookies")]
+        public ResponseResult LoginByCookies()
+        {
+            ResponseResult result = new ResponseResult();
+
+            var list = new List<dynamic> {
+                new { Id="12", UserName="aaa",Pwd="123456",Role="admin"},
+                new { Id="45", UserName="bbb",Pwd="456789",Role="system"},
+            };
+
+            var user = list.SingleOrDefault(q => q.UserName == "aaa" && q.Pwd == "123456");
+            if (user == null)
+            {
+                result.errno = 1;
+                result.errmsg = "用户名或密码错误";
+                return result;
+            }
+            else
+            {
+                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);//一定要声明AuthenticationScheme
+                identity.AddClaim(new Claim(ClaimTypes.PrimarySid, user.Id));
+                identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
+                identity.AddClaim(new Claim(ClaimTypes.Sid, user.UserName));
+                identity.AddClaim(new Claim(ClaimTypes.Role, user.Role));
+                HttpContext.SignInAsync(identity.AuthenticationType, new ClaimsPrincipal(identity));
+
+                return result;
+            }
+
         }
     }
 

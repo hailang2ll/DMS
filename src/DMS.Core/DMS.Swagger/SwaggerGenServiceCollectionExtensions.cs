@@ -10,9 +10,15 @@ using System.IO;
 
 namespace DMS.Swagger
 {
+    public enum AuthType
+    {
+        Outh20,
+        Simple,
+
+    }
     public static class SwaggerGenServiceCollectionExtensions
     {
-        public static IServiceCollection AddSwaggerGenV2(this IServiceCollection services, string pathName = "")
+        public static IServiceCollection AddSwaggerGenV2(this IServiceCollection services, AuthType  authType = AuthType.Simple)
         {
 
             var basePath = AppContext.BaseDirectory;
@@ -62,20 +68,27 @@ namespace DMS.Swagger
                     {
                         ConsoleHelper.WriteErrorLine($"SwaggerGen.contracts load fail;path={contractPath}");
                     }
-                    
 
-                    option.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                    if (authType == AuthType.Simple)
                     {
-                        Description = "JWT认证授权，使用直接在下框中输入Bearer {token}（注意两者之间是一个空格）\"",
-                        Name = "Authorization",  //jwt 默认参数名称
-                        In = ParameterLocation.Header,  //jwt默认存放Authorization信息的位置（请求头）
-                        Type = SecuritySchemeType.ApiKey
-                    });
-                    //开启加权小锁
-                    option.OperationFilter<AddResponseHeadersFilter>();
-                    option.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
-                    //在header中添加token，传递到后台
-                    option.OperationFilter<SecurityRequirementsOperationFilter>();
+                        option.OperationFilter<AddRequiredHeaderParameter>("AccessToken");
+                    }
+                    else
+                    {
+                        option.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                        {
+                            Description = "JWT认证授权，使用直接在下框中输入Bearer {token}（注意两者之间是一个空格）\"",
+                            Name = "Authorization",  //jwt 默认参数名称
+                            In = ParameterLocation.Header,  //jwt默认存放Authorization信息的位置（请求头）
+                            Type = SecuritySchemeType.ApiKey
+                        });
+                        //开启加权小锁
+                        option.OperationFilter<AddResponseHeadersFilter>();
+                        option.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+                        //在header中添加token，传递到后台
+                        option.OperationFilter<SecurityRequirementsOperationFilter>();
+                    }
+
                 });
             }
             else

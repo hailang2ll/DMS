@@ -27,6 +27,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:DMS.Sample31.Api.Controllers.LoginController.LoginByCookies">
+            <summary>
+            LoginByCookies 认证
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:DMS.Sample31.Api.Controllers.ValuesController">
             <summary>
             

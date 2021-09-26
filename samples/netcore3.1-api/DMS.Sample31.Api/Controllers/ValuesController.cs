@@ -20,7 +20,7 @@ namespace DMS.Sample31.Api.Controllers
     //[Authorize(Policy = "BaseRole")]
     //[Authorize(Policy = "MoreBaseRole")]
     //[Authorize(Policy = "customizePermisson")]
-    [Authorize]
+    [Authorize(Roles ="admin")]
     public class ValuesController : ControllerBase
     {
         private readonly IProductService productService;
