@@ -65,7 +65,7 @@ namespace DMS.Sample31.Api
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 options.JsonSerializerOptions.DictionaryKeyPolicy = null;
             });
-            services.AddSwaggerGenV2();
+            services.AddSwaggerGenV2(AuthType.Outh20);
             services.AddHttpContextSetup();
             services.AddRedisSetup();
             services.AddAuthSetup();
@@ -81,8 +81,7 @@ namespace DMS.Sample31.Api
             }
             else
             {
-                //services.AddAuthenticationJWTSetup();
-                services.AddAuthenticationCookiesSetup();
+                services.AddAuthenticationJWTSetup();
             }
             //services.AddAuthorizationSetup();
 

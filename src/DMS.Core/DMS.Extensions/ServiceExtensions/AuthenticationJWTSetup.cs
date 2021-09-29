@@ -44,11 +44,11 @@ namespace DMS.Extensions.ServiceExtensions
             //开启Bearer认证
             services.AddAuthentication(x =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                //x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                //x.DefaultChallengeScheme = nameof(ApiResponseHandler);
-                //x.DefaultForbidScheme = nameof(ApiResponseHandler);
+                //x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                //x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = nameof(ApiResponseHandler);
+                x.DefaultForbidScheme = nameof(ApiResponseHandler);
             })
             .AddJwtBearer(o =>
             {
@@ -89,8 +89,8 @@ namespace DMS.Extensions.ServiceExtensions
                         return Task.CompletedTask;
                     }
                 };
-            });
-            //.AddScheme<AuthenticationSchemeOptions, ApiResponseHandler>(nameof(ApiResponseHandler), o => { });
+            })
+            .AddScheme<AuthenticationSchemeOptions, ApiResponseHandler>(nameof(ApiResponseHandler), o => { });
 
 
 

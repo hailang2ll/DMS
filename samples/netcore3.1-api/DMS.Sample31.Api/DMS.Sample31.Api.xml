@@ -9,21 +9,15 @@
             
             </summary>
         </member>
-        <member name="M:DMS.Sample31.Api.Controllers.LoginController.GetToken">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:DMS.Sample31.Api.Controllers.LoginController.Login">
             <summary>
-            
+            JWT认证
             </summary>
             <returns></returns>
         </member>
-        <member name="M:DMS.Sample31.Api.Controllers.LoginController.Login2">
+        <member name="M:DMS.Sample31.Api.Controllers.LoginController.MainLogin">
             <summary>
-            
+            主方法认证
             </summary>
             <returns></returns>
         </member>

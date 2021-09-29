@@ -14,13 +14,13 @@ namespace DMS.Sample31.Api.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = "admin")]
     //[Authorize(Roles = "user")]
     //[Authorize(Roles = "admin,user")]
     //[Authorize(Policy = "BaseRole")]
     //[Authorize(Policy = "MoreBaseRole")]
+    //[Authorize(Roles = "dylan")]
+    //[Authorize(Roles ="system")]
     //[Authorize(Policy = "customizePermisson")]
-    [Authorize(Roles ="admin")]
     public class ValuesController : ControllerBase
     {
         private readonly IProductService productService;

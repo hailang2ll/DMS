@@ -22,8 +22,8 @@ namespace DMS.Extensions.ServiceExtensions
 #if NET5_0 || NETCOREAPP3_1
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("BaseRole", options => options.RequireRole("admin"));
-                options.AddPolicy("MoreBaseRole", options => options.RequireRole("admin", "user"));
+                options.AddPolicy("BaseRole", options => options.RequireRole("admin_dylan"));
+                options.AddPolicy("MoreBaseRole", options => options.RequireRole("admin_dylan", "user_dylan"));
             });
             #region 参数
             string Issuer = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Audience", "Issuer" });
