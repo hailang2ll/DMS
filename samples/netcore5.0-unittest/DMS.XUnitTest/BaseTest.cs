@@ -12,7 +12,7 @@ namespace DMS.XUnitTest
         public BaseTest()
         {
             var builder = new ConfigurationBuilder()
-            .AddRedisFile($"Configs/redis.json", optional: false, reloadOnChange: true);
+            .AddJsonFile($"Configs/redis.json", optional: false, reloadOnChange: true);
             Configuration = builder.Build();
         }
     }

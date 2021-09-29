@@ -6,14 +6,14 @@ namespace DMS.Redis
 {
     public class AppConfig
     {
-        public static IConfigurationRoot Configuration { get; set; }
         public static RedisOption RedisOption
         {
             get
             {
+               var Configuration= DMSN.Common.CoreExtensions.AppConfig.Configuration;
                 if (Configuration == null)
                 {
-                    throw new Exception($"Configuration is null");
+                    throw new Exception($"Configuration is null,please load AddAppSettingsFile on Startup");
                 }
                 IConfigurationSection configurationSection = Configuration.GetSection("RedisConfig");
                 if (configurationSection == null)

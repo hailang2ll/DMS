@@ -272,7 +272,14 @@ namespace DMS.Redis
         public async Task<T> ListRightPopAsync<T>(string key)
         {
             string value = await _database.ListRightPopAsync(key);
-            return value.DeserializeObject<T>();
+            if (typeof(T).Name.Equals(typeof(string).Name))
+            {
+                return JsonConvert.DeserializeObject<T>($"'{value}'");
+            }
+            else
+            {
+                return value.DeserializeObject<T>();
+            }
         }
         /// <summary>
         /// 入栈
@@ -293,7 +300,14 @@ namespace DMS.Redis
         public async Task<T> ListLeftPopAsync<T>(string key)
         {
             string value = await _database.ListLeftPopAsync(key);
-            return value.DeserializeObject<T>();
+            if (typeof(T).Name.Equals(typeof(string).Name))
+            {
+                return JsonConvert.DeserializeObject<T>($"'{value}'");
+            }
+            else
+            {
+                return value.DeserializeObject<T>();
+            }
         }
         /// <summary>
         /// 获取集合中的数量

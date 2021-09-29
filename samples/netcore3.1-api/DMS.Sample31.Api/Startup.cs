@@ -38,7 +38,7 @@ namespace DMS.Sample31.Api
             var path = env.ContentRootPath;
             var builder = new ConfigurationBuilder()
             .SetBasePath(env.ContentRootPath)
-            .AddRedisFile($"Configs/redis.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"Configs/redis.json", optional: false, reloadOnChange: true)
             .AddJsonFile($"Configs/domain.json", optional: false, reloadOnChange: true)
             .AddJsonFile($"appsettings.json", optional: true, reloadOnChange: true)
             .AddAppSettingsFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);

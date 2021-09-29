@@ -31,7 +31,7 @@ namespace DMS.Sample31.Service
 
         }
         /// <summary>
-        /// 
+        /// 我应该在0库
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
@@ -88,23 +88,24 @@ namespace DMS.Sample31.Service
             var listLength = await redisRepository.ListLengthAsync("list");
             if (listLength < 10)
             {
+
                 //获取指KEY的集合
                 List<UserTicket> list = await redisRepository.ListRangeAsync<UserTicket>("list");
 
                 //入栈
-                listLength = await redisRepository.ListLeftPushAsync<string>("list", "aaaaaa");
+                listLength = await redisRepository.ListLeftPushAsync<UserTicket>("list", userTicket);
                 //出栈
-                var str = await redisRepository.ListLeftPopAsync<string>("list");
+                var str = await redisRepository.ListLeftPopAsync<UserTicket>("list");
 
                 //入队
-                listLength = await redisRepository.ListRightPushAsync<string>("list", "bbbb");
+                listLength = await redisRepository.ListRightPushAsync<string>("list", "aaaaaaaaaaa");
                 //出队
-                str = await redisRepository.ListRightPopAsync<string>("list");
+                var str2 = await redisRepository.ListRightPopAsync<string>("list");
             }
             #endregion
         }
         /// <summary>
-        /// 
+        /// 我应该在1库
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
