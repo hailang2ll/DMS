@@ -19,6 +19,8 @@ namespace DMS.Auth.v1
             Console.WriteLine($"UserAuth.v1.1:{redisRepository}");
         }
         public long ID => UserTicket.ID;
+        public string EpCode => UserTicket.EpCode;
+        public string UID => UserTicket.UID;
         public string Name => UserTicket.Name;
         public string GetToken()
         {
