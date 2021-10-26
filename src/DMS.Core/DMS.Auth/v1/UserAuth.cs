@@ -36,7 +36,7 @@ namespace DMS.Auth.v1
                 {
                     return userTicket;
                 }
-                return null;
+                return new UserTicket();
             }
         }
     }

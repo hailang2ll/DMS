@@ -1,4 +1,4 @@
-﻿using DMS.Auth.v2;
+﻿using DMS.Auth.v1;
 using DMS.Sample31.Contracts;
 using DMSN.Common.BaseResult;
 using DMSN.Common.Helper;
@@ -108,19 +108,20 @@ namespace DMS.Sample31.Api.Controllers
         public async Task<ResponseResult> CheckAuth()
         {
             var token = userAuth.GetToken();
-            var isAuth = userAuth.IsAuthenticated();
-            var id2 = userAuth.ID2;
-            var name2 = userAuth.Name2;
-            var a = DMSN.Common.CoreExtensions.AppConfig.GetVaule("AllowedHosts");
-            var ip = IPHelper.GetCurrentIp();
-            var (loginFlag, result) = await userAuth.ChenkLoginAsync();
-            if (!loginFlag)
-            {
-                return result;
-            }
+            //var isAuth = userAuth.IsAuthenticated();
+            //var id2 = userAuth.ID2;
+            //var name2 = userAuth.Name2;
+            //var a = DMSN.Common.CoreExtensions.AppConfig.GetVaule("AllowedHosts");
+            //var ip = IPHelper.GetCurrentIp();
+            //var (loginFlag, result) = await userAuth.ChenkLoginAsync();
+            //if (!loginFlag)
+            //{
+            //    return result;
+            //}
             var id = userAuth.ID;
             var name = userAuth.Name;
-            return new ResponseResult() { data = new { isAuth, id2, name2 } };
+            return new ResponseResult() { data = new { } };
+            //return new ResponseResult() { data = new { isAuth, id2, name2 } };
         }
 
         /// <summary>
