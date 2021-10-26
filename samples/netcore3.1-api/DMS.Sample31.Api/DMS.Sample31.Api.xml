@@ -32,12 +32,12 @@
             
             </summary>
         </member>
-        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.#ctor(DMS.Sample31.Contracts.IProductService,DMS.Auth.v1.IUserAuth)">
+        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.#ctor(DMS.Sample31.Contracts.IProductService,DMS.Auth.v1.IUserAuth,DMS.Auth.v2.IUserAuth)">
             <summary>
             
             </summary>
             <param name="productService"></param>
-            <param name="userAuth"></param>
+            <param name="userAuth1"></param>
         </member>
         <member name="M:DMS.Sample31.Api.Controllers.ValuesController.Get">
             <summary>

@@ -1,5 +1,4 @@
-﻿using DMS.Auth.v1;
-using DMS.Sample31.Contracts;
+﻿using DMS.Sample31.Contracts;
 using DMSN.Common.BaseResult;
 using DMSN.Common.Helper;
 using Microsoft.AspNetCore.Authorization;
@@ -24,17 +23,19 @@ namespace DMS.Sample31.Api.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly IProductService productService;
-        private readonly IUserAuth userAuth;
+        private readonly DMS.Auth.v1.IUserAuth userAuth1;
+        private readonly DMS.Auth.v2.IUserAuth userAuth2;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="productService"></param>
-        /// <param name="userAuth"></param>
+        /// <param name="userAuth1"></param>
 
-        public ValuesController(IProductService productService, IUserAuth userAuth)
+        public ValuesController(IProductService productService, DMS.Auth.v1.IUserAuth userAuth1, DMS.Auth.v2.IUserAuth userAuth2)
         {
             this.productService = productService;
-            this.userAuth = userAuth;
+            this.userAuth1 = userAuth1;
+            this.userAuth2 = userAuth2;
         }
 
         /// <summary>
@@ -107,21 +108,22 @@ namespace DMS.Sample31.Api.Controllers
         //[TypeFilter(typeof(CheckLoginAttribute))]
         public async Task<ResponseResult> CheckAuth()
         {
-            var token = userAuth.GetToken();
-            //var isAuth = userAuth.IsAuthenticated();
-            //var id2 = userAuth.ID2;
-            //var name2 = userAuth.Name2;
-            //var a = DMSN.Common.CoreExtensions.AppConfig.GetVaule("AllowedHosts");
-            //var ip = IPHelper.GetCurrentIp();
-            //var (loginFlag, result) = await userAuth.ChenkLoginAsync();
-            //if (!loginFlag)
-            //{
-            //    return result;
-            //}
-            var id = userAuth.ID;
-            var name = userAuth.Name;
-            return new ResponseResult() { data = new { } };
-            //return new ResponseResult() { data = new { isAuth, id2, name2 } };
+            var id = userAuth1.ID;
+            var name = userAuth1.Name;
+            var token = userAuth1.GetToken();
+
+            var isAuth = userAuth2.IsAuthenticated();
+            var id2 = userAuth2.ID2;
+            var name2 = userAuth2.Name2;
+            var a = DMSN.Common.CoreExtensions.AppConfig.GetVaule("AllowedHosts");
+            var ip = IPHelper.GetCurrentIp();
+            var (loginFlag, result) = await userAuth2.ChenkLoginAsync();
+            if (!loginFlag)
+            {
+                return result;
+            }
+          
+            return new ResponseResult() { data = new { isAuth, id2, name2 } };
         }
 
         /// <summary>
