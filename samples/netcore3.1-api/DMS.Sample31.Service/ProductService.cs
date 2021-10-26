@@ -41,9 +41,7 @@ namespace DMS.Sample31.Service
             {
                 ID = 1,
                 Name = "dylan",
-                Code = 2,
-                Msg = "我是消息",
-                UnionID = "unid",
+                UID = "unid",
                 ExpDate = DateTime.Now.AddDays(1)
             };
             var setAsync = await redisRepository.SetAsync("string", "我是内容", DateTime.Now.AddDays(1));
@@ -115,9 +113,7 @@ namespace DMS.Sample31.Service
             {
                 ID = 1,
                 Name = "dylan",
-                Code = 2,
-                Msg = "我是消息",
-                UnionID = "unid",
+                UID = "unid",
                 ExpDate = DateTime.Now.AddDays(1)
             };
 
@@ -138,9 +134,7 @@ namespace DMS.Sample31.Service
             {
                 ID = 1,
                 Name = "dylan",
-                Code = 2,
-                Msg = "我是消息",
-                UnionID = "unid",
+                UID = "unid",
                 ExpDate = DateTime.Now.AddDays(1)
             };
             redisRepository.PublishAsync("queueName", userTicket);

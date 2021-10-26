@@ -31,8 +31,8 @@ namespace DMS.Auth.Tickets
                 {
                     //获取用户票据为空，重新登录
                     var option = AppConfig.RedisOption;
-                    userTicket.Msg = $"未找到SID，sid={sid},{memCached._conn.IsConnected},{option.RedisConnectionString}";
-                    userTicket.Code = 3;
+                    //userTicket.Msg = $"未找到SID，sid={sid},{memCached._conn.IsConnected},{option.RedisConnectionString}";
+                    //userTicket.Code = 3;
                     return userTicket;
                 }
 
@@ -44,15 +44,15 @@ namespace DMS.Auth.Tickets
                 {
                     //用户票据缓存90天,用户票据缓存时间超时，重新登录
                     memCached.KeyDelete(sid);
-                    userTicket.Msg = string.Format("用户票据缓存时间超时，sid={0},userid={1},username={2},timeout=90天,days={3}", sid, userTicket.ID, userTicket.Name, days);
-                    userTicket.Code = 5;
+                    //userTicket.Msg = string.Format("用户票据缓存时间超时，sid={0},userid={1},username={2},timeout=90天,days={3}", sid, userTicket.ID, userTicket.Name, days);
+                    //userTicket.Code = 5;
                     return userTicket;
                 }
                 else
                 {
                     //获取用户票据成功，正常票据
-                    userTicket.Msg = string.Format("{0}用户票据正常", userTicket.ID);
-                    userTicket.Code = 4;
+                    //userTicket.Msg = string.Format("{0}用户票据正常", userTicket.ID);
+                    //userTicket.Code = 4;
                     return userTicket;
                 }
                 //}

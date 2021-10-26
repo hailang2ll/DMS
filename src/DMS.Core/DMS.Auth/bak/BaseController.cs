@@ -66,7 +66,7 @@ namespace DMS.Auth
                 }
                 else
                 {
-                    System.Console.WriteLine($"获取缓存身份信息：{userTicket.Msg}，{controllerName}/{actionName}");
+                    System.Console.WriteLine($"获取缓存身份信息为空，{controllerName}/{actionName}");
                 }
             }
 

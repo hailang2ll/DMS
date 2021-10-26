@@ -1,4 +1,5 @@
-﻿using DMSN.Common.Helper;
+﻿using DMS.Extensions;
+using DMSN.Common.Helper;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
@@ -18,7 +19,7 @@ namespace DMS.Swagger
     }
     public static class SwaggerGenServiceCollectionExtensions
     {
-        public static IServiceCollection AddSwaggerGenV2(this IServiceCollection services, AuthType  authType = AuthType.Simple)
+        public static IServiceCollection AddSwaggerGenV2(this IServiceCollection services, AuthModel authModel = AuthModel.Token)
         {
 
             var basePath = AppContext.BaseDirectory;
@@ -69,11 +70,11 @@ namespace DMS.Swagger
                         ConsoleHelper.WriteErrorLine($"SwaggerGen.contracts load fail;path={contractPath}");
                     }
 
-                    if (authType == AuthType.Simple)
+                    if (authModel == AuthModel.Token)
                     {
                         option.OperationFilter<AddRequiredHeaderParameter>("AccessToken");
                     }
-                    else
+                    else if (authModel == AuthModel.Auth20)
                     {
                         option.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                         {

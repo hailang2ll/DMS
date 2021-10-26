@@ -1,7 +1,10 @@
 ﻿using DMSN.Common.BaseResult;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace DMS.Auth
+namespace DMS.Auth.v2
 {
     public interface IUserAuth
     {

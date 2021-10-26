@@ -6,20 +6,26 @@ namespace DMS.Auth
     public class UserTicket
     {
         /// <summary>
-        /// 主键ID
+        /// 用户唯一ID（业务ID）
         /// </summary>
         /// <value></value>
-        public long ID { get; set; } = 0;
+        public long ID { get; set; }
+        /// <summary>
+        /// 用户唯一code（业务code）
+        /// </summary>
+        public string EpCode { get; set; }
+        /// <summary>
+        /// 用户唯一标识（微信uid）
+        /// </summary>
+        public string UID { get; set; }
         /// <summary>
         /// 名称
         /// </summary>
         /// <value></value>
         public string Name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public DateTime ExpDate { get; set; } = DateTime.Now.AddDays(90);
-        public string Msg { get; set; } = "初始化";
-        public int Code { get; set; }
-
-        public string UnionID { get; set; }
-
     }
 }

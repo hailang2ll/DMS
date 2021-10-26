@@ -7,9 +7,10 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace DMS.Auth
+namespace DMS.Auth.v2
 {
     public class UserAuth : IUserAuth
     {
@@ -65,12 +66,12 @@ namespace DMS.Auth
             get
             {
                 var token = _accessor.HttpContext.Request.Headers["AccessToken"].ToString();
-                var userTicket = redisRepository.GetValueAsync<UserTicket>(token).Result;// RedisManager.StringGet<UserTicket>(token);
+                var userTicket = redisRepository.GetValueAsync<UserTicket>(token).Result;
                 if (userTicket != null && userTicket.ID > 0)
                 {
                     return userTicket;
                 }
-                return new UserTicket() { Msg = "get userticket fail" };
+                return null;
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using DMS.Auth;
+﻿using DMS.Auth.v2;
 using DMS.Sample31.Contracts;
 using DMSN.Common.BaseResult;
 using DMSN.Common.Helper;

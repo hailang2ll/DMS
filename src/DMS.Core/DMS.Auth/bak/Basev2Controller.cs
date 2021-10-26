@@ -36,7 +36,7 @@ namespace DMS.Auth
                 {
                     return userTicket;
                 }
-                return new UserTicket() { Msg = "get userticket fail" };
+                return null;
             }
         }
         //[NonAction]

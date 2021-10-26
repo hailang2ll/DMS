@@ -32,7 +32,7 @@
             
             </summary>
         </member>
-        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.#ctor(DMS.Sample31.Contracts.IProductService,DMS.Auth.IUserAuth)">
+        <member name="M:DMS.Sample31.Api.Controllers.ValuesController.#ctor(DMS.Sample31.Contracts.IProductService,DMS.Auth.v2.IUserAuth)">
             <summary>
             
             </summary>

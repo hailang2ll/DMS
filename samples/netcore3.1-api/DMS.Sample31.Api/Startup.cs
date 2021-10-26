@@ -1,6 +1,7 @@
 using Autofac;
 using DMS.Auth;
 using DMS.Autofac;
+using DMS.Extensions;
 using DMS.Extensions.Authorizations.Model;
 using DMS.Extensions.ServiceExtensions;
 using DMS.NLogs.Filters;
@@ -10,10 +11,8 @@ using DMS.Swagger;
 using DMSN.Common.CoreExtensions.ConfigExtensions;
 using DMSN.Common.Helper;
 using DMSN.Common.JsonHandler.JsonConverters;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -65,10 +64,10 @@ namespace DMS.Sample31.Api
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 options.JsonSerializerOptions.DictionaryKeyPolicy = null;
             });
-            services.AddSwaggerGenV2(AuthType.Outh20);
+            services.AddSwaggerGenV2(AuthModel.Token);
             services.AddHttpContextSetup();
             services.AddRedisSetup();
-            services.AddAuthSetup();
+            services.AddAuthSetup(AuthModel.Token);
             //用户服务自定义
             services.AddRedisMqSetup();
             services.AddCorsSetup();
