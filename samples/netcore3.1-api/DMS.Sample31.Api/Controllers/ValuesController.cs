@@ -30,6 +30,7 @@ namespace DMS.Sample31.Api.Controllers
         /// </summary>
         /// <param name="productService"></param>
         /// <param name="userAuth1"></param>
+        /// <param name="userAuth2"></param>
 
         public ValuesController(IProductService productService, DMS.Auth.v1.IUserAuth userAuth1, DMS.Auth.v2.IUserAuth userAuth2)
         {
@@ -122,7 +123,7 @@ namespace DMS.Sample31.Api.Controllers
             {
                 return result;
             }
-          
+
             return new ResponseResult() { data = new { isAuth, id2, name2 } };
         }
 

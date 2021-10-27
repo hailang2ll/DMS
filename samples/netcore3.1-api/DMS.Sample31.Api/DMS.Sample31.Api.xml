@@ -38,6 +38,7 @@
             </summary>
             <param name="productService"></param>
             <param name="userAuth1"></param>
+            <param name="userAuth2"></param>
         </member>
         <member name="M:DMS.Sample31.Api.Controllers.ValuesController.Get">
             <summary>
