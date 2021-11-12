@@ -1,4 +1,4 @@
-﻿using DMSN.Common.Configurations;
+﻿using DMSN.Common.netfx;
 using log4net;
 using System;
 using System.IO;
