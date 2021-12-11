@@ -1,7 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFrameworks>net45;net46;net461;net472</TargetFrameworks>
-  </PropertyGroup>
-
-</Project>
