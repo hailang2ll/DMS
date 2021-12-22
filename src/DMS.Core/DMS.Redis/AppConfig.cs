@@ -10,7 +10,7 @@ namespace DMS.Redis
         {
             get
             {
-               var Configuration= DMSN.Common.CoreExtensions.AppConfig.Configuration;
+               var Configuration= DMS.Common.AppConfig.Configuration;
                 if (Configuration == null)
                 {
                     throw new Exception($"Configuration is null,please load AddAppSettingsFile on Startup");

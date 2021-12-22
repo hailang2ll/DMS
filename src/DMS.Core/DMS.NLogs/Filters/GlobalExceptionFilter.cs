@@ -1,5 +1,4 @@
-﻿using DMSN.Common.BaseResult;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -12,14 +11,21 @@ namespace DMS.NLogs.Filters
     /// </summary>
     public class GlobalExceptionFilter : IExceptionFilter
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly IHostingEnvironment _env;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="env"></param>
         public GlobalExceptionFilter(IHostingEnvironment env)
         {
             _env = env;
         }
         public void OnException(ExceptionContext context)
         {
-            var json = new DataResultBase()
+            var json = new DMS.Common.Model.Result.ResponseResult()
             {
                 errno = 500,//系统异常代码
                 errmsg = "系统异常，请联系客服",//系统异常信息

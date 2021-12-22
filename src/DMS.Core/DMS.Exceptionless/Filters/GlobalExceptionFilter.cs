@@ -1,5 +1,4 @@
 ﻿using DMS.Exceptionless.Extensions;
-using DMSN.Common.BaseResult;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +19,7 @@ namespace DMS.Exceptionless.Filters
         }
         public void OnException(ExceptionContext context)
         {
-            var json = new DataResultBase()
+            var json = new DMS.Common.Model.Result.ResponseResult()
             {
                 errno = 500,//系统异常代码
                 errmsg = "系统异常，请联系客服",//系统异常信息 

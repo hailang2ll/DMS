@@ -9,8 +9,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DMSN.Common.Extensions;
 using Microsoft.AspNetCore.Authentication;
+using DMS.Common.Extensions;
 
 namespace DMS.Extensions.ServiceExtensions
 {
@@ -19,9 +19,9 @@ namespace DMS.Extensions.ServiceExtensions
         public static void AddAuthenticationJWTSetup(this IServiceCollection services)
         {
 
-            string Issuer = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Audience", "Issuer" });
-            string Audience = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Audience", "Audience" });
-            string secretCredentials = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Audience", "Secret" });
+            string Issuer = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Issuer" });
+            string Audience = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Audience" });
+            string secretCredentials = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Secret" });
 
             // 令牌验证参数
             var tokenValidationParameters = new TokenValidationParameters

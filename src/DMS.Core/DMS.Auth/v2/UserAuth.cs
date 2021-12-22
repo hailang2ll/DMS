@@ -1,13 +1,12 @@
-﻿using DMS.Redis;
-using DMSN.Common.BaseResult;
-using DMSN.Common.Extensions;
+﻿using DMS.Common.Extensions;
+using DMS.Common.Model.Result;
+using DMS.Redis;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DMS.Auth.v2

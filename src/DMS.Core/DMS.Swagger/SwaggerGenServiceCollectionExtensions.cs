@@ -1,5 +1,5 @@
 ﻿using DMS.Extensions;
-using DMSN.Common.Helper;
+using DMS.Common.Helper;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;

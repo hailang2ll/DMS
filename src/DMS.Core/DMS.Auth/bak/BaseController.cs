@@ -1,7 +1,7 @@
-﻿using DMS.Redis;
-using DMSN.Common.BaseResult;
-using DMSN.Common.Extensions;
-using DMSN.Common.JsonHandler;
+﻿using DMS.Common.Extensions;
+using DMS.Common.JsonHandler;
+using DMS.Common.Model.Result;
+using DMS.Redis;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

@@ -1,6 +1,5 @@
-﻿using DMS.Auth.Tickets;
+﻿using DMS.Common.Model.Result;
 using DMS.Redis;
-using DMSN.Common.BaseResult;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

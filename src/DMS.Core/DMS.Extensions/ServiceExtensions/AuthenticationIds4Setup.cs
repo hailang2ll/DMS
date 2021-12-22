@@ -24,9 +24,9 @@ namespace DMS.Extensions.ServiceExtensions
             })
             .AddJwtBearer(options =>
             {
-                options.Authority = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "IdentityServer4", "AuthorizationUrl" });
+                options.Authority = DMS.Common.AppConfig.GetValue(new string[] { "IdentityServer4", "AuthorizationUrl" });
                 options.RequireHttpsMetadata = false;
-                options.Audience = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "IdentityServer4", "ApiName" });
+                options.Audience = DMS.Common.AppConfig.GetValue(new string[] { "IdentityServer4", "ApiName" });
             })
             .AddScheme<AuthenticationSchemeOptions, ApiResponseHandler>(nameof(ApiResponseHandler), o => { });
         }

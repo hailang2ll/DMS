@@ -1,7 +1,7 @@
 ﻿using DMS.Auth.v2;
+using DMS.Common.Extensions;
+using DMS.Common.Model.Result;
 using DMS.Redis;
-using DMSN.Common.BaseResult;
-using DMSN.Common.Extensions;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,5 @@
-﻿using DMS.Extensions.Authorizations.Model;
-using DMSN.Common.Extensions;
+﻿using DMS.Common.Extensions;
+using DMS.Extensions.Authorizations.Model;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -20,9 +20,9 @@ namespace DMS.Extensions.Authorizations
         public static TokenInfoViewModel BuildJwtToken(Claim[] claims)
         {
 
-            string iss = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Audience", "Issuer" });
-            string aud = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Audience", "Audience" });
-            string secret = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Audience", "Secret" });
+            string iss = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Issuer" });
+            string aud = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Audience" });
+            string secret = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Secret" });
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -57,9 +57,9 @@ namespace DMS.Extensions.Authorizations
         /// <returns></returns>
         public static string IssueJwt(TokenModelJwt tokenModel)
         {
-            string iss = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Audience", "Issuer" });
-            string aud = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Audience", "Audience" });
-            string secret = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Audience", "Secret" });
+            string iss = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Issuer" });
+            string aud = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Audience" });
+            string secret = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Secret" });
 
             //var claims = new Claim[] //old
             var claims = new List<Claim>

@@ -1,16 +1,16 @@
 ﻿#if NET5_0 || NETCOREAPP3_1
+using DMS.Extensions.Authorizations.Model;
+using DMS.Common.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using DMSN.Common.Extensions;
-using System.Collections.Generic;
-using DMS.Extensions.Authorizations.Model;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace DMS.Extensions.Authorizations.Policys
 {
@@ -110,7 +110,7 @@ namespace DMS.Extensions.Authorizations.Policys
                     var result = await httpContext.AuthenticateAsync(defaultAuthenticate.Name);
 
                     // 是否开启测试环境
-                    var isTestCurrent = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "UseLoadTest" }).ToBool();
+                    var isTestCurrent = DMS.Common.AppConfig.GetValue(new string[] { "UseLoadTest" }).ToBool();
 
                     //result?.Principal不为空即登录成功
                     if (result?.Principal != null || isTestCurrent)
@@ -166,7 +166,7 @@ namespace DMS.Extensions.Authorizations.Policys
                         // ids4
                         if (Permissions.IsUseIds4)
                         {
-                            isExp = (httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) != null && DMSN.Common.Extensions.DateTimeExtensions.ToDateTime(httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) >= DateTime.Now;
+                            isExp = (httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) != null && DMS.Common.Extensions.DateTimeExtensions.ToDateTime(httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) >= DateTime.Now;
                         }
                         else
                         {

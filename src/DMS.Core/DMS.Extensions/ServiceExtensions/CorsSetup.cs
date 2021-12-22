@@ -1,4 +1,4 @@
-﻿using DMSN.Common.Extensions;
+﻿using DMS.Common.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -10,10 +10,10 @@ namespace DMS.Extensions.ServiceExtensions
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 
-            bool isEnableAllIPs = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Cors", "EnableAllIPs" }).ToBool();
-            var PolicyName = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Cors", "PolicyName" });
-            var IPs = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Cors", "IPs" });
-            DMSN.Common.Helper.ConsoleHelper.WriteInfoLine($"AddCorsSetup:isEnableAllIPs={isEnableAllIPs},PolicyName={PolicyName},IPs={IPs}");
+            bool isEnableAllIPs = DMS.Common.AppConfig.GetValue(new string[] { "Cors", "EnableAllIPs" }).ToBool();
+            var PolicyName = DMS.Common.AppConfig.GetValue(new string[] { "Cors", "PolicyName" });
+            var IPs = DMS.Common.AppConfig.GetValue(new string[] { "Cors", "IPs" });
+            DMS.Common.Helper.ConsoleHelper.WriteInfoLine($"AddCorsSetup:isEnableAllIPs={isEnableAllIPs},PolicyName={PolicyName},IPs={IPs}");
             services.AddCors(c =>
             {
                 if (!isEnableAllIPs)

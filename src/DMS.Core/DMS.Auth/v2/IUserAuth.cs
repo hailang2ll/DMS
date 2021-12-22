@@ -1,7 +1,4 @@
-﻿using DMSN.Common.BaseResult;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DMS.Common.Model.Result;
 using System.Threading.Tasks;
 
 namespace DMS.Auth.v2

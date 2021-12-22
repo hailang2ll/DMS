@@ -28,7 +28,7 @@ namespace DMS.Redis.Configurations
             connect.ConfigurationChanged += MuxerConfigurationChanged;
             connect.HashSlotMoved += MuxerHashSlotMoved;
             connect.InternalError += MuxerInternalError;
-            DMSN.Common.Helper.ConsoleHelper.WriteInfoLine($"AddRedisSetup:IsConnected={connect.IsConnected},RedisOption={option.RedisConnectionString}");
+            DMS.Common.Helper.ConsoleHelper.WriteInfoLine($"AddRedisSetup:IsConnected={connect.IsConnected},RedisOption={option.RedisConnectionString}");
             services.AddSingleton<ConnectionMultiplexer>(connect);
 
             return services;

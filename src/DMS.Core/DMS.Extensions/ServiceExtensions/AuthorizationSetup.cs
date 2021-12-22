@@ -26,9 +26,9 @@ namespace DMS.Extensions.ServiceExtensions
                 options.AddPolicy("MoreBaseRole", options => options.RequireRole("admin_dylan", "user_dylan"));
             });
             #region 参数
-            string Issuer = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Audience", "Issuer" });
-            string Audience = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Audience", "Audience" });
-            string secretCredentials = DMSN.Common.CoreExtensions.AppConfig.GetVaule(new string[] { "Audience", "Secret" });
+            string Issuer = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Issuer" });
+            string Audience = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Audience" });
+            string secretCredentials = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Secret" });
 
             var keyByteArray = Encoding.ASCII.GetBytes(secretCredentials);
             var signingKey = new SymmetricSecurityKey(keyByteArray);
