@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using DMS.Common.Extensions;
 namespace DMS.Test
 {
+    /// <summary>
+    /// 6.0 基类
+    /// </summary>
     public class Base_Test
     {
         public IConfiguration Configuration { get; }
