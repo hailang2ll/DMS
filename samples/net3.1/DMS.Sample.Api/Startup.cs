@@ -19,6 +19,9 @@ using Microsoft.Extensions.Hosting;
 
 namespace DMS.Sample.Api
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Startup
     {
         /// <summary>
