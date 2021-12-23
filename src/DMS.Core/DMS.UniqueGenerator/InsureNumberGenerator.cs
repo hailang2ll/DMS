@@ -8,7 +8,7 @@ namespace DMS.UniqueGenerator
     public class InsureNumberGenerator
     {
         static readonly object readLocker = new object();
-        static string rootPath = "";// AppSettings.GetConfigPath;
+        static string rootPath = "";// AppSettings.GetConfigPath; 
         static string[] app = null;//System.Configuration.ConfigurationManager.AppSettings["InsureNumApp"].Split(',');
 
         static Dictionary<string, List<string>> insureNumList = new Dictionary<string, List<string>>();
