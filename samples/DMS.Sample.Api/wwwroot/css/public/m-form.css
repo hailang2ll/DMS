@@ -1,0 +1,85 @@
+
+/*input:text|password*/
+.ui-text { height: 16px; line-height: 16px; background: #fff; padding:4px; border: 1px solid #c1c1c1; font-size: 14px; width: 200px; outline: none; font-family: "microsoft Yahei"; float: left; }
+.ui-text.error { border-color: #ca222d; }
+.ui-text.valid { border-color: #33aa00; }
+.ui-text:not([class*=valid]):hover { border-color: #999; box-shadow: 0px 0px 3px 0px #ccc; }
+.ui-text:not([class*=valid]):focus { box-shadow: 0 0 3px #03a9f4; border-color: #03a9f4; }
+.ui-text.error:hover , .ui-text.error:focus { border-color: #ca222d; box-shadow: 0px 0px 3px 0px #ca222d; }
+.ui-text.valid:hover , .ui-text.valid:focus { border-color: #33aa00; box-shadow: 0px 0px 3px 0px #33aa00; }
+
+
+/*input:textarea*/
+.ui-textarea { height: 80px; width:500px; line-height:18px; border:1px solid #c1c1c1; color:#595959; font-size:14px;padding:10px; border-radius: 3px 3px 3px 3px; resize: none; outline: none; float: left;}
+.ui-textarea:hover { border:1px solid #999; box-shadow: 0px 0px 3px 0px #ccc; }
+.ui-textarea:focus { border:1px solid #03a9f4; box-shadow: 0px 0px 3px 0px #03a9f4; }
+.ui-textarea.error { border-color: #ca222d; }
+.ui-textarea.valid { border-color: #33aa00; }
+.ui-textarea.error:hover , .ui-textarea.error:focus { border-color: #ca222d; box-shadow: 0px 0px 3px 0px #ca222d; }
+.ui-textarea.valid:hover , .ui-textarea.valid:focus { border-color: #33aa00; box-shadow: 0px 0px 3px 0px #33aa00; }
+
+
+/*验证提示*/
+.ui-cite { display: inline-block; padding: 0 10px; height: 26px; line-height: 26px; font-size: 12px; margin-left: 20px; position: relative; background: #ccc; color: #fff; border-radius:0px 5px 5px 0px; }
+.ui-cite i { position: absolute; top: 0px; left: -10px; width: 0; height: 0; border-right: 10px solid #ccc; border-top: 13px solid transparent; border-bottom: 13px solid transparent; }
+
+/*验证报错提示*/
+.errorMsg { display: inline-block; padding-left:22px; margin-left: 10px; height: 26px; line-height: 26px; font-size: 12px; color: #ca222d; background:url(../../img/errorMsg.png) no-repeat 0px 4px; float: left; }
+p.errorMsg { clear: both; margin:5px auto 30px auto; }
+
+
+/*label*/
+.ui-label { display: inline-block; margin-right:50px; cursor: pointer; float: left; }
+.ui-label input { float: left; margin-right: 5px; margin-top: 6px; }
+.ui-label em { float: left; }
+
+/*普通灰色按钮 input:submit，button*/
+.ui-btn { line-height: 16px; height: 16px; padding: 4px 10px; display: inline-block; _display: inline; _zoom:1; text-align: center; background: #e6edf4; font-family:"Microsoft Yahei","Yahei"; font-size: 14px; font-weight: 500; color: #333; border: 1px solid #8c9eb0; cursor: pointer; border-radius:3px; float: left; margin-right: 10px; }
+input.ui-btn { line-height: 14px; height: 26px !important;}
+.ui-btn:hover { background: #e6edf4; border: 1px solid #8c9eb0; color: #000; box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.1); }
+/*禁用按钮样式*/
+.ui-btn.disabled , .ui-btn.disabled:hover { background: #ddd; border:1px solid #c1c1c1; cursor:default; color:#999; box-shadow: none; }
+.ui-btn.red {  background: #ca222d; border: 1px solid #ca222d; color:#fff; cursor: pointer; }
+.ui-btn.red:hover { background: #b9111c; border: 1px solid #b9111c; color:#fff; }
+.ui-btn.yello { background: #e69b18; border: 1px solid #e69b18; color:#fff; cursor: pointer;}
+.ui-btn.yello:hover { background: #dc8c02; border: 1px solid #dc8c02; color:#fff; }
+.ui-btn.blue { background: #1896e6; border: 1px solid #1896e6; color:#fff; cursor: pointer;}
+.ui-btn.blue:hover { background: #0184d8; border: 1px solid #0184d8; color:#fff; }
+.ui-btn.green { background: #15b884; border: 1px solid #15b884; color:#fff; cursor: pointer;}
+.ui-btn.green:hover { background: #03a26f; border: 1px solid #03a26f; color:#fff; }
+
+/*上传文件*/
+.ui-upload { height: 16px; line-height: 16px; position: relative; border: 1px solid #8c9eb0; background: #e6edf4 url(../../img/upfile.png) no-repeat 0px -5px; border-radius: 3px 3px 3px 3px; padding:4px 10px 4px 24px; overflow: hidden; display: block; float: left; }
+.ui-upload input { opacity: 0; filter:alpha(opacity=0); position: absolute; width: 600px; height: 200px; right:0px; top:0px; cursor:pointer;}
+.ui-upload:hover { background: #e6edf4 url(../../img/upfile.png) no-repeat 0px -45px; color:#ca222d; box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.2);}
+
+.ui-select { font-size: 12px; height: 26px; line-height: 26px; vertical-align: middle; float: left;}
+
+
+/*模拟分类*/
+.ui-select-cate { height: 16px; line-height: 16px; background: #fff; padding:4px; border: 1px solid #c1c1c1; font-size: 14px; width: 200px; outline: none; font-family: "microsoft Yahei"; float: left; cursor: pointer; }
+.ui-select-cate em { float: left; }
+.ui-select-cate .dg { 
+	display: block; 
+	margin: 5px 5px 0px 5px; 
+	width: 0; height: 0; 
+	position: relative; 
+	float: right;
+	border-left: 5px solid transparent; 
+	border-top: 7px solid #222; 
+	border-right: 5px solid transparent;
+}
+.ui-select-cate .dg i { 
+	position: absolute; 
+	display: block; 
+	left:-5px; 
+	bottom: 1px; 
+	width: 0; height: 0; 
+	text-indent: -9999px; 
+	overflow: hidden;
+	border-left: 5px solid transparent; 
+	border-top: 7px solid #FFF; 
+	border-right: 5px solid transparent; 
+}
+.ui-select-cate.disabled { background: #efefef; color: #999;}
+.ui-select-cate.disabled .dg i { border-top: 7px solid #efefef; }

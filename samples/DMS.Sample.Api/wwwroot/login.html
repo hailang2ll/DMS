@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+    <title>DMS--登录</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="icon" type="image/x-icon" href="/img/ccdfs.ico"/>
+    <link href="/css/login.css" rel="stylesheet">
+    <script src="/js/public/jquery-1.11.1.js"></script>
+    <script src="/js/plugins/jquery.cookie.js"></script>
+    <script src="/js/public/tools.js"></script>
+    <script src="/js/public/html5shiv.js"></script>
+</head>
+<body>
+    <div class="loginBox">
+        <div class="logo"><img src="/img/ccdfs.png"></div>
+        <div class="loginBoxForm">
+            <form id="targetForm">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tbody>
+                        <tr>
+                            <td width="80">
+                                用户名：
+                            </td>
+                            <td>
+                                <input name="UserCode" type="text" id="txtUserCode" class="txt" test="required">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="80">
+                                密&nbsp;&nbsp;&nbsp;&nbsp;码：
+                            </td>
+                            <td>
+                                <input name="UserPwd" type="password" id="txtUserPwd" class="txt" test="required">
+                            </td>
+                        </tr>
+                        <tr id="trValidcode" style="display: none;">
+                            <td width="80">
+                                验证码：
+                            </td>
+                            <td>
+                                <input name="checkCode" type="text" style="width:60px;" id="txtcheckCode" class="txt txtcode">
+                                <!--<img style="cursor: pointer;" alt="点击刷新验证码" id="imgValidateCode" src="/Images/loader.gif">-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="80">
+                                &nbsp;
+                            </td>
+                            <td>
+                                <input type="submit" value="登录" class="btn">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <p class="notice">DMS有限公司版权所有 2012-2015</p>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            T.registerFileds();
+            $("#targetForm").submit(function () {
+                var entity = T.formToJSON("#targetForm", function (data) {
+                    return data;
+                });
+                if (entity) {
+                    $.ajax({
+                        url: "http://api_admin.ccdfs.cc/api_admin/admuserlogin/login",
+                        data: entity,
+                        //xhrFields: {
+                        //    withCredentials: true
+                        //},
+                        type: "post",
+                        cache: false,
+                        dataType: "json",
+                        success: function (res) {
+                            alert("成功");
+                            T.cookie("__asid", res.data.Sid, 7);
+                            window.location = T.DOMAIN.WWW + "index.html";
+                        },
+                        error: function () {
+                            // view("异常！");
+                            alert("异常！");
+                        }
+                    });
+
+
+                    //T.POST({
+                    //    action: "http://api_admin.ccdfs.cc/api_admin/admuserlogin/login",
+                    //    params: entity,
+                    //    success: function (res) {
+                    //        console.log(res);
+                    //        if (res.data) {
+                    //            alert(333);
+                    //            T.cookie("__asid", res.data.Sid, 7);
+                    //            window.location = T.DOMAIN.WWW + "index.html";
+                    //        }
+                    //    },
+                    //    failure: function (res) {
+                    //        alert(res.errmsg);
+                    //        $("#txtUserPwd").val("");
+                    //    }, error: function () {
+                    //        alert(data.errmsg);
+                    //        $("#txtUserPwd").val("");
+                    //    }
+                    //})
+                }
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

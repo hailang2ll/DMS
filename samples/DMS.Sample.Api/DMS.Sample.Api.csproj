@@ -2,12 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\samples\DMS.Sample.Service\DMS.Sample.Service.csproj" />
     <ProjectReference Include="..\..\src\DMS.Core\DMS.Autofac\DMS.Autofac.csproj" />
     <ProjectReference Include="..\..\src\DMS.Core\DMS.Swagger\DMS.Swagger.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\plugins\" />
   </ItemGroup>
 
 

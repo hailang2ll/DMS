@@ -1,0 +1,22 @@
+﻿
+/*数据列表*/
+.m-list table { margin:0px auto; width: 100%; border-collapse: collapse; }
+.m-list table th { background: #f7f7f7 none repeat scroll 0 0; border: 1px solid #ddd; font-weight: 700; padding: 5px 10px; text-align: left; }
+.m-list table td { background: #fff; border: 1px solid #ddd; padding: 5px 10px; text-align: left; }
+.m-list table td a { color: #0000cc; }
+.m-list table .odd td { background: #f6fbfc; }
+.m-list table .over td , .m-list table .current td { background: #e3ecfa; }
+
+/*数据表单*/
+.m-formBox { padding:10px 15px; border: 1px solid #ddd; background: #FAFAFA; }
+.m-formBox table , .m-formBox-noborder table { border-collapse: collapse; }
+.m-formBox table td , .m-formBox-noborder table td { padding:5px 0px; line-height: 26px; vertical-align: top; } 
+
+/*搜索表单*/
+.m-searchForm { border: 1px solid #ddd; padding: 10px 15px; background: #FAFAFA; }
+.m-searchForm td { padding: 5px 0px; vertical-align: top; line-height: 26px; }
+.m-searchForm .fw7 { color: #000; text-align: right; padding-right: 10px;}
+.m-searchForm p.errorMsg { margin: 0px; }
+
+/*/没有数据回来*/
+.noDataBack { display:block; height:80px; line-height:80px; border:1px solid #ddd; border-top:none;  overflow: hidden;  text-align:center; clear: both;}
