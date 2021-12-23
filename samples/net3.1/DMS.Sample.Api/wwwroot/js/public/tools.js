@@ -351,9 +351,8 @@ if (typeof JSON !== 'object') {
 
     // 域名配置
     T.DOMAIN = {
-        /* ACTION: 'http://action.' + _DOMAIN + '/',*/
+        ACTION: 'http://' + _HOSTNAME + '/',
         WWW: 'http://' + _HOSTNAME + '/',
-        /* BASE: 'http://base.' + _HOSTNAME + '/',*/
         DOMAIN: _DOMAIN
     };
 
@@ -696,6 +695,7 @@ if (typeof JSON !== 'object') {
         params.jsoncallback = jsoncallback;
         var _params = params;
         options.action += (options.action.indexOf('?') < 0 ? '?' : '&') + T.ConvertToQueryString(_params);
+
         var script = document.createElement('script');
         script.defer = 'defer';
         script.async = 'async';

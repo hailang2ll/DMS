@@ -6,12 +6,13 @@
     <title>DMS--登录</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
-    <link rel="icon" type="image/x-icon" href="/img/ccdfs.ico"/>
+    <link rel="icon" type="image/x-icon" href="/img/ccdfs.ico" />
     <link href="/css/login.css" rel="stylesheet">
     <script src="/js/public/jquery-1.11.1.js"></script>
     <script src="/js/plugins/jquery.cookie.js"></script>
     <script src="/js/public/tools.js"></script>
     <script src="/js/public/html5shiv.js"></script>
+    <script src="/js/public/md5.js"></script>
 </head>
 <body>
     <div class="loginBox">
@@ -64,51 +65,28 @@
             T.registerFileds();
             $("#targetForm").submit(function () {
                 var entity = T.formToJSON("#targetForm", function (data) {
+                    data["UserPwd"] = hex_md5(data["UserPwd"]);
                     return data;
                 });
                 if (entity) {
                     $.ajax({
-                        url: "http://api_admin.ccdfs.cc/api_admin/admuserlogin/login",
+                        url: "json/menu.json",
                         data: entity,
-                        //xhrFields: {
-                        //    withCredentials: true
-                        //},
-                        type: "post",
-                        cache: false,
-                        dataType: "json",
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        type: "GET",
+                        contentType: "application/json",
                         success: function (res) {
                             alert("成功");
-                            T.cookie("__asid", res.data.Sid, 7);
+                            //T.cookie("__asid", res.data.Sid, 7);
                             window.location = T.DOMAIN.WWW + "index.html";
                         },
-                        error: function () {
-                            // view("异常！");
+                        error: function (err) {
                             alert("异常！");
                         }
                     });
-
-
-                    //T.POST({
-                    //    action: "http://api_admin.ccdfs.cc/api_admin/admuserlogin/login",
-                    //    params: entity,
-                    //    success: function (res) {
-                    //        console.log(res);
-                    //        if (res.data) {
-                    //            alert(333);
-                    //            T.cookie("__asid", res.data.Sid, 7);
-                    //            window.location = T.DOMAIN.WWW + "index.html";
-                    //        }
-                    //    },
-                    //    failure: function (res) {
-                    //        alert(res.errmsg);
-                    //        $("#txtUserPwd").val("");
-                    //    }, error: function () {
-                    //        alert(data.errmsg);
-                    //        $("#txtUserPwd").val("");
-                    //    }
-                    //})
                 }
-                return false;
             });
         });
     </script>
