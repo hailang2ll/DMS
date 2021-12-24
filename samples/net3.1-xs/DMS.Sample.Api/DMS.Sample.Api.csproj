@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\plugins\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\DMS.Core\DMS.Autofac\DMS.Autofac.csproj" />
+    <ProjectReference Include="..\..\..\src\DMS.Core\DMS.Swagger\DMS.Swagger.csproj" />
+    <ProjectReference Include="..\DMS.Sample.Service\DMS.Sample.Service.csproj" />
+  </ItemGroup>
+
+
+</Project>

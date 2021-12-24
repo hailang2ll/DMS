@@ -1,0 +1,19 @@
+/**
+ * 页面位置 面包屑
+ * @authors Your Name (you@example.org)
+ * @date    2015-04-20 10:15:44
+ * @version $Id$
+ */
+
+.locationBox { width: 100%; overflow: hidden; }
+
+.m-crumbs { float: left; padding:0px 0px 10px 0px; overflow: hidden; background: url("../../img/crumbs.png") no-repeat 0px 3px; text-indent: 24px; }
+.m-crumbs b , .m-crumbs em { color: #666; line-height: 24px; }
+.m-crumbs em { cursor: default; }
+/*
+.m-crumbs a { color: #666; line-height: 24px; }
+.m-crumbs a:hover { color: #c71622;}
+*/
+.topOpts { float: right; color: #666; }
+.topOpts a , .topOpts input{ float: left; margin-right: 0px; margin-left: 10px; }
+.topOpts span , .topOpts b , .topOpts em { line-height: 24px; }
