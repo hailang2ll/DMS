@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Hosting;
 using System;
 
 namespace DMS.Exceptionless.Filters
@@ -12,8 +13,8 @@ namespace DMS.Exceptionless.Filters
     /// </summary>
     public class GlobalExceptionFilter : IExceptionFilter
     {
-        private readonly IHostingEnvironment _env;
-        public GlobalExceptionFilter(IHostingEnvironment env)
+        private readonly IWebHostEnvironment _env;
+        public GlobalExceptionFilter(IWebHostEnvironment env)
         {
             _env = env;
         }

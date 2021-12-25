@@ -14,12 +14,12 @@ namespace DMS.NLogs.Filters
         /// <summary>
         /// 
         /// </summary>
-        private readonly IHostingEnvironment _env;
+        private readonly IWebHostEnvironment _env;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="env"></param>
-        public GlobalExceptionFilter(IHostingEnvironment env)
+        public GlobalExceptionFilter(IWebHostEnvironment env)
         {
             _env = env;
         }

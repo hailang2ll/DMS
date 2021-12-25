@@ -11,8 +11,8 @@ namespace DMS.Log4net.Filters
     /// </summary>
     public class GlobalExceptionFilter : IExceptionFilter
     {
-        private readonly IHostingEnvironment _env;
-        public GlobalExceptionFilter(IHostingEnvironment env)
+        private readonly IWebHostEnvironment _env;
+        public GlobalExceptionFilter(IWebHostEnvironment env)
         {
             _env = env;
         }

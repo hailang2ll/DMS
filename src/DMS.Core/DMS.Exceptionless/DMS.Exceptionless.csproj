@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
     <Description>基于Exceptionless框架开发，依赖DMS中基础框架，主要用于分页式日志系统</Description>
     <Company>Dylan,hailang</Company>
     <Authors>Dylan,hailang</Authors>
