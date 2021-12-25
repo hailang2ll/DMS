@@ -51,7 +51,7 @@ namespace DMS.Sample.Api
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(option =>
+            services.AddControllersWithViews(option =>
             {
                 option.Filters.Add<GlobalExceptionFilter>();
                 //option.Filters.Add(typeof(LoginFilter));
@@ -105,7 +105,9 @@ namespace DMS.Sample.Api
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                   name: "default",
+                   pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
 

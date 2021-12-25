@@ -12,10 +12,12 @@ namespace DMS.Sample.Service.RedisEvBus
     {
         public static void AddRedisMqSetup(this IServiceCollection services)
         {
-            if (services == null) throw new ArgumentNullException(nameof(services));
-
-            services.AddInitQ(m =>
+            if (DMS.Redis.AppConfig.RedisOption.Enable)
             {
+                if (services == null) throw new ArgumentNullException(nameof(services));
+
+                services.AddInitQ(m =>
+                {
                 //时间间隔
                 m.SuspendTime = 2000;
                 //redis服务器地址
@@ -24,10 +26,11 @@ namespace DMS.Sample.Service.RedisEvBus
                 //对应的订阅者类，需要new一个实例对象，当然你也可以传参，比如日志对象
                 m.ListSubscribe = new List<Type>() {
                         typeof(RedisSubscribe)
-                };
+                    };
                 //显示日志
                 m.ShowLog = false;
-            });
+                });
+            }
         }
     }
 }

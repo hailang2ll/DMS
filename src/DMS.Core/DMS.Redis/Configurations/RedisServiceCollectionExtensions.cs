@@ -10,27 +10,29 @@ namespace DMS.Redis.Configurations
     {
         public static IServiceCollection AddRedisSetup(this IServiceCollection services)
         {
-            if (services == null) throw new ArgumentNullException(nameof(services));
+            if (DMS.Redis.AppConfig.RedisOption.Enable)
+            {
+                if (services == null) throw new ArgumentNullException(nameof(services));
 
-            services.AddTransient<IRedisRepository, RedisRepository>();
+                services.AddTransient<IRedisRepository, RedisRepository>();
 
-            //获取连接字符串
-            RedisOption option = AppConfig.RedisOption;
-            var options = ConfigurationOptions.Parse(option.RedisConnectionString, true);
-            options.AbortOnConnectFail = false;//服务器上停止redis service，即便后来redis服务端修好能够接通时，也不会自动连接。
-                                               //options.Password = option.RedisConnectionPwd;
-                                               //options.ResolveDns = true;
-            var connect = ConnectionMultiplexer.Connect(options);
-            //注册如下事件
-            connect.ConnectionFailed += MuxerConnectionFailed;
-            connect.ConnectionRestored += MuxerConnectionRestored;
-            connect.ErrorMessage += MuxerErrorMessage;
-            connect.ConfigurationChanged += MuxerConfigurationChanged;
-            connect.HashSlotMoved += MuxerHashSlotMoved;
-            connect.InternalError += MuxerInternalError;
-            DMS.Common.Helper.ConsoleHelper.WriteInfoLine($"AddRedisSetup:IsConnected={connect.IsConnected},RedisOption={option.RedisConnectionString}");
-            services.AddSingleton<ConnectionMultiplexer>(connect);
-
+                //获取连接字符串
+                RedisOption option = AppConfig.RedisOption;
+                var options = ConfigurationOptions.Parse(option.RedisConnectionString, true);
+                options.AbortOnConnectFail = false;//服务器上停止redis service，即便后来redis服务端修好能够接通时，也不会自动连接。
+                                                   //options.Password = option.RedisConnectionPwd;
+                                                   //options.ResolveDns = true;
+                var connect = ConnectionMultiplexer.Connect(options);
+                //注册如下事件
+                connect.ConnectionFailed += MuxerConnectionFailed;
+                connect.ConnectionRestored += MuxerConnectionRestored;
+                connect.ErrorMessage += MuxerErrorMessage;
+                connect.ConfigurationChanged += MuxerConfigurationChanged;
+                connect.HashSlotMoved += MuxerHashSlotMoved;
+                connect.InternalError += MuxerInternalError;
+                DMS.Common.Helper.ConsoleHelper.WriteInfoLine($"AddRedisSetup:IsConnected={connect.IsConnected},RedisOption={option.RedisConnectionString}");
+                services.AddSingleton<ConnectionMultiplexer>(connect);
+            }
             return services;
         }
 

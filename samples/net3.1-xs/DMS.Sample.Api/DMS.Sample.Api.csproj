@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\plugins\" />
+    <Folder Include="wwwroot\admin.xs\css\plugins\" />
   </ItemGroup>
 
   <ItemGroup>

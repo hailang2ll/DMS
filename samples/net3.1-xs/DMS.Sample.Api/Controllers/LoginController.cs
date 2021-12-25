@@ -12,13 +12,22 @@ using System.Security.Claims;
 
 namespace DMS.Sample.Api.Controllers
 {
-       /// <summary>
+    /// <summary>
     /// 
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Content("我是API");
+        }
         /// <summary>
         /// JWT认证
         /// </summary>
@@ -77,7 +86,7 @@ namespace DMS.Sample.Api.Controllers
             }
             else
             {
-                var userRoles = list.Select(q=>q.Role).ToList();
+                var userRoles = list.Select(q => q.Role).ToList();
                 //如果是基于用户的授权策略，这里要添加用户;如果是基于角色的授权策略，这里要添加角色
                 var claims = new List<Claim> {
                     new Claim(ClaimTypes.Name, user.UserName),

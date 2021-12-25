@@ -7,6 +7,10 @@ namespace DMS.Redis.Configurations
     public class RedisOption
     {
         /// <summary>
+        /// 是否启用
+        /// </summary>
+        public bool Enable { get; set; }
+        /// <summary>
         /// Redis服务器 
         /// </summary>
         public string RedisConnectionString { get; set; }
