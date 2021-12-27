@@ -5,7 +5,7 @@ namespace DMS.Sample.Api.Controllers
     /// <summary>
     /// 
     /// </summary>
-    public class HomeController : Controller
+    public class CmsUserController : Controller
     {
         /// <summary>
         /// 
@@ -13,7 +13,7 @@ namespace DMS.Sample.Api.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            return Content("我是MVC");
+            return View();
         }
     }
 }

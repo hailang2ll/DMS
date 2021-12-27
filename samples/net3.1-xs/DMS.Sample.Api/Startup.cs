@@ -54,7 +54,6 @@ namespace DMS.Sample.Api
             services.AddControllersWithViews(option =>
             {
                 option.Filters.Add<GlobalExceptionFilter>();
-                //option.Filters.Add(typeof(LoginFilter));
 
             }).AddJsonOptions(options =>
             {
@@ -63,26 +62,9 @@ namespace DMS.Sample.Api
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 options.JsonSerializerOptions.DictionaryKeyPolicy = null;
             });
+            services.AddSqlsugarSetup(Configuration);
             services.AddSwaggerGenV2(AuthModel.Token);
             services.AddHttpContextSetup();
-            services.AddRedisSetup();
-            services.AddAuthSetup(AuthModel.Token);
-            //用户服务自定义
-            services.AddRedisMqSetup();
-            services.AddCorsSetup();
-
-
-            // 授权+认证 (jwt or ids4)
-            if (Permissions.IsUseIds4)
-            {
-                services.AddAuthenticationIds4Setup();
-            }
-            else
-            {
-                services.AddAuthenticationJWTSetup();
-            }
-            //services.AddAuthorizationSetup();
-
         }
 
         /// <summary>
@@ -97,12 +79,8 @@ namespace DMS.Sample.Api
                 app.UseDeveloperExceptionPage();
             }
             app.UseSwaggerUIV2(DebugHelper.IsDebug(GetType()));
-            // CORS跨域
-            app.UseCors(DMS.Common.AppConfig.GetValue(new string[] { "Cors", "PolicyName" }));
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

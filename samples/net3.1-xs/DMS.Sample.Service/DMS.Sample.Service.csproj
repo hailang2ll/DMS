@@ -12,6 +12,7 @@
     <ProjectReference Include="..\..\..\src\DMS.Core\DMS.Auth\DMS.Auth.csproj" />
     <ProjectReference Include="..\..\..\src\DMS.Core\DMS.NLogs\DMS.NLogs.csproj" />
     <ProjectReference Include="..\DMS.Sample.Contracts\DMS.Sample.Contracts.csproj" />
+    <ProjectReference Include="..\DMS.Sample.Entity\DMS.Sample.Entity.csproj" />
   </ItemGroup>
 
 </Project>
