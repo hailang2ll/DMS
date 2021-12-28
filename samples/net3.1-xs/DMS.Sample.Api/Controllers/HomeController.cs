@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DMS.Sample.Contracts;
+using GenFu;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DMS.Sample.Api.Controllers
 {
     /// <summary>
     /// 
     /// </summary>
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         /// <summary>
         /// 
@@ -13,7 +15,9 @@ namespace DMS.Sample.Api.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            return Content("我是MVC");
+            ViewData["Message"] = "Your application description page.";
+            var data = GenFu.GenFu.ListOf<UserEntity>(10);
+            return View(data);
         }
     }
 }

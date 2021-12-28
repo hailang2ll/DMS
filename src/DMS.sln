@@ -41,7 +41,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMS.Sample.Contracts", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMS.Sample.Service", "..\samples\net3.1-xs\DMS.Sample.Service\DMS.Sample.Service.csproj", "{31E29BD0-5EC4-4D97-B372-5F149F375D1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMS.Sample.Entity", "..\samples\net3.1-xs\DMS.Sample.Entity\DMS.Sample.Entity.csproj", "{5C5E625B-9C41-41EA-86B1-4B1268E227BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMS.Sample.Entity", "..\samples\net3.1-xs\DMS.Sample.Entity\DMS.Sample.Entity.csproj", "{5C5E625B-9C41-41EA-86B1-4B1268E227BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

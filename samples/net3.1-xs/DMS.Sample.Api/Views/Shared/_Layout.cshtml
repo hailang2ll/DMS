@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using DMS.Sample.Contracts;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -8,21 +9,13 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
-        main,main
-    </header>
-    <div class="container">
-        @RenderBody()
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - DDDD - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        @await RenderSectionAsync("Scripts", required: false)*@
+    @await Html.PartialAsync("_DateTimeInfo")
+    @{
+        await Html.RenderPartialAsync("_Head");
+    }
+    @RenderBody()
+    @{
+        await Html.RenderPartialAsync("_Foot", new UserEntity() { UserID = 1, UserName = "hailang", Pwd = "123", Time = DateTime.Now });
+    }
 </body>
 </html>
