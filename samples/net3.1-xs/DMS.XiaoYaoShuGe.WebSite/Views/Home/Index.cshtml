@@ -1,8 +1,17 @@
-﻿@{
+﻿@model List<DMS.Sample.Contracts.UserEntity>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="content">
+    我是中间内容--@ViewData["Message"]
+    <ul>
+        @if (Model.Count > 0)
+        {
+            @foreach (var item in Model)
+            {
+                <li class="badge">@item.UserName</li>
+            }
+        }
+    </ul>
 </div>

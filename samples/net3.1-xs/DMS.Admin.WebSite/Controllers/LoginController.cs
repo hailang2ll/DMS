@@ -10,7 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 
-namespace DMS.Sample.Api.Controllers
+namespace DMS.Admin.WebSite.Controllers
 {
     /// <summary>
     /// 

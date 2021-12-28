@@ -1,3 +1,12 @@
+using Autofac;
+using DMS.Autofac;
+using DMS.Common.Extensions;
+using DMS.Common.Helper;
+using DMS.Common.JsonHandler.JsonConverters;
+using DMS.Extensions;
+using DMS.Extensions.ServiceExtensions;
+using DMS.NLogs.Filters;
+using DMS.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -12,37 +21,84 @@ using System.Threading.Tasks;
 
 namespace DMS.Admin.WebSite
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        /// <summary>
+        /// 
+        /// </summary>
+        public IConfiguration Configuration { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="env"></param>
+        public Startup(IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            var path = env.ContentRootPath;
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(env.ContentRootPath)
+            .AddJsonFile($"Configs/redis.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"Configs/domain.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.json", optional: true, reloadOnChange: true)
+            .AddAppSettingsFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+            Configuration = builder.Build();
         }
 
-        public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllersWithViews(option =>
+            {
+                option.Filters.Add<GlobalExceptionFilter>();
+
+            }).AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
+                options.JsonSerializerOptions.IgnoreNullValues = true;
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                options.JsonSerializerOptions.DictionaryKeyPolicy = null;
+            });
+            services.AddSqlsugarSetup(Configuration);
+            services.AddSwaggerGenV2(AuthModel.Token);
+            services.AddHttpContextSetup();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseSwaggerUIV2(DebugHelper.IsDebug(GetType()));
+            app.UseStaticFiles();
             app.UseRouting();
-
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                   name: "default",
+                   pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterAutofac31("DMS.Sample.Service", "DMS.Sample.Contracts");
+        }
+
     }
 }

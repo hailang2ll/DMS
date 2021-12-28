@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DMS.Sample.Api.Controllers
+namespace DMS.Admin.WebSite.Controllers
 {
     /// <summary>
     /// 

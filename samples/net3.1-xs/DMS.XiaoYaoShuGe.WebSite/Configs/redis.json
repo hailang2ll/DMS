@@ -1,0 +1,7 @@
+﻿{
+  "RedisConfig": {
+    "Enable": false,
+    "RedisConnectionString": "192.168.31.200:6379,allowadmin=true,password=123456",
+    "RedisPrefixKey": ""
+  }
+}

@@ -1,37 +1,23 @@
-﻿using DMS.XiaoYaoShuGe.WebSite.Models;
+﻿using DMS.Sample.Contracts;
+using GenFu;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DMS.XiaoYaoShuGe.WebSite.Controllers
 {
-    public class HomeController : Controller
+    /// <summary>
+    /// 
+    /// </summary>
+    public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            ViewData["Message"] = "Your application description page.";
+            var data = GenFu.GenFu.ListOf<UserEntity>(10);
+            return View(data);
         }
     }
 }
