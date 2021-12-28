@@ -1,0 +1,43 @@
+/*分页条*/
+
+.m-pageBar {
+    text-align: right; margin-top: 10px;
+}
+
+.m-pageBar .count {
+    margin-right: 20px;
+}
+
+.m-pageBar .count i { margin: 0px 3px; font-weight: 700; color: #c71622; }
+
+.m-pageBar a {
+    display: inline-block;
+    height: 26px;
+    line-height: 26px;
+    border: 1px solid #ddd;
+    color: #333;
+    background: #FFF;
+    zoom:1;
+    padding: 0px 10px;
+    font-size: 14px;
+    font-family: \5b8b\4f53;
+    margin-left: 5px;
+}
+
+.m-pageBar a:hover {
+	border: 1px solid #c71622;
+}
+.m-pageBar a.selected {
+    background: #c71622;
+    border: 1px solid #c71622;
+    color: #fff;
+    text-decoration: none;
+}
+
+.m-pageBar a.disabled , .m-pageBar a.disabled:hover {
+    background: #fff;
+    color: #CCC;
+    cursor: default;
+    text-decoration: none;
+    border: 1px solid #ddd;
+}

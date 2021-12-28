@@ -1,0 +1,18 @@
+
+.ui-btn { line-height: 16px; height: 16px; padding: 4px 10px; display: inline-block; _display: inline; _zoom:1; text-align: center; background: #e6edf4; font-family:"Microsoft Yahei","Yahei"; font-size: 14px; font-weight: 500; color: #333; border: 1px solid #8c9eb0; cursor: pointer; border-radius:3px; float: left; margin-right: 10px; }
+.ui-btn:hover { background: #e6edf4; border: 1px solid #8c9eb0; color: #000; box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.1); }
+.ui-btn.red {  background: #ca222d; border: 1px solid #ca222d; color:#fff; cursor: pointer; }
+.ui-btn.red:hover { background: #b9111c; border: 1px solid #b9111c; }
+
+/* 弹出层 */
+.m-category { background: #fff; display: none; padding: 0px; box-shadow: 0 5px 15px #555; border-radius: 5px 5px 5px 5px; }
+.m-category .title { width: 100%; margin-top: 20px; height: 45px; line-height: 40px;/* background: #c71622;*/ color: #000; font-size: 18px; text-indent: 30px; } 
+.m-category .conter { padding:0px 0px 30px 10px; overflow: hidden; }
+.m-category .conter ul { padding: 5px; width: 200px; height: 235px; overflow: auto; border: 1px solid #ccc; margin-left: 15px; float: left; border-radius: 3px; }
+.m-category .conter ul li { padding-left: 15px; line-height: 26px; color: #333; cursor: pointer; }
+.m-category .conter ul li:hover { background: #333; color: #fff; }
+.m-category .conter ul li.selected { background: #666; color: #fff; cursor: default; }
+.m-category .footer { width: 100%; text-align: center; }
+.m-category .footer .ui-btn { float: none; height: 32px; line-height: 32px; font-size: 20px; padding: 0px 30px;}
+.m-category .close { position: absolute; font-size:24px; width: 30px; line-height:30px; height: 30px; overflow: hidden; text-align:center; top: 14px; right: 14px; color:#333; cursor: pointer; } 
+.m-category .close:hover { color:#f00; }

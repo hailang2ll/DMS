@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+    <title>DMS--首页</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="icon" type="image/x-icon" href="/img/ccdfs.ico" />
+    <link href="/css/index.css" rel="stylesheet">
+    <script src="/js/public/html5shiv.js"></script>
+    <script src="/js/public/jquery-1.11.1.js"></script>
+    <script src="/js/public/tools.js"></script>
+    <script src="/js/plugins/jquery.tmpl.js"></script>
+    <script src="/js/plugins/jquery.rightMenu.js"></script>
+    <script src="/js/frame.js"></script>
+    <script src="/js/plugins/jquery.cookie.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="logo" id="logo"><span></span></div>
+        <script id="menuRootTpl" type="text/x-jquery-tmpl">
+            <a href="javascript:;" id="${RightsID}_nav">${DisplayName}</a>
+        </script>
+        <div class="menuRoot" id="menuRoot">
+            <!--
+            <a href="javascript:;" id="1_nav" class="current">系统中心</a>
+            <a href="javascript:;" id="56_nav">会员中心</a>
+            <a href="javascript:;" id="51_nav">商品中心</a>
+            <a href="javascript:;" id="7_nav">订单中心</a>
+            <a href="javascript:;" id="584_nav">营销中心</a>
+            <a href="javascript:;" id="559_nav">报表中心</a>
+            -->
+        </div>
+        <div class="welcome" id="welcome"><em>欢迎 <span id="userName"></span></em><span>|</span><a href="#">修改密码</a><span>|</span><a href="#">DMS首页</a><span>|</span><a href="javascript:;" id="logout">安全退出</a></div>
+    </div>
+    <div class="content">
+        <script id="menuSubTpl" type="text/x-jquery-tmpl">
+            <div id="${RightsID}_menu" class="box" style="display:none;">
+                <h2><span class="fold"></span></h2>
+                {{each GroupRights}}
+                <dl>
+                    <dt id="${RightsID}_menu"><i class="dg"></i><em><u></u>${DisplayName}</em></dt>
+                    {{each GroupRights}}
+                    <dd id="${RightsID}_menu" url="${URLAddr}"><i class="ico-1"></i><em><u></u>${DisplayName}</em></dd>
+                    {{/each}}
+                </dl>
+                {{/each}}
+                <dl>
+                    <dt id="${RightsID}1000_menu"><i class="dg"></i><em><u></u>模板显示</em></dt>
+                    <dd id="${RightsID}1001_menu" url="demo_valiForm.html"><i class="ico-1"></i><em><u></u>表单验证</em></dd>
+                    <dd id="${RightsID}1002_menu" url="demo_fillForm.html"><i class="ico-2"></i><em><u></u>表单赋值</em></dd>
+                    <dd id="${RightsID}1003_menu" url="demo_list.html"><i class="ico-3"></i><em><u></u>列表煊览</em></dd>
+                    <dd id="${RightsID}1004_menu" url="demo_cate.html"><i class="ico-1"></i><em><u></u>分类属性</em></dd>
+                </dl>
+            </div>
+        </script>
+        <div class="menuSub" id="menuSub">
+            <!--
+            <div id="1_menu" class="box" style="">
+                <div class="notice">操作导航</div>
+                <dl>
+                    <dt id="3_menu">系统维护<b class="dg"><i></i></b></dt>
+                    <dd id="42_menu" url="/SysBase/SysCenterList.aspx">系统生成管理</dd>
+                    <dd id="86_menu" url="/SysBase/LogFileList.aspx">文件日志</dd>
+                    <dd id="524_menu" url="/SysBase/LogJobList.aspx">服务日志列表</dd>
+                    <dd id="545_menu" url="/Customs/KeepOnRecordsOfCustomsLogList.aspx">海关日志</dd>
+                </dl>
+                <dl>
+                    <dt id="2_menu">用户权限<b class="dg"><i></i></b></dt>
+                    <dd id="5_menu" url="/SysBase/RightsList.aspx">菜单模块管理</dd>
+                    <dd id="25_menu" url="/SysBase/DeptList.aspx">组织架构管理</dd>
+                    <dd id="27_menu" url="/SysBase/GroupList.aspx">职位列表管理</dd>
+                    <dd id="26_menu" url="/SysBase/UserList.aspx">后台用户管理</dd>
+                </dl>
+            </div>
+            -->
+        </div>
+        <div class="main" id="mainWrap">
+            <div class="mainLayout box" id="mainLayout">
+                <div class="tabs">
+                    <div class="tabsListLeft" style="display:none;"></div>
+                    <div class="tabsList box" id="tabsList">
+                        <ul>
+                            <li class="current"><b>系统首页</b><span style="width:8px; display:inline-block;"></span></li>
+                        </ul>
+                    </div>
+                    <div class="tabsListRight"></div>
+                    <div class="tabsMore" id="tabsMore" style="display:none;">
+                        <span class="count">0</span>
+                        <div class="tabsMoreTip box" style="display:none;">
+                            <ul>
+                                <li class="current">系统首页</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="wins box" id="pagesWindow">
+                    <div class="item">
+                        <iframe src="welcome.html" frameborder="0" width="100%" height="100%" scrolling="yes"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        // 页面加载完成执行
+        $(function () {
+
+            // 如果浏览器版本低于 IE 9.0 不能访问
+            var Tbrowser = T.getBrowser();
+            if (Tbrowser.browser == "ie" && Tbrowser.version < 9) {
+                alert("本系统暂不支持IE9以下版本浏览器，1秒后将退到百度首页，您可以下载更高级IE版本，或Chrome、Firefox、Opera、Safari等其它高级现代浏览器……");
+                window.location = "http://baidu.com";
+            }
+
+            // 初始化页面分类数据及窗口切换
+            if (window.T && customFrame) {
+                customFrame.init({
+                    requires: {
+                        // 请求数据
+                        url: "json/menu.json" 
+                    }
+                });
+            }
+            // 退出系统
+            $("#logout").on("click", function () {
+                T.GET({
+                    action: "http://api_admin.ccdfs.cc/api_admin/admuserlogin/Loginout",
+                    success: function (json) {
+                        if (json.errno == 0) {                           
+                            T.uncookie();
+                            window.location = "/home";
+                        } else {
+                            alert(json.errmsg);
+                        }
+                    },
+                    failure: function (res) {
+                        if (res && res.errmsg) {
+                            alert(res.errmsg);
+                        } else {
+                            alert("系统逻辑错误");
+                        }
+                    },
+                    error: function (e) {
+                        alert(e);
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
