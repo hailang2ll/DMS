@@ -1,7 +1,7 @@
-﻿@model  DMS.Sample.Contracts.UserEntity;
+﻿@model  DMS.Sample.Entity.CmsUser
 <div class="foot">
     我是尾部
-    <h3>@Model.UserID</h3>
-    <span>@Model.Time.ToString("yyyy-MM-dd")</span>
+    <h3>@Model.Id</h3>
+    <span>@Model.CreateTime.ToString("yyyy-MM-dd")</span>
     <p>@Model.UserName</p>
 </div>

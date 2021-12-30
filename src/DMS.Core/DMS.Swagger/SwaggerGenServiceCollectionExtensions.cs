@@ -67,7 +67,7 @@ namespace DMS.Swagger
                     }
                     else
                     {
-                        ConsoleHelper.WriteErrorLine($"SwaggerGen.contracts load fail;path={contractPath}");
+                        ConsoleHelper.WriteWarningLine($"SwaggerGen.contracts load fail;path={contractPath}");
                     }
 
                     if (authModel == AuthModel.Token)

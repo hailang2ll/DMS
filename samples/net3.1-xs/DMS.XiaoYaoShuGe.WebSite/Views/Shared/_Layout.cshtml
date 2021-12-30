@@ -1,5 +1,4 @@
-﻿@using DMS.Sample.Contracts;
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,13 +8,12 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    @await Html.PartialAsync("_DateTimeInfo")
     @{
         await Html.RenderPartialAsync("_Head");
     }
     @RenderBody()
     @{
-        await Html.RenderPartialAsync("_Foot", new UserEntity() { UserID = 1, UserName = "hailang", Pwd = "123", Time = DateTime.Now });
+        await Html.RenderPartialAsync("_Foot", new DMS.Sample.Entity.CmsUser() { Id = 1, UserName = "hailang", UserPassword = "123", CreateTime = DateTime.Now });
     }
 </body>
 </html>

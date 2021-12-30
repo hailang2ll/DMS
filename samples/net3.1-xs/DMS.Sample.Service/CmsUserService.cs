@@ -26,13 +26,13 @@ namespace DMS.Sample.Service
         public async Task<ResponseResult> Login(LoginCmsUserParam param)
         {
             ResponseResult result = new ResponseResult();
-            if (param.UserName.IsNullOrEmpty()
-                || param.UserPassword.IsNullOrEmpty())
-            {
-                result.errno = 1;
-                result.errmsg = "参数错误";
-                return result;
-            }
+            //if (param.UserName.IsNullOrEmpty()
+            //    || param.UserPassword.IsNullOrEmpty())
+            //{
+            //    result.errno = 1;
+            //    result.errmsg = "参数错误";
+            //    return result;
+            //}
 
             var entity = await db.Queryable<CmsUser>()
              .FirstAsync(q => q.UserName == param.UserName && q.UserPassword == param.UserPassword);

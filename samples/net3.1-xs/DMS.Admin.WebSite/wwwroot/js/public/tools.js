@@ -1684,7 +1684,7 @@ if (typeof JSON !== 'object') {
             modeConfirmHTML: '<div class="popup popConfirm"><header class="hd">提示</header><section class="ct">说明文字提示区</section><footer class="ft"><a class="btnTrue" href="javascript:;">确定</a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="btnFalse popup-close" href="javascript:;">取消</a></footer><a href="javascript:;" class="close">×</a></div>',
             modePromptHTML: '<div class="popup popPromp"><header class="hd">提示</header><section class="ct"><h1>说明文字提示区</h1><p><input type="text" value=""></p></section><footer class="ft"><a class="btnTrue" href="javascript:;">确定</a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="btnFalse popup-close" href="javascript:;">取消</a></footer><a href="javascript:;" class="close">×</a></div>',
             modeIframeHTML: '<div class="popup popIframe"><header class="hd">提示标题</header><section class="ct"><iframe src="#" frameborder="0" style="background:#fff;"></iframe></section><a href="javascript:;" class="close">×</a></div>',
-            baseCssLink: 'http://base.ccdfs.cc/manager/css/public/m-popup.css',
+            baseCssLink: '/css/public/m-popup.css',
             htmlString: '',                      // 弹层ID不存在 则以此启用创建弹层
             htmlID: null,                        // 弹层ID
             htmlCssFlag: null,                   // 附加 css block style ID

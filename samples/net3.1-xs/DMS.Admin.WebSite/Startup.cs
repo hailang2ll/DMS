@@ -1,8 +1,10 @@
 using Autofac;
+using DMS.Admin.WebSite.FilterAttribute;
 using DMS.Autofac;
 using DMS.Common.Extensions;
 using DMS.Common.Helper;
 using DMS.Common.JsonHandler.JsonConverters;
+using DMS.Common.Model.Result;
 using DMS.Extensions;
 using DMS.Extensions.ServiceExtensions;
 using DMS.NLogs.Filters;
@@ -56,14 +58,30 @@ namespace DMS.Admin.WebSite
             services.AddControllersWithViews(option =>
             {
                 option.Filters.Add<GlobalExceptionFilter>();
+                option.Filters.Add<ApiResultFilterAttribute>();
 
             }).AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
-                options.JsonSerializerOptions.IgnoreNullValues = true;
-                options.JsonSerializerOptions.PropertyNamingPolicy = null;
-                options.JsonSerializerOptions.DictionaryKeyPolicy = null;
+                //options.JsonSerializerOptions.IgnoreNullValues = true;
+                //options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                //options.JsonSerializerOptions.DictionaryKeyPolicy = null;
+            }).ConfigureApiBehaviorOptions(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
             });
+            #region 默认模型验证
+            //services.Configure<ApiBehaviorOptions>(options =>
+            //{
+            //    //options.SuppressModelStateInvalidFilter = true; // 使用自定义模型验证
+            //    options.InvalidModelStateResponseFactory = (context) =>
+            //    {
+            //        var result = new ResponseResult();
+            //        result.errmsg = string.Join(Environment.NewLine, context.ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)));
+            //        return new JsonResult(result);
+            //    };
+            //});
+            #endregion
             services.AddSqlsugarSetup(Configuration);
             services.AddSwaggerGenV2(AuthModel.Token);
             services.AddHttpContextSetup();

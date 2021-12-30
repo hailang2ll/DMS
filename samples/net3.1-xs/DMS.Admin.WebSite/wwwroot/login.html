@@ -26,7 +26,7 @@
                                 用户名：
                             </td>
                             <td>
-                                <input name="UserCode" type="text" id="txtUserCode" class="txt" test="required">
+                                <input name="UserNamea" type="text" id="txtUserName" class="txt" test="required">
                             </td>
                         </tr>
                         <tr>
@@ -34,7 +34,7 @@
                                 密&nbsp;&nbsp;&nbsp;&nbsp;码：
                             </td>
                             <td>
-                                <input name="UserPwd" type="password" id="txtUserPwd" class="txt" test="required">
+                                <input name="UserPassword" type="password" id="txtUserPassword" class="txt" test="required">
                             </td>
                         </tr>
                         <tr id="trValidcode" style="display: none;">
@@ -65,28 +65,34 @@
             T.registerFileds();
             $("#targetForm").submit(function () {
                 var entity = T.formToJSON("#targetForm", function (data) {
-                    data["UserPwd"] = hex_md5(data["UserPwd"]);
+                    data["UserPassword"] = hex_md5(data["UserPassword"]);
                     return data;
                 });
                 if (entity) {
                     $.ajax({
-                        url: "json/menu.json",
-                        data: entity,
+                        type: "POST",
+                        url: "api/Login/DoLogin",
+                        contentType: "application/json",
+                        data: JSON.stringify(entity),
                         xhrFields: {
                             withCredentials: true
                         },
-                        type: "GET",
-                        contentType: "application/json",
                         success: function (res) {
-                            alert("成功");
-                            //T.cookie("__asid", res.data.Sid, 7);
-                            window.location = T.DOMAIN.WWW + "index.html";
+                            if (res.errno == 0) {
+                                T.alert("登录成功", 1000, function () {
+                                    window.location = T.DOMAIN.WWW + "index.html";
+                                });
+                                //T.cookie("__asid", res.data.Sid, 7);
+                            } else {
+                                T.alert(res.errmsg);
+                            }
                         },
                         error: function (err) {
-                            alert("异常！");
+                            T.alert("异常！" + err.status + "（" + err.statusText + "）");
                         }
                     });
                 }
+                return false;
             });
         });
     </script>
