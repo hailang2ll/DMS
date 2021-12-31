@@ -47,6 +47,7 @@ namespace DMS.Admin.WebSite.Controllers
         [HttpPost("DoLogin")]
         public async Task<ResponseResult> DoLogin(LoginCmsUserParam param)
         {
+            //Response.Cookies.Append("one", "");
             ResponseResult result = await cmsUserService.Login(param);
             return result;
         }

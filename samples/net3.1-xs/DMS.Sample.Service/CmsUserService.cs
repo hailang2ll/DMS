@@ -42,6 +42,7 @@ namespace DMS.Sample.Service
                 result.errmsg = "未找到相关数据";
                 return result;
             }
+
             result.data = entity;
             return result;
         }
