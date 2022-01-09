@@ -37,7 +37,6 @@ namespace DMS.Sample.Service
             CmsNovel cmsNovel = new CmsNovel()
             {
                 Title = param.Title,
-                Content = param.Content,
             };
             var flag = await db.Insertable(cmsNovel).ExecuteReturnIdentityAsync();
             if (flag > 0)

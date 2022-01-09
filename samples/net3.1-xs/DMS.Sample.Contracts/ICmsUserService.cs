@@ -1,5 +1,6 @@
 ﻿using DMS.Common.Model.Result;
 using DMS.Sample.Contracts.Param;
+using DMS.Sample.Contracts.Result;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,6 +15,6 @@ namespace DMS.Sample.Contracts
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        Task<ResponseResult> Login(LoginCmsUserParam param);
+        Task<ResponseResult<LoginCmsUserResult>> Login(LoginCmsUserParam param);
     }
 }

@@ -127,7 +127,7 @@
             // 退出系统
             $("#logout").on("click", function () {
                 T.GET({
-                    action: "http://api_admin.ccdfs.cc/api_admin/admuserlogin/Loginout",
+                    action: "api/Login/Loginout",
                     success: function (json) {
                         if (json.errno == 0) {                           
                             T.uncookie();

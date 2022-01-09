@@ -63,9 +63,6 @@ namespace DMS.Admin.WebSite
             }).AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
-                //options.JsonSerializerOptions.IgnoreNullValues = true;
-                //options.JsonSerializerOptions.PropertyNamingPolicy = null;
-                //options.JsonSerializerOptions.DictionaryKeyPolicy = null;
             }).ConfigureApiBehaviorOptions(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;

@@ -23,6 +23,7 @@ namespace DMS.Admin.WebSite.FilterAttribute
             {
                 //初始化返回结果
                 var result = new ResponseResult();
+                result.errno = 1;
                 result.errmsg = string.Join(Environment.NewLine, context.ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)));
                 //foreach (var item in context.ModelState.Values)
                 //{

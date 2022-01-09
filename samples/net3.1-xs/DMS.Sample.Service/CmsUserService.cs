@@ -2,6 +2,7 @@
 using DMS.Common.Model.Result;
 using DMS.Sample.Contracts;
 using DMS.Sample.Contracts.Param;
+using DMS.Sample.Contracts.Result;
 using DMS.Sample.Entity;
 using SqlSugar;
 using System;
@@ -23,19 +24,13 @@ namespace DMS.Sample.Service
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public async Task<ResponseResult> Login(LoginCmsUserParam param)
+        public async Task<ResponseResult<LoginCmsUserResult>> Login(LoginCmsUserParam param)
         {
-            ResponseResult result = new ResponseResult();
-            //if (param.UserName.IsNullOrEmpty()
-            //    || param.UserPassword.IsNullOrEmpty())
-            //{
-            //    result.errno = 1;
-            //    result.errmsg = "参数错误";
-            //    return result;
-            //}
-
+            ResponseResult<LoginCmsUserResult> result = new ResponseResult<LoginCmsUserResult>();
             var entity = await db.Queryable<CmsUser>()
-             .FirstAsync(q => q.UserName == param.UserName && q.UserPassword == param.UserPassword);
+                .Where(q => q.UserName == param.UserName && q.UserPassword == param.UserPassword)
+                .Select<LoginCmsUserResult>()
+                .FirstAsync();
             if (entity == null)
             {
                 result.errno = 2;

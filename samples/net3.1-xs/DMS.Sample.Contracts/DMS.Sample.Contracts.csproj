@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DMS.Common" Version="4.0.0" />
+    <PackageReference Include="DMS.Common" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Result\" />
+    <ProjectReference Include="..\DMS.Sample.Entity\DMS.Sample.Entity.csproj" />
   </ItemGroup>
 
 </Project>
