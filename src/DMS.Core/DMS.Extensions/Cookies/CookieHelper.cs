@@ -10,7 +10,7 @@ namespace DMS.Extensions.Cookies
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         /// <summary>
-        /// 通过构造函数进行注入
+        /// 通过构造函数进行注入 
         /// </summary>
         /// <param name="httpContextAccessor"></param>
         public CookieHelper(IHttpContextAccessor httpContextAccessor)
