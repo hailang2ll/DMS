@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DMS.ORM
+namespace DMS.Extensions.ServiceExtensions
 {
     public static class SqlsugarSetup
     {

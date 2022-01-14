@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DMS.ORM
+namespace DMS.Extensions.ServiceExtensions
 {
     public static class FreesqlSetup
     {
