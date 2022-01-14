@@ -7,7 +7,8 @@
     <Authors>Dylan,hailang</Authors>
     <Copyright>Copyright@2016-2022 Dylan</Copyright>
     <Version>1.5.6</Version>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -26,9 +27,5 @@
   <ItemGroup>
     <ProjectReference Include="..\DMS.Extensions\DMS.Extensions.csproj" />
   </ItemGroup>
-
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="If $(ConfigurationName) == Release (&#xD;&#xA;del $(ProjectDir)$(OutDir)..\*.nupkg /s/q&#xD;&#xA;exit 0&#xD;&#xA;)ELSE (echo &quot;Not Debug mode, no file del from nupkg&quot;)" />
-  </Target>
 
 </Project>
