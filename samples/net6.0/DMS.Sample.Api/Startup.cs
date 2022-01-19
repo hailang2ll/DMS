@@ -19,6 +19,9 @@ using Microsoft.Extensions.Hosting;
 
 namespace DMS.Sample.Api
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Startup
     {
         /// <summary>
@@ -50,34 +53,41 @@ namespace DMS.Sample.Api
         {
             services.AddControllers(option =>
             {
+                //全局处理异常，支持DMS.Log4net，DMS.NLogs
                 option.Filters.Add<GlobalExceptionFilter>();
                 //option.Filters.Add(typeof(LoginFilter));
 
             }).AddJsonOptions(options =>
-            {
+            {   
                 options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
-                options.JsonSerializerOptions.IgnoreNullValues = true;
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 options.JsonSerializerOptions.DictionaryKeyPolicy = null;
             });
-            services.AddSwaggerGenV2(AuthModel.Token);
-            services.AddHttpContextSetup();
-            services.AddRedisSetup();
-            services.AddAuthSetup(AuthModel.Token);
-            //用户服务自定义
-            services.AddRedisMqSetup();
-            services.AddCorsSetup();
+            //api文档生成，1支持普通token验证，2支持oauth2切换；默认为1
+            //services.AddSwaggerGenV2();
+            ////开启HttpContext服务
+            //services.AddHttpContextSetup();
+            ////开启redis服务
+            //services.AddRedisSetup();
+            ////开启身份认证服务，与api文档验证对应
+            //services.AddAuthSetup();
+            ////开启redismq服务
+            //services.AddRedisMqSetup();
+            ////开启跨域服务
+            //services.AddCorsSetup();
 
 
-            // 授权+认证 (jwt or ids4)
-            if (Permissions.IsUseIds4)
-            {
-                services.AddAuthenticationIds4Setup();
-            }
-            else
-            {
-                services.AddAuthenticationJWTSetup();
-            }
+            //// 授权+认证 (jwt or ids4)
+            //if (Permissions.IsUseIds4)
+            //{
+            //    services.AddAuthenticationIds4Setup();
+            //}
+            //else
+            //{
+            //    services.AddAuthenticationJWTSetup();
+            //}
+
+
             //services.AddAuthorizationSetup();
 
         }
@@ -93,9 +103,10 @@ namespace DMS.Sample.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseSwaggerUIV2(DebugHelper.IsDebug(GetType()));
+            //app.UseSwaggerUIV2(DebugHelper.IsDebug(GetType()));
             // CORS跨域
             app.UseCors(DMS.Common.AppConfig.GetValue(new string[] { "Cors", "PolicyName" }));
+            //开户静态页面
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
@@ -107,7 +118,7 @@ namespace DMS.Sample.Api
         }
 
         /// <summary>
-        /// 
+        /// 接口注入
         /// </summary>
         /// <param name="builder"></param>
         public void ConfigureContainer(ContainerBuilder builder)

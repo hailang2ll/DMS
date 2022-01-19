@@ -23,8 +23,17 @@ namespace DMS.Sample.Api.Controllers
     //[Authorize(Policy = "customizePermisson")]
     public class ValuesController : ControllerBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly IProductService productService;
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly DMS.Auth.v1.IUserAuth userAuth1;
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly DMS.Auth.v2.IUserAuth userAuth2;
         /// <summary>
         /// 
@@ -33,11 +42,10 @@ namespace DMS.Sample.Api.Controllers
         /// <param name="userAuth1"></param>
         /// <param name="userAuth2"></param>
 
-        public ValuesController(IProductService productService, DMS.Auth.v1.IUserAuth userAuth1, DMS.Auth.v2.IUserAuth userAuth2)
+        public ValuesController(IProductService productService)
         {
             this.productService = productService;
-            this.userAuth1 = userAuth1;
-            this.userAuth2 = userAuth2;
+        
         }
 
         /// <summary>

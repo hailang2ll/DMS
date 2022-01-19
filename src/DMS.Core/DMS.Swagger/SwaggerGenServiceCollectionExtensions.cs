@@ -25,11 +25,6 @@ namespace DMS.Swagger
             var basePath = AppContext.BaseDirectory;
             var commentsFileName = AppDomain.CurrentDomain.FriendlyName + ".xml";
             var xmlPath = Path.Combine(basePath, commentsFileName);
-
-            string serviceName = AppDomain.CurrentDomain.FriendlyName.Replace(".Api", "").Replace("Api", "").Replace(".API", "").Replace("API", "");
-            var contractPath = Path.Combine(basePath, serviceName + ".Contracts.xml");
-
-
             if (File.Exists(xmlPath))
             {
                 ConsoleHelper.WriteSuccessLine($"SwaggerGen.api load success:path={xmlPath}");
@@ -60,6 +55,10 @@ namespace DMS.Swagger
                     //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                     // 添加控制器层注释，true表示显示控制器注释
                     option.IncludeXmlComments(xmlPath, true);
+
+                    #region 加载实体注释
+                    string serviceName = AppDomain.CurrentDomain.FriendlyName.Replace(".Api", "").Replace("Api", "").Replace(".API", "").Replace("API", "");
+                    var contractPath = Path.Combine(basePath, serviceName + ".Contracts.xml");
                     if (File.Exists(contractPath))
                     {
                         ConsoleHelper.WriteSuccessLine($"SwaggerGen.contracts load success:path={contractPath}");
@@ -69,6 +68,7 @@ namespace DMS.Swagger
                     {
                         ConsoleHelper.WriteErrorLine($"SwaggerGen.contracts load fail;path={contractPath}");
                     }
+                    #endregion
 
                     if (authModel == AuthModel.Token)
                     {

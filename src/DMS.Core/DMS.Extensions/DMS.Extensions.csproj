@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DMS.Common" Version="4.0.0" />
+    <PackageReference Include="DMS.Common" Version="4.0.1" />
     <PackageReference Include="FreeSql.Provider.MySql" Version="3.0.100" />
     <PackageReference Include="IdentityModel" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
