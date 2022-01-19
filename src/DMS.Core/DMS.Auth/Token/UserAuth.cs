@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DMS.Auth.v1
+namespace DMS.Auth.Token
 {
     public class UserAuth : IUserAuth
     {
@@ -13,10 +13,10 @@ namespace DMS.Auth.v1
         private readonly IRedisRepository redisRepository;
         public UserAuth(IHttpContextAccessor httpContextAccessor, IRedisRepository redisRepository)
         {
-            Console.WriteLine($"UserAuth.v1:{redisRepository}");
+            Console.WriteLine($"DMS.Auth.Token-1:{redisRepository}");
             this._accessor = httpContextAccessor;
             this.redisRepository = redisRepository;
-            Console.WriteLine($"UserAuth.v1.1:{redisRepository}");
+            Console.WriteLine($"DMS.Auth.Token-2:{redisRepository}");
         }
         public long ID => UserTicket.ID;
         public string EpCode => UserTicket.EpCode;

@@ -1,4 +1,4 @@
-﻿using DMS.Auth.v2;
+﻿using DMS.Auth.Oauth2;
 using DMS.Common.Extensions;
 using DMS.Common.Model.Result;
 using DMS.Redis;

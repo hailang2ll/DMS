@@ -1,10 +1,11 @@
 ﻿using DMS.Common.Model.Result;
+using DMS.Sample.Contracts.Result;
 using System.Threading.Tasks;
 
 namespace DMS.Sample.Contracts
 {
     /// <summary>
-    /// 
+    /// 产品接口
     /// </summary>
     public interface IProductService
     {
@@ -12,31 +13,6 @@ namespace DMS.Sample.Contracts
         /// 
         /// </summary>
         /// <returns></returns>
-        Task<ResponseResult<UserEntity>> GetProductAsync(long jobLogID);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        Task TestRedis0(string msg = "我应该在0库");
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="msg"></param>
-        /// <returns></returns>
-        Task TestRedis1(string msg = "我应该在1库");
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        Task RedisPublish();
-        /// <summary>
-        /// 
-        /// </summary>
-        void Publish();
-        /// <summary>
-        /// 
-        /// </summary>
-        void Subscribe();
-
+        Task<ResponseResult<ProductEntityResult>> GetProductAsync(long id);
     }
 }

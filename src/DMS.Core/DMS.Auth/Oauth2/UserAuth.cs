@@ -9,7 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace DMS.Auth.v2
+namespace DMS.Auth.Oauth2
 {
     public class UserAuth : IUserAuth
     {
@@ -17,10 +17,10 @@ namespace DMS.Auth.v2
         private readonly IRedisRepository redisRepository;
         public UserAuth(IHttpContextAccessor httpContextAccessor, IRedisRepository redisRepository)
         {
-            Console.WriteLine($"UserAuth:{redisRepository}");
+            Console.WriteLine($"DMS.Auth.Oauth2-1:{redisRepository}");
             this._accessor = httpContextAccessor;
             this.redisRepository = redisRepository;
-            Console.WriteLine($"UserAuth.1:{redisRepository}");
+            Console.WriteLine($"DMS.Auth.Oauth2-1:{redisRepository}");
         }
 
         public string Name => UserTicket.Name;

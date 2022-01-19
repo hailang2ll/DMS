@@ -64,18 +64,18 @@ namespace DMS.Sample.Api
                 options.JsonSerializerOptions.DictionaryKeyPolicy = null;
             });
             //api文档生成，1支持普通token验证，2支持oauth2切换；默认为1
-            //services.AddSwaggerGenV2();
-            ////开启HttpContext服务
-            //services.AddHttpContextSetup();
+            services.AddSwaggerGenV2();
             ////开启redis服务
-            //services.AddRedisSetup();
+            services.AddRedisSetup();
+            //开启redismq服务
+            services.AddRedisMqSetup();
             ////开启身份认证服务，与api文档验证对应
             //services.AddAuthSetup();
-            ////开启redismq服务
-            //services.AddRedisMqSetup();
+
             ////开启跨域服务
             //services.AddCorsSetup();
-
+            ////开启HttpContext服务
+            //services.AddHttpContextSetup();
 
             //// 授权+认证 (jwt or ids4)
             //if (Permissions.IsUseIds4)
@@ -103,7 +103,7 @@ namespace DMS.Sample.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            //app.UseSwaggerUIV2(DebugHelper.IsDebug(GetType()));
+            app.UseSwaggerUIV2(DebugHelper.IsDebug(GetType()));
             // CORS跨域
             app.UseCors(DMS.Common.AppConfig.GetValue(new string[] { "Cors", "PolicyName" }));
             //开户静态页面

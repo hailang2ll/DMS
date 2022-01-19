@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DMS.Auth.v1
+namespace DMS.Auth.Token
 {
     public interface IUserAuth
     {

@@ -19,10 +19,10 @@ namespace DMS.Redis
             {
                 throw new Exception($"no load redis.json file，connection fail");
             }
-            Console.WriteLine($"RedisRepository:{conn}");
+            Console.WriteLine($"RedisRepository:{conn.Configuration}");
             _conn = conn;
             _database = _conn.GetDatabase();
-            Console.WriteLine($"RedisRepository.1:{conn}");
+            Console.WriteLine($"RedisRepository.1:{conn.Configuration}");
         }
 
 

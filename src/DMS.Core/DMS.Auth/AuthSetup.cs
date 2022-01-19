@@ -11,11 +11,11 @@ namespace DMS.Auth
             if (services == null) throw new ArgumentNullException(nameof(services));
             if (authModel == AuthModel.Token)
             {
-                services.AddScoped<DMS.Auth.v1.IUserAuth, DMS.Auth.v1.UserAuth>();
+                services.AddScoped<DMS.Auth.Token.IUserAuth, DMS.Auth.Token.UserAuth>();
             }
             else if (authModel == AuthModel.Auth20)
             {
-                services.AddScoped<DMS.Auth.v2.IUserAuth, DMS.Auth.v2.UserAuth>();
+                services.AddScoped<DMS.Auth.Oauth2.IUserAuth, DMS.Auth.Oauth2.UserAuth>();
             }
         }
     }

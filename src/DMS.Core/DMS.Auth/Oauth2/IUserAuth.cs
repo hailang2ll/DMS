@@ -1,7 +1,7 @@
 ﻿using DMS.Common.Model.Result;
 using System.Threading.Tasks;
 
-namespace DMS.Auth.v2
+namespace DMS.Auth.Oauth2
 {
     public interface IUserAuth
     {
