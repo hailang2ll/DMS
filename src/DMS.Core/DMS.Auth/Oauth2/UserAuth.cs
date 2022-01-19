@@ -23,59 +23,8 @@ namespace DMS.Auth.Oauth2
             Console.WriteLine($"DMS.Auth.Oauth2-1:{redisRepository}");
         }
 
-        public string Name => UserTicket.Name;
-
-        public long ID => UserTicket.ID;
-        public (bool, ResponseResult) ChenkLogin()
-        {
-            return ChenkLoginAsync().Result;
-        }
-        public (bool, ResponseResult<T>) ChenkLogin<T>()
-        {
-            return ChenkLoginAsync<T>().Result;
-        }
-        public Task<(bool, ResponseResult)> ChenkLoginAsync()
-        {
-            if (UserTicket.ID <= 0)
-            {
-                var response = new ResponseResult()
-                {
-                    errno = 30,
-                    errmsg = "请先登录"
-                };
-                return Task.FromResult((false, response));
-            }
-            return Task.FromResult((true, new ResponseResult() { errmsg = "success" }));
-        }
-        public Task<(bool, ResponseResult<T>)> ChenkLoginAsync<T>()
-        {
-            if (UserTicket.ID <= 0)
-            {
-                var response = new ResponseResult<T>()
-                {
-                    errno = 30,
-                    errmsg = "请先登录"
-                };
-                return Task.FromResult((false, response));
-            }
-            return Task.FromResult((true, new ResponseResult<T>() { errmsg = "success" }));
-        }
-        public UserTicket UserTicket
-        {
-            get
-            {
-                var token = _accessor.HttpContext.Request.Headers["AccessToken"].ToString();
-                var userTicket = redisRepository.GetValueAsync<UserTicket>(token).Result;
-                if (userTicket != null && userTicket.ID > 0)
-                {
-                    return userTicket;
-                }
-                return new UserTicket();
-            }
-        }
-
-
-
+        public long ID => GetClaimValueByType("jti").FirstOrDefault().ToLong();
+        public string Name => GetName();
 
         public string GetToken()
         {
@@ -85,9 +34,6 @@ namespace DMS.Auth.Oauth2
         {
             return _accessor.HttpContext.User.Identity.IsAuthenticated;
         }
-
-        public string Name2 => GetName();
-
         private string GetName()
         {
             if (IsAuthenticated() && !_accessor.HttpContext.User.Identity.Name.IsNullOrEmpty())
@@ -107,7 +53,7 @@ namespace DMS.Auth.Oauth2
             return "";
         }
 
-        public long ID2 => GetClaimValueByType("jti").FirstOrDefault().ToLong();
+
 
         public List<string> GetUserInfoFromToken(string ClaimType)
         {
@@ -133,7 +79,6 @@ namespace DMS.Auth.Oauth2
         }
         public List<string> GetClaimValueByType(string ClaimType)
         {
-
             return (from item in GetClaimsIdentity()
                     where item.Type == ClaimType
                     select item.Value).ToList();

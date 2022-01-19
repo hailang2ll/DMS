@@ -25,15 +25,15 @@ namespace DMS.Sample.Contracts
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        Task RedisPublish();
-        /// <summary>
-        /// 
-        /// </summary>
         void Publish();
         /// <summary>
         /// 
         /// </summary>
         void Subscribe();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task RedisPublish();
     }
 }

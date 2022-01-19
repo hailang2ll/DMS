@@ -10,7 +10,7 @@ namespace DMS.Sample.Api.Controllers
     public class ValuesController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 我是API
         /// </summary>
         /// <returns></returns>
         [HttpGet]

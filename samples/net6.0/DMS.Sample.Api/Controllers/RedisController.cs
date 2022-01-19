@@ -67,6 +67,7 @@ namespace DMS.Sample.Api.Controllers
         }
 
         /// <summary>
+        /// 订阅服务先注入
         /// 发布
         /// </summary>
         /// <returns></returns>

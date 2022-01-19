@@ -69,13 +69,14 @@ namespace DMS.Sample.Api
             services.AddRedisSetup();
             //开启redismq服务
             services.AddRedisMqSetup();
-            ////开启身份认证服务，与api文档验证对应
-            //services.AddAuthSetup();
+            //开启HttpContext服务
+            services.AddHttpContextSetup();
+            //开启身份认证服务，与api文档验证对应即可
+            services.AddAuthSetup(AuthModel.All);
 
             ////开启跨域服务
             //services.AddCorsSetup();
-            ////开启HttpContext服务
-            //services.AddHttpContextSetup();
+
 
             //// 授权+认证 (jwt or ids4)
             //if (Permissions.IsUseIds4)

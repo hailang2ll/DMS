@@ -1,5 +1,8 @@
-﻿using DMS.Common.Model.Result;
+﻿using DMS.Auth;
+using DMS.Common.JsonHandler;
+using DMS.Common.Model.Result;
 using DMS.Extensions.Authorizations;
+using DMS.Redis;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
@@ -9,16 +12,48 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace DMS.Sample.Api.Controllers
 {
-       /// <summary>
-    /// 
+    /// <summary>
+    /// 我是登录
+    /// 颁发令牌
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
     {
+        private readonly IRedisRepository redisRepository;
+        /// <summary>
+        /// 构造函数注入
+        /// </summary>
+        /// <param name="redisRepository"></param>
+        public LoginController(IRedisRepository redisRepository)
+        {
+            this.redisRepository = redisRepository;
+        }
+        /// <summary>
+        /// 普通TOKEN认识方式
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("TokenLogin")]
+        public async Task<ResponseResult> TokenLogin()
+        {
+            ResponseResult result = new ResponseResult();
+            UserTicket tokenModel = new UserTicket
+            {
+                ID = 120,
+                EpCode = "100214545454",
+                UID = "435353534",
+                ExpDate = DateTime.Now.AddDays(1),
+            };
+            string sid = DMS.Extensions.UniqueGenerator.UniqueHelper.GetWorkerID().ToString();
+            await redisRepository.SetAsync(sid, tokenModel.SerializeObject(), tokenModel.ExpDate);
+            result.data = sid;
+            return result;
+        }
+
         /// <summary>
         /// JWT认证
         /// </summary>
@@ -77,7 +112,7 @@ namespace DMS.Sample.Api.Controllers
             }
             else
             {
-                var userRoles = list.Select(q=>q.Role).ToList();
+                var userRoles = list.Select(q => q.Role).ToList();
                 //如果是基于用户的授权策略，这里要添加用户;如果是基于角色的授权策略，这里要添加角色
                 var claims = new List<Claim> {
                     new Claim(ClaimTypes.Name, user.UserName),

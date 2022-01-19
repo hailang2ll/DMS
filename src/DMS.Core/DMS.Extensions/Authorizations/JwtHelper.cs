@@ -19,7 +19,6 @@ namespace DMS.Extensions.Authorizations
         /// <returns></returns>
         public static TokenInfoViewModel BuildJwtToken(Claim[] claims)
         {
-
             string iss = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Issuer" });
             string aud = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Audience" });
             string secret = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Secret" });
@@ -45,7 +44,7 @@ namespace DMS.Extensions.Authorizations
                 success = true,
                 token = encodedJwt,
                 expires_in = TimeSpan.FromSeconds(60 * 60).TotalSeconds,
-                token_type = "Bearer"
+                token_type = "Bearer", 
             };
             return responseJson;
         }
@@ -76,8 +75,8 @@ namespace DMS.Extensions.Authorizations
                 new Claim(ClaimTypes.Name,tokenModel.Name),
                 new Claim(JwtRegisteredClaimNames.Iat, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}"),
                 new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
-                //这个就是过期时间，目前是过期1000秒，可自定义，注意JWT有自己的缓冲过期时间
-                new Claim (JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(DateTime.Now.AddSeconds(1000)).ToUnixTimeSeconds()}"),
+                //这个就是过期时间，目前是过期3600秒，可自定义，注意JWT有自己的缓冲过期时间
+                new Claim (JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(DateTime.Now.AddSeconds(3600)).ToUnixTimeSeconds()}"),
                 new Claim(ClaimTypes.Expiration, DateTime.Now.AddSeconds(1000).ToString()),
                 new Claim(JwtRegisteredClaimNames.Iss,iss),
                 new Claim(JwtRegisteredClaimNames.Aud,aud),
