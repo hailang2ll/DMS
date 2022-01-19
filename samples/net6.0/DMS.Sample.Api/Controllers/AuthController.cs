@@ -1,8 +1,8 @@
-﻿using DMS.Common.Helper;
+﻿using DMS.Auth.Token.FilterAttribute;
+using DMS.Common.Helper;
 using DMS.Common.Model.Result;
 using DMS.Sample.Contracts;
 using DMS.Sample.Contracts.Result;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -20,6 +20,8 @@ namespace DMS.Sample.Api.Controllers
     //[Authorize(Roles = "dylan")]
     //[Authorize(Roles ="system")]
     //[Authorize(Policy = "customizePermisson")]
+    //全局Token认证
+    [TypeFilter(typeof(CheckLoginAttribute))]
     public class AuthController : ControllerBase
     {
         /// <summary>
@@ -61,11 +63,10 @@ namespace DMS.Sample.Api.Controllers
             var token = userToken.GetToken();
 
             var ip = IPHelper.GetCurrentIp();
-            if (id <= 0)
-            {
-                return new ResponseResult() { errno = 30, errmsg = "未登录" };
-            }
-
+            //if (id <= 0)
+            //{
+            //    return new ResponseResult() { errno = 30, errmsg = "未登录" };
+            //}
             return await Task.FromResult(new ResponseResult() { data = new { id, name, epCode, uid, token, ip } });
         }
 
