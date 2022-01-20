@@ -1,5 +1,6 @@
 using Autofac;
 using DMS.Auth;
+using DMS.Auth.Token.FilterAttribute;
 using DMS.Autofac;
 using DMS.Common.Extensions;
 using DMS.Common.Helper;
@@ -55,7 +56,8 @@ namespace DMS.Sample.Api
             {
                 //全局处理异常，支持DMS.Log4net，DMS.NLogs
                 option.Filters.Add<GlobalExceptionFilter>();
-                //option.Filters.Add(typeof(LoginFilter));
+                //全局普通token验证
+                //option.Filters.Add<AuthorizationFilter>();
 
             }).AddJsonOptions(options =>
             {   

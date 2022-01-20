@@ -20,8 +20,11 @@ namespace DMS.Sample.Api.Controllers
     //[Authorize(Roles = "dylan")]
     //[Authorize(Roles ="system")]
     //[Authorize(Policy = "customizePermisson")]
-    //全局Token认证
+
+
+    //全局Token认证二选一
     [TypeFilter(typeof(CheckLoginAttribute))]
+    [AuthorizationFilter]
     public class AuthController : ControllerBase
     {
         /// <summary>
@@ -100,6 +103,7 @@ namespace DMS.Sample.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("GetProduct")]
+        [JumpCheckLogin]
         public async Task<ResponseResult<ProductEntityResult>> GetProductAsync(long id)
         {
             var ip = IPHelper.GetCurrentIp();

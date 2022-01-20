@@ -24,7 +24,6 @@
     <Compile Include="bak\BaseController.cs" />
     <Compile Include="bak\BaseLoginApiController.cs" />
     <Compile Include="bak\Basev2Controller.cs" />
-    <Compile Include="bak\CheckLoginAttributebak.cs" />
     <Compile Include="bak\RedisToken.cs" />
     <Compile Include="bak\UserAuthbak.cs" />
   </ItemGroup>
