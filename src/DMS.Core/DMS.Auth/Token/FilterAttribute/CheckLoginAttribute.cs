@@ -11,6 +11,7 @@ using System.Net;
 namespace DMS.Auth.Token.FilterAttribute
 {
     /// <summary>
+    /// 统一登录验证
     /// 第一个管道
     /// 全局过虑：option.Filters.Add<AuthorizationFilter>();
     /// 控制器过虑：[AuthorizationFilter]

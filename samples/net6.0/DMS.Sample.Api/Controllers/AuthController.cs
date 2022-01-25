@@ -23,8 +23,8 @@ namespace DMS.Sample.Api.Controllers
 
 
     //全局Token认证二选一
-    [TypeFilter(typeof(CheckLoginAttribute))]
-    [AuthorizationFilter]
+    //[TypeFilter(typeof(CheckLoginAttribute))]
+    //[AuthorizationFilter]
     public class AuthController : ControllerBase
     {
         /// <summary>
@@ -57,6 +57,7 @@ namespace DMS.Sample.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("CheckTokenAuth")]
+        [AuthorizationFilter]
         public async Task<ResponseResult> CheckTokenAuth()
         {
             var id = userToken.ID;
@@ -66,10 +67,6 @@ namespace DMS.Sample.Api.Controllers
             var token = userToken.GetToken();
 
             var ip = IPHelper.GetCurrentIp();
-            //if (id <= 0)
-            //{
-            //    return new ResponseResult() { errno = 30, errmsg = "未登录" };
-            //}
             return await Task.FromResult(new ResponseResult() { data = new { id, name, epCode, uid, token, ip } });
         }
 
@@ -98,7 +95,7 @@ namespace DMS.Sample.Api.Controllers
 
         /// <summary>
         /// 获取产品信息
-        /// 验证身份令牌
+        /// 跳过检查身份
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

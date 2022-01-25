@@ -16,7 +16,7 @@ namespace DMS.Swagger
         /// <param name="app"></param>
         /// <param name="isDebug"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseSwaggerUIV2(this IApplicationBuilder app, bool isDebug)
+        public static IApplicationBuilder UseSwaggerUI(this IApplicationBuilder app, bool isDebug)
         {
             if (isDebug)
             {

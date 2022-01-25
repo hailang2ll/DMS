@@ -19,7 +19,7 @@ namespace DMS.Swagger
     }
     public static class SwaggerGenServiceCollectionExtensions
     {
-        public static IServiceCollection AddSwaggerGenV2(this IServiceCollection services, AuthModel authModel = AuthModel.Token)
+        public static IServiceCollection AddSwaggerGenSetup(this IServiceCollection services, AuthModel authModel = AuthModel.Token)
         {
 
             var basePath = AppContext.BaseDirectory;

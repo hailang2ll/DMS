@@ -34,6 +34,19 @@ namespace DMS.Auth.Token
                 var userTicket = redisRepository.GetValueAsync<UserTicket>(token).Result;
                 if (userTicket != null && userTicket.ID > 0)
                 {
+                    DateTime dateExp = userTicket.ExpDate;
+                    DateTime dateNow = DateTime.Now;
+                    TimeSpan diff = dateNow - dateExp;
+                    long days = diff.Days;
+                    if (days > 90)
+                    {
+                        //用户票据缓存90天,用户票据缓存时间超时，重新登录
+                        //memCached.KeyDelete(sid);
+                    }
+                    else
+                    {
+                        //获取用户票据成功，正常票据
+                    }
                     return userTicket;
                 }
                 return new UserTicket();

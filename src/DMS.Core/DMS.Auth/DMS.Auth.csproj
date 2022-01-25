@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
     <Authors>Dylan,hailang</Authors>
     <Description>简单的身份验证，基于redis，httpcontext中间件</Description>
     <Version>2.2.2</Version>
@@ -9,23 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="bak\**" />
-    <EmbeddedResource Remove="bak\**" />
-    <None Remove="bak\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="IUserAuth.cs" />
     <Compile Remove="UserAuth.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="bak\BaseApiController.cs" />
-    <Compile Include="bak\BaseController.cs" />
-    <Compile Include="bak\BaseLoginApiController.cs" />
-    <Compile Include="bak\Basev2Controller.cs" />
-    <Compile Include="bak\RedisToken.cs" />
-    <Compile Include="bak\UserAuthbak.cs" />
   </ItemGroup>
 
   <ItemGroup>
