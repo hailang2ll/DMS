@@ -27,8 +27,4 @@
 		<ProjectReference Include="..\DMS.Extensions\DMS.Extensions.csproj" />
 	</ItemGroup>
 
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-	  <Exec Command="If $(ConfigurationName) == Release (&#xD;&#xA;del $(ProjectDir)$(OutDir)..\*.nupkg /s/q&#xD;&#xA;exit 0&#xD;&#xA;)ELSE (echo &quot;Not Debug mode, no file del from nupkg&quot;)" />
-	</Target>
-
 </Project>

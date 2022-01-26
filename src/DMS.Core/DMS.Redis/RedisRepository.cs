@@ -15,14 +15,13 @@ namespace DMS.Redis
         private IDatabase _database;
         public RedisRepository(ConnectionMultiplexer conn)
         {
+            Console.WriteLine($"RedisRepository:{conn.Configuration}");
             if (conn == null || conn.IsConnected == false)
             {
                 throw new Exception($"no load redis.json file，connection fail");
             }
-            Console.WriteLine($"RedisRepository:{conn.Configuration}");
             _conn = conn;
             _database = _conn.GetDatabase();
-            Console.WriteLine($"RedisRepository.1:{conn.Configuration}");
         }
 
 

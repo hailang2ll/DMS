@@ -24,7 +24,7 @@ namespace DMS.Sample.Api.Controllers
 
     //全局Token认证二选一
     //[TypeFilter(typeof(CheckLoginAttribute))]
-    //[AuthorizationFilter]
+    [AuthorizationFilter]
     public class AuthController : ControllerBase
     {
         /// <summary>
@@ -57,7 +57,6 @@ namespace DMS.Sample.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("CheckTokenAuth")]
-        [AuthorizationFilter]
         public async Task<ResponseResult> CheckTokenAuth()
         {
             var id = userToken.ID;

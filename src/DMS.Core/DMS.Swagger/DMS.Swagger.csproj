@@ -1,31 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>1.4.9</Version>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>dylan,hailang</Authors>
-    <Company>dylan,hailang</Company>
-    <Copyright>Copyright@2016-2022 Dylan</Copyright>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<Version>3.0.0</Version>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Authors>dylan,hailang</Authors>
+		<Company>dylan,hailang</Company>
+		<Copyright>Copyright@2016-2022 Dylan</Copyright>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Properties\**" />
-    <EmbeddedResource Remove="Properties\**" />
-    <None Remove="Properties\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="Properties\**" />
+		<EmbeddedResource Remove="Properties\**" />
+		<None Remove="Properties\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.2" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DMS.Extensions\DMS.Extensions.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\DMS.Extensions\DMS.Extensions.csproj" />
+	</ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="If $(ConfigurationName) == Release (&#xD;&#xA;del $(ProjectDir)$(OutDir)..\*.nupkg /s/q&#xD;&#xA;exit 0&#xD;&#xA;)ELSE (echo &quot;Not Debug mode, no file del from nupkg&quot;)" />
-  </Target>
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="If $(ConfigurationName) == Release (&#xD;&#xA;del $(ProjectDir)$(OutDir)..\*.nupkg /s/q&#xD;&#xA;exit 0&#xD;&#xA;)ELSE (echo &quot;Not Debug mode, no file del from nupkg&quot;)" />
+	</Target>
 
 </Project>

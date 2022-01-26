@@ -17,10 +17,9 @@ namespace DMS.Auth.Oauth2
         private readonly IRedisRepository redisRepository;
         public UserAuth(IHttpContextAccessor httpContextAccessor, IRedisRepository redisRepository)
         {
-            Console.WriteLine($"DMS.Auth.Oauth2-1:{redisRepository}");
+            Console.WriteLine($"DMS.Auth.Oauth:{redisRepository}");
             this._accessor = httpContextAccessor;
             this.redisRepository = redisRepository;
-            Console.WriteLine($"DMS.Auth.Oauth2-1:{redisRepository}");
         }
 
         public long ID => GetClaimValueByType("jti").FirstOrDefault().ToLong();
