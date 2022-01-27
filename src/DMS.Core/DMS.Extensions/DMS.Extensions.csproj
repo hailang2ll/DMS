@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+		<TargetFrameworks>netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+		<!--;net5.0;net6.0-->
 		<Description>基于DMSN.Common扩展，主要实现公共中间件的作用</Description>
 		<Copyright>Copyright@2018-2022 Dylan</Copyright>
 		<Authors>Dylan,hailang</Authors>
@@ -12,30 +13,29 @@
 	<ItemGroup>
 		<PackageReference Include="DMS.Common" Version="4.0.3" />
 		<PackageReference Include="FreeSql.Provider.MySql" Version="3.0.100" />
-		<PackageReference Include="IdentityModel" Version="5.1.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
-		<PackageReference Include="SqlSugarCore" Version="5.0.5.2" />
+		<PackageReference Include="IdentityModel" Version="6.0.0" />
+		<PackageReference Include="SqlSugarCore" Version="5.0.5.4" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'netstandard2.1'">
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer">
-			<Version>2.2.0</Version>
-		</PackageReference>
-	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer">
-			<Version>3.1.19</Version>
+			<Version>3.1.22</Version>
 		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer">
-			<Version>5.0.10</Version>
+			<Version>5.0.13</Version>
 		</PackageReference>
 	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer">
+			<Version>6.0.1</Version>
+		</PackageReference>
+	</ItemGroup>
+
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
 		<Exec Command="If $(ConfigurationName) == Release (&#xD;&#xA;del $(ProjectDir)$(OutDir)..\*.nupkg /s/q&#xD;&#xA;exit 0&#xD;&#xA;)ELSE (echo &quot;Not Debug mode, no file del from nupkg&quot;)" />

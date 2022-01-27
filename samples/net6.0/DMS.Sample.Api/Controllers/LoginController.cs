@@ -1,7 +1,10 @@
 ﻿using DMS.Auth;
+using DMS.Common.Extensions;
 using DMS.Common.JsonHandler;
 using DMS.Common.Model.Result;
 using DMS.Extensions.Authorizations;
+using DMS.Extensions.Authorizations.Model;
+using DMS.Extensions.Authorizations.Policys;
 using DMS.Redis;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -24,14 +27,23 @@ namespace DMS.Sample.Api.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly IRedisRepository redisRepository;
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly PermissionRequirement _requirement;
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly IRedisRepository _redisRepository;
         /// <summary>
         /// 构造函数注入
         /// </summary>
+        /// <param name="requirement"></param>
         /// <param name="redisRepository"></param>
-        public LoginController(IRedisRepository redisRepository)
+        public LoginController(PermissionRequirement requirement, IRedisRepository redisRepository)
         {
-            this.redisRepository = redisRepository;
+            _requirement = requirement;
+            _redisRepository = redisRepository;
         }
         /// <summary>
         /// 普通TOKEN认识方式
@@ -49,26 +61,26 @@ namespace DMS.Sample.Api.Controllers
                 ExpDate = DateTime.Now.AddDays(1),
             };
             string sid = DMS.Extensions.UniqueGenerator.UniqueHelper.GetWorkerID().ToString();
-            await redisRepository.SetAsync(sid, tokenModel.SerializeObject(), tokenModel.ExpDate);
+            await _redisRepository.SetAsync(sid, tokenModel.SerializeObject(), tokenModel.ExpDate);
             result.data = sid;
             return result;
         }
 
         /// <summary>
-        /// JWT认证
+        /// JWT token 生成
         /// </summary>
         /// <returns></returns>
-        [HttpPost("Login")]
-        public ResponseResult Login()
+        [HttpPost("Oauth2Login")]
+        public ResponseResult JWTLogin()
         {
             ResponseResult result = new ResponseResult();
 
-            var list = new List<dynamic> {
+            var userList = new List<dynamic> {
                 new { Id="12", UserName="aaa",Pwd="123456",Role="admin"},
-                new { Id="45", UserName="bbb",Pwd="456789",Role="system"},
+                new { Id="45", UserName="bbb",Pwd="456789",Role="invoice"},
             };
 
-            var user = list.SingleOrDefault(q => q.UserName == "aaa" && q.Pwd == "123456");
+            var user = userList.SingleOrDefault(q => q.UserName == "aaa" && q.Pwd == "123456");
             if (user == null)
             {
                 result.errno = 1;
@@ -77,14 +89,44 @@ namespace DMS.Sample.Api.Controllers
             }
             else
             {
-                TokenModelJwt tokenModel = new TokenModelJwt
+                var userRoles = userList.Select(q => q.Role).ToList();
+                //如果是基于用户的授权策略，这里要添加用户;如果是基于角色的授权策略，这里要添加角色
+                var claims = new List<Claim> {
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString()),
+                    new Claim(ClaimTypes.Expiration, DateTime.Now.AddSeconds(_requirement.Expiration.TotalSeconds).ToString()) };
+                //claims.AddRange(userRoles.Split(',').Select(s => new Claim(ClaimTypes.Role, s)));
+                claims.AddRange(userRoles.Select(s => new Claim(ClaimTypes.Role, s)));
+
+                if (Permissions.IsUseIds4)
                 {
-                    Uid = 120,
-                    Name = "dylan-123",
-                    Role = "dylan",
-                    Work = "dev",
-                };
-                result.data = JwtHelper.IssueJwt(tokenModel);
+
+                }
+                else
+                {
+                    //jwt
+                    //var data = await _roleModulePermissionServices.RoleModuleMaps();
+                    var data = new List<PermissionData>() {
+                              new PermissionData { Id=1,  LinkUrl="/api/Oauth2/GetProduct1", Name="invoice"},
+                              new PermissionData { Id=2,  LinkUrl="/api/values", Name="admin"},
+                              new PermissionData { Id=3,  LinkUrl="/api/Oauth2/GetProduct2", Name="system"},
+                              new PermissionData { Id=4,  LinkUrl="/api/values1", Name="system"}
+                              };
+                    var list = (from item in data
+                                where item.IsDeleted == false
+                                orderby item.Id
+                                select new PermissionItem
+                                {
+                                    Url = item.LinkUrl,
+                                    Name = item.Name.ToStringDefault(),
+                                }).ToList();
+
+                    _requirement.Permissions = list;
+                }
+
+                var token = JwtToken.BuildJwtToken(claims.ToArray(), _requirement);
+                result.data = token;
+
             }
             return result;
         }
@@ -118,8 +160,9 @@ namespace DMS.Sample.Api.Controllers
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, user.Id),
                     new Claim(ClaimTypes.Expiration, DateTime.Now.AddSeconds(TimeSpan.FromSeconds(60 * 60).TotalSeconds).ToString()) };
+
                 claims.AddRange(userRoles.Select(s => new Claim(ClaimTypes.Role, s)));
-                var token = JwtHelper.BuildJwtToken(claims.ToArray());
+                var token = JwtToken.BuildJwtToken(claims.ToArray(), _requirement);
 
                 result.data = token;
             }

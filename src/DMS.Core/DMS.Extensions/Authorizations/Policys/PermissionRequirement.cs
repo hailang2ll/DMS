@@ -1,5 +1,4 @@
-﻿#if NET5_0 || NETCOREAPP3_1
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -14,14 +13,15 @@ namespace DMS.Extensions.Authorizations.Policys
     public class PermissionRequirement : IAuthorizationRequirement
     {
         /// <summary>
-        /// 用户权限集合，一个订单包含了很多详情，
-        /// 同理，一个网站的认证发行中，也有很多权限详情(这里是Role和URL的关系)
+        /// 用户权限集合
         /// </summary>
         public List<PermissionItem> Permissions { get; set; }
         /// <summary>
         /// 无权限action
         /// </summary>
         public string DeniedAction { get; set; }
+
+
 
         /// <summary>
         /// 认证授权类型
@@ -61,9 +61,10 @@ namespace DMS.Extensions.Authorizations.Policys
         /// <param name="expiration">过期时间</param>
         public PermissionRequirement(string deniedAction, List<PermissionItem> permissions, string claimType, string issuer, string audience, SigningCredentials signingCredentials, TimeSpan expiration)
         {
-            ClaimType = claimType;
             DeniedAction = deniedAction;
             Permissions = permissions;
+
+            ClaimType = claimType;
             Issuer = issuer;
             Audience = audience;
             Expiration = expiration;
@@ -71,4 +72,3 @@ namespace DMS.Extensions.Authorizations.Policys
         }
     }
 }
-#endif

@@ -1,16 +1,14 @@
-﻿#if NET5_0 || NETCOREAPP3_1
+﻿using DMS.Common.Extensions;
 using DMS.Extensions.Authorizations.Policys;
-using Microsoft.AspNetCore.Authorization;
-#endif
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using DMS.Common.Extensions;
 
 namespace DMS.Extensions.ServiceExtensions
 {
@@ -26,32 +24,33 @@ namespace DMS.Extensions.ServiceExtensions
             // 令牌验证参数
             var tokenValidationParameters = new TokenValidationParameters
             {
-                //是否验证发行人
-                ValidateIssuer = true,
+                ValidateIssuer = true,//是否验证发行人
                 ValidIssuer = Issuer,//发行人
-                                     //是否验证受众人
-                ValidateAudience = true,
+                                    
+                ValidateAudience = true,//是否验证被发布者
                 ValidAudience = Audience,//受众人
-                                         //是否验证密钥
-                ValidateIssuerSigningKey = true,
+                                         
+                ValidateIssuerSigningKey = true,//是否验证密钥
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretCredentials)),
 
                 ValidateLifetime = true, //验证生命周期
-                //ClockSkew = TimeSpan.FromSeconds(30),
+                ClockSkew = TimeSpan.FromSeconds(30),//注意这是缓冲过期时间，总的有效时间等于这个时间加上jwt的过期时间，如果不配置，默认是5分钟
                 RequireExpirationTime = true, //过期时间
             };
-#if NET5_0 || NETCOREAPP3_1
             //开启Bearer认证
             services.AddAuthentication(x =>
             {
                 //x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 //x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
                 x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = nameof(ApiResponseHandler);
                 x.DefaultForbidScheme = nameof(ApiResponseHandler);
             })
             .AddJwtBearer(o =>
             {
+                //不使用https
+                //o.RequireHttpsMetadata = false;
                 o.TokenValidationParameters = tokenValidationParameters;
                 o.Events = new JwtBearerEvents
                 {
@@ -94,7 +93,6 @@ namespace DMS.Extensions.ServiceExtensions
 
 
 
-#endif
         }
     }
 }

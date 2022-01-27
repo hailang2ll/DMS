@@ -56,17 +56,15 @@ namespace DMS.Sample.Api
             {
                 //全局处理异常，支持DMS.Log4net，DMS.NLogs
                 option.Filters.Add<GlobalExceptionFilter>();
-                //全局普通token验证
-                //option.Filters.Add<AuthorizationFilter>();
 
             }).AddJsonOptions(options =>
-            {   
+            {
                 options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 options.JsonSerializerOptions.DictionaryKeyPolicy = null;
             });
             //api文档生成，1支持普通token验证，2支持oauth2切换；默认为1
-            services.AddSwaggerGenSetup();
+            services.AddSwaggerGenSetup(AuthModel.All);
             ////开启redis服务
             services.AddRedisSetup();
             //开启redismq服务
@@ -75,23 +73,23 @@ namespace DMS.Sample.Api
             services.AddHttpContextSetup();
             //开启身份认证服务，与api文档验证对应即可
             services.AddAuthSetup(AuthModel.All);
+   
+
+            Permissions.IsUseIds4 = DMS.Common.AppConfig.GetValue(new string[] { "IdentityServer4", "Enabled" }).ToBool();
+            services.AddAuthorizationSetup();
+            // 授权+认证 (jwt or ids4)
+            if (Permissions.IsUseIds4)
+            {
+                services.AddAuthenticationIds4Setup();
+            }
+            else
+            {
+                services.AddAuthenticationJWTSetup();
+            }
 
             ////开启跨域服务
             //services.AddCorsSetup();
 
-
-            //// 授权+认证 (jwt or ids4)
-            //if (Permissions.IsUseIds4)
-            //{
-            //    services.AddAuthenticationIds4Setup();
-            //}
-            //else
-            //{
-            //    services.AddAuthenticationJWTSetup();
-            //}
-
-
-            //services.AddAuthorizationSetup();
 
         }
 

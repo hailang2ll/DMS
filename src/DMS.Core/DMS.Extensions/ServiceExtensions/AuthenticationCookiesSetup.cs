@@ -1,5 +1,4 @@
-﻿#if NET5_0 || NETCOREAPP3_1
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -26,4 +25,3 @@ namespace DMS.Extensions.ServiceExtensions
         }
     }
 }
-#endif

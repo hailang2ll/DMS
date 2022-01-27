@@ -1,5 +1,4 @@
-﻿#if NET5_0 || NETCOREAPP3_1
-using DMS.Extensions.Authorizations.Model;
+﻿using DMS.Extensions.Authorizations.Model;
 using DMS.Common.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +10,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Routing;
 
 namespace DMS.Extensions.Authorizations.Policys
 {
@@ -34,24 +34,28 @@ namespace DMS.Extensions.Authorizations.Policys
             Schemes = schemes;
         }
 
-        // 重写异步处理程序
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
             var httpContext = _accessor.HttpContext;
 
-            // 获取系统中所有的角色和菜单的关系集合
+            #region 获取系统中所有的角色和菜单的关系集合
             if (!requirement.Permissions.Any())
             {
                 //var data = await _roleModulePermissionServices.RoleModuleMaps();
-                List<PermissionData> data = new List<PermissionData>() {
-                    new PermissionData (){ Id = 1, Name="admin", LinkUrl = "http://localhost:20300",IsDeleted = false},
-                    new PermissionData (){ Id = 2, Name="admin", LinkUrl = "http://localhost:20300",IsDeleted = false},
-                    new PermissionData (){ Id = 3, Name="admin", LinkUrl = "http://localhost:20300",IsDeleted = false},
-                };
+                //List<PermissionData> data = new List<PermissionData>() {
+                //    new PermissionData (){ Id = 1, Name="admin", LinkUrl = "http://localhost:20300",IsDeleted = false},
+                //    new PermissionData (){ Id = 2, Name="admin", LinkUrl = "http://localhost:20300",IsDeleted = false},
+                //    new PermissionData (){ Id = 3, Name="admin", LinkUrl = "http://localhost:20300",IsDeleted = false},
+                //};
+
+                var data = new List<PermissionData>() {
+                              new PermissionData { Id=1,  LinkUrl="/api/Oauth2/GetProduct1", Name="invoice"},
+                              new PermissionData { Id=2,  LinkUrl="/api/values", Name="admin"},
+                              new PermissionData { Id=3,  LinkUrl="/api/Oauth2/GetProduct2", Name="system"},
+                              new PermissionData { Id=4,  LinkUrl="/api/values1", Name="system"}
+            };
 
                 var list = new List<PermissionItem>();
-                // ids4和jwt切换
-                // ids4
                 if (Permissions.IsUseIds4)
                 {
                     list = (from item in data
@@ -60,23 +64,24 @@ namespace DMS.Extensions.Authorizations.Policys
                             select new PermissionItem
                             {
                                 Url = item.LinkUrl,
-                                Role = item.Id.ToStringDefault(),
+                                Name = item.Name.ToStringDefault(),
                             }).ToList();
                 }
-                // jwt
                 else
                 {
+                    //jwt
                     list = (from item in data
                             where item.IsDeleted == false
                             orderby item.Id
                             select new PermissionItem
                             {
                                 Url = item.LinkUrl,
-                                Role = item.Name,
+                                Name = item.Name,
                             }).ToList();
                 }
                 requirement.Permissions = list;
             }
+            #endregion
 
             if (httpContext != null)
             {
@@ -108,20 +113,13 @@ namespace DMS.Extensions.Authorizations.Policys
                 if (defaultAuthenticate != null)
                 {
                     var result = await httpContext.AuthenticateAsync(defaultAuthenticate.Name);
-
-                    // 是否开启测试环境
-                    var isTestCurrent = DMS.Common.AppConfig.GetValue(new string[] { "UseLoadTest" }).ToBool();
-
                     //result?.Principal不为空即登录成功
-                    if (result?.Principal != null || isTestCurrent)
+                    if (result?.Principal != null)
                     {
-
-                        if (!isTestCurrent) httpContext.User = result.Principal;
-
+                        #region 验证权限
+                        httpContext.User = result.Principal;
                         // 获取当前用户的角色信息
                         var currentUserRoles = new List<string>();
-                        // ids4和jwt切换
-                        // ids4
                         if (Permissions.IsUseIds4)
                         {
                             currentUserRoles = (from item in httpContext.User.Claims
@@ -130,14 +128,14 @@ namespace DMS.Extensions.Authorizations.Policys
                         }
                         else
                         {
-                            // jwt
+                            //jwt
                             currentUserRoles = (from item in httpContext.User.Claims
                                                 where item.Type == requirement.ClaimType
                                                 select item.Value).ToList();
                         }
 
                         var isMatchRole = false;
-                        var permisssionRoles = requirement.Permissions.Where(w => currentUserRoles.Contains(w.Role));
+                        var permisssionRoles = requirement.Permissions.Where(w => currentUserRoles.Contains(w.Name));
                         foreach (var item in permisssionRoles)
                         {
                             try
@@ -154,23 +152,23 @@ namespace DMS.Extensions.Authorizations.Policys
                             }
                         }
 
-                        //验证权限
+                        //当前用户无角色||未匹配到角色与URL，认证失败
                         if (currentUserRoles.Count <= 0 || !isMatchRole)
                         {
                             context.Fail();
                             return;
                         }
+                        #endregion
 
+                        #region 过期时间验证
                         var isExp = false;
-                        // ids4和jwt切换
-                        // ids4
                         if (Permissions.IsUseIds4)
                         {
                             isExp = (httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) != null && DMS.Common.Extensions.DateTimeExtensions.ToDateTime(httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) >= DateTime.Now;
                         }
                         else
                         {
-                            // jwt
+                            //jwt
                             isExp = (httpContext.User.Claims.SingleOrDefault(s => s.Type == ClaimTypes.Expiration)?.Value) != null && DateTime.Parse(httpContext.User.Claims.SingleOrDefault(s => s.Type == ClaimTypes.Expiration)?.Value) >= DateTime.Now;
                         }
                         if (isExp)
@@ -182,9 +180,11 @@ namespace DMS.Extensions.Authorizations.Policys
                             context.Fail();
                             return;
                         }
+                        #endregion
                         return;
                     }
                 }
+
                 //判断没有登录时，是否访问登录的url,并且是Post请求，并且是form表单提交类型，否则为失败
                 if (!(questUrl.Equals(requirement.LoginPath.ToLower(), StringComparison.Ordinal) && (!httpContext.Request.Method.Equals("POST") || !httpContext.Request.HasFormContentType)))
                 {
@@ -192,9 +192,6 @@ namespace DMS.Extensions.Authorizations.Policys
                     return;
                 }
             }
-
-            //context.Succeed(requirement);
         }
     }
 }
-#endif

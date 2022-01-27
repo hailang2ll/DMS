@@ -6,15 +6,10 @@ namespace DMS.Extensions.Authorizations.Model
 {
     public class Permissions
     {
-        public const string Name = "Permission";
-
         /// <summary>
-        /// 测试网关授权
-        /// 可以使用Blog.Core项目中的test用户
-        /// 账号：test
-        /// 密码：test
+        /// 策略名称
         /// </summary>
-        public const string GWName = "GW";
+        public const string Name = "CustomizePermisson";
 
         /// <summary>
         /// 当前项目是否启用IDS4权限方案

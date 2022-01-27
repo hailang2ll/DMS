@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+		<TargetFrameworks>netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
 		<Description>基于StackExchange.Redis框架开发，注入redis可用，依赖DMS中基础框架，主要用于分布式缓存系统</Description>
 		<Company>Dylan,hailang</Company>
 		<Authors>Dylan,hailang</Authors>

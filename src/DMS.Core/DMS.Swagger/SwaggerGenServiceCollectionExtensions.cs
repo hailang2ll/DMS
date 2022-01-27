@@ -39,7 +39,7 @@ namespace DMS.Swagger
                         Contact = new OpenApiContact
                         {
                             Email = "79522860@qq.com",
-                            Name = "github",
+                            Name = "dylan",
                             Url = new Uri("https://github.com/hailang2ll")
                         },
                         License = new OpenApiLicense
@@ -76,6 +76,24 @@ namespace DMS.Swagger
                     }
                     else if (authModel == AuthModel.Auth20)
                     {
+                        option.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                        {
+                            Description = "JWT认证授权，使用直接在下框中输入Bearer {token}（注意两者之间是一个空格）\"",
+                            Name = "Authorization",  //jwt 默认参数名称
+                            In = ParameterLocation.Header,  //jwt默认存放Authorization信息的位置（请求头）
+                            Type = SecuritySchemeType.ApiKey
+                        });
+                        //开启加权小锁
+                        option.OperationFilter<AddResponseHeadersFilter>();
+                        option.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+                        //在header中添加token，传递到后台
+                        option.OperationFilter<SecurityRequirementsOperationFilter>();
+                    }
+                    else
+                    {
+                        //两者都开启
+                        option.OperationFilter<AddRequiredHeaderParameter>("AccessToken");
+
                         option.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                         {
                             Description = "JWT认证授权，使用直接在下框中输入Bearer {token}（注意两者之间是一个空格）\"",
