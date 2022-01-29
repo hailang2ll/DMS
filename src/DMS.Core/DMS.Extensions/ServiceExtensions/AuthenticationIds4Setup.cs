@@ -1,4 +1,5 @@
 ﻿using DMS.Extensions.Authorizations.Policys;
+using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,6 +7,7 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 namespace DMS.Extensions.ServiceExtensions
@@ -29,8 +31,14 @@ namespace DMS.Extensions.ServiceExtensions
                 options.Authority = DMS.Common.AppConfig.GetValue(new string[] { "IdentityServer4", "AuthorizationUrl" });
                 options.RequireHttpsMetadata = false;
                 options.Audience = DMS.Common.AppConfig.GetValue(new string[] { "IdentityServer4", "ApiName" });
-                options.MetadataAddress = options.Authority + "/.well-known/openid-configuration";
-                options.Configuration = new Microsoft.IdentityModel.Protocols.OpenIdConnect.OpenIdConnectConfiguration();
+                //options.MetadataAddress = options.Authority + "/.well-known/openid-configuration";
+                //options.Configuration = new Microsoft.IdentityModel.Protocols.OpenIdConnect.OpenIdConnectConfiguration();
+                //options.TokenValidationParameters = new TokenValidationParameters
+                //{
+                //    NameClaimType = JwtClaimTypes.Name,
+                //    RoleClaimType = JwtClaimTypes.Role
+                //};
+                //options.SaveToken = true;
             })
             .AddScheme<AuthenticationSchemeOptions, ApiResponseHandler>(nameof(ApiResponseHandler), o => { });
         }

@@ -39,48 +39,48 @@ namespace DMS.Extensions.Authorizations.Policys
             var httpContext = _accessor.HttpContext;
 
             #region 获取系统中所有的角色和菜单的关系集合
-            if (!requirement.Permissions.Any())
-            {
-                //var data = await _roleModulePermissionServices.RoleModuleMaps();
-                //List<PermissionData> data = new List<PermissionData>() {
-                //    new PermissionData (){ Id = 1, Name="admin", LinkUrl = "http://localhost:20300",IsDeleted = false},
-                //    new PermissionData (){ Id = 2, Name="admin", LinkUrl = "http://localhost:20300",IsDeleted = false},
-                //    new PermissionData (){ Id = 3, Name="admin", LinkUrl = "http://localhost:20300",IsDeleted = false},
-                //};
+            //if (!requirement.Permissions.Any())
+            //{
+            //    //var data = await _roleModulePermissionServices.RoleModuleMaps();
+            //    //List<PermissionData> data = new List<PermissionData>() {
+            //    //    new PermissionData (){ Id = 1, Name="admin", LinkUrl = "http://localhost:20300",IsDeleted = false},
+            //    //    new PermissionData (){ Id = 2, Name="admin", LinkUrl = "http://localhost:20300",IsDeleted = false},
+            //    //    new PermissionData (){ Id = 3, Name="admin", LinkUrl = "http://localhost:20300",IsDeleted = false},
+            //    //};
 
-                var data = new List<PermissionData>() {
-                              new PermissionData { Id=1,  LinkUrl="/api/Oauth2/GetProduct1", Name="invoice"},
-                              new PermissionData { Id=2,  LinkUrl="/api/values", Name="admin"},
-                              new PermissionData { Id=3,  LinkUrl="/api/Oauth2/GetProduct2", Name="system"},
-                              new PermissionData { Id=4,  LinkUrl="/api/values1", Name="system"}
-            };
+            //    var data = new List<PermissionData>() {
+            //                  new PermissionData { Id=1,  LinkUrl="/api/Oauth2/GetProduct1", Name="invoice"},
+            //                  new PermissionData { Id=2,  LinkUrl="/api/values", Name="admin"},
+            //                  new PermissionData { Id=3,  LinkUrl="/api/Oauth2/GetProduct2", Name="system"},
+            //                  new PermissionData { Id=4,  LinkUrl="/api/values1", Name="system"}
+            //};
 
-                var list = new List<PermissionItem>();
-                if (Permissions.IsUseIds4)
-                {
-                    list = (from item in data
-                            where item.IsDeleted == false
-                            orderby item.Id
-                            select new PermissionItem
-                            {
-                                Url = item.LinkUrl,
-                                Name = item.Name.ToStringDefault(),
-                            }).ToList();
-                }
-                else
-                {
-                    //jwt
-                    list = (from item in data
-                            where item.IsDeleted == false
-                            orderby item.Id
-                            select new PermissionItem
-                            {
-                                Url = item.LinkUrl,
-                                Name = item.Name,
-                            }).ToList();
-                }
-                requirement.Permissions = list;
-            }
+            //    var list = new List<PermissionItem>();
+            //    if (Permissions.IsUseIds4)
+            //    {
+            //        list = (from item in data
+            //                where item.IsDeleted == false
+            //                orderby item.Id
+            //                select new PermissionItem
+            //                {
+            //                    Url = item.LinkUrl,
+            //                    Name = item.Name.ToStringDefault(),
+            //                }).ToList();
+            //    }
+            //    else
+            //    {
+            //        //jwt
+            //        list = (from item in data
+            //                where item.IsDeleted == false
+            //                orderby item.Id
+            //                select new PermissionItem
+            //                {
+            //                    Url = item.LinkUrl,
+            //                    Name = item.Name,
+            //                }).ToList();
+            //    }
+            //    requirement.Permissions = list;
+            //}
             #endregion
 
             if (httpContext != null)

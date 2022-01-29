@@ -8,6 +8,7 @@ using DMS.Extensions.Authorizations.Policys;
 using DMS.Redis;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -70,8 +71,8 @@ namespace DMS.Sample.Api.Controllers
         /// JWT token 生成
         /// </summary>
         /// <returns></returns>
-        [HttpPost("Oauth2Login")]
-        public ResponseResult JWTLogin()
+        [HttpPost("GetJWTToken")]
+        public ResponseResult GetJWTToken()
         {
             ResponseResult result = new ResponseResult();
 
@@ -98,31 +99,25 @@ namespace DMS.Sample.Api.Controllers
                 //claims.AddRange(userRoles.Split(',').Select(s => new Claim(ClaimTypes.Role, s)));
                 claims.AddRange(userRoles.Select(s => new Claim(ClaimTypes.Role, s)));
 
-                if (Permissions.IsUseIds4)
-                {
 
-                }
-                else
-                {
-                    //jwt
-                    //var data = await _roleModulePermissionServices.RoleModuleMaps();
-                    var data = new List<PermissionData>() {
+                //jwt
+                //var data = await _roleModulePermissionServices.RoleModuleMaps();
+                var data = new List<PermissionData>() {
                               new PermissionData { Id=1,  LinkUrl="/api/Oauth2/GetProduct1", Name="invoice"},
                               new PermissionData { Id=2,  LinkUrl="/api/values", Name="admin"},
                               new PermissionData { Id=3,  LinkUrl="/api/Oauth2/GetProduct2", Name="system"},
                               new PermissionData { Id=4,  LinkUrl="/api/values1", Name="system"}
                               };
-                    var list = (from item in data
-                                where item.IsDeleted == false
-                                orderby item.Id
-                                select new PermissionItem
-                                {
-                                    Url = item.LinkUrl,
-                                    Name = item.Name.ToStringDefault(),
-                                }).ToList();
+                var list = (from item in data
+                            where item.IsDeleted == false
+                            orderby item.Id
+                            select new PermissionItem
+                            {
+                                Url = item.LinkUrl,
+                                Name = item.Name.ToStringDefault(),
+                            }).ToList();
 
-                    _requirement.Permissions = list;
-                }
+                _requirement.Permissions = list;
 
                 var token = JwtToken.BuildJwtToken(claims.ToArray(), _requirement);
                 result.data = token;
@@ -130,7 +125,61 @@ namespace DMS.Sample.Api.Controllers
             }
             return result;
         }
+        /// <summary>
+        /// 请求刷新Token
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("RefreshToken")]
+        public ResponseResult RefreshToken(string token = "")
+        {
+            ResponseResult result = new ResponseResult();
 
+            if (string.IsNullOrEmpty(token))
+            {
+                result.errno = 1;
+                result.errmsg = "token无效，请重新登录";
+                return result;
+            }
+            var tokenModel = JwtHelper.SerializeJwt(token);
+            if (tokenModel == null || JwtHelper.customSafeVerify(token) && tokenModel.Uid < 0)
+            {
+                result.errno = 4;
+                result.errmsg = "认证失败";
+                return result;
+            }
+            else
+            {
+                var userList = new List<dynamic> {
+                    new { Id="12", UserName="aaa",Pwd="123456",Role="admin"},
+                    new { Id="45", UserName="bbb",Pwd="456789",Role="invoice"},
+                };
+                var user = userList.SingleOrDefault(q => q.UserName == "aaa" && q.Pwd == "123456");
+                if (user == null)
+                {
+                    result.errno = 1;
+                    result.errmsg = "用户名或密码错误";
+                    return result;
+                }
+                else
+                {
+                    var userRoles = userList.Select(q => q.Role).ToList();
+                    //如果是基于用户的授权策略，这里要添加用户;如果是基于角色的授权策略，这里要添加角色
+                    var claims = new List<Claim> {
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(JwtRegisteredClaimNames.Jti, tokenModel.Uid.ToString()),
+                    new Claim(ClaimTypes.Expiration, DateTime.Now.AddSeconds(_requirement.Expiration.TotalSeconds).ToString()) };
+                    //claims.AddRange(userRoles.Split(',').Select(s => new Claim(ClaimTypes.Role, s)));
+                    claims.AddRange(userRoles.Select(s => new Claim(ClaimTypes.Role, s)));
+                    //用户标识
+                    var identity = new ClaimsIdentity(JwtBearerDefaults.AuthenticationScheme);
+                    identity.AddClaims(claims);
+
+                    var refreshToken = JwtToken.BuildJwtToken(claims.ToArray(), _requirement);
+                    result.data = refreshToken;
+                    return result;
+                }
+            }
+        }
         /// <summary>
         /// 主方法认证
         /// </summary>

@@ -46,7 +46,7 @@ namespace DMS.Sample.Api.Controllers
         }
 
         /// <summary>
-        /// 我要认证，但接口未授权
+        /// 认证，但接口未授权
         /// </summary>
         /// <returns></returns>
         [HttpGet("CheckOauth2")]
@@ -60,25 +60,13 @@ namespace DMS.Sample.Api.Controllers
 
             return await Task.FromResult(new ResponseResult() { data = new { isAuth, id2, name2 } });
         }
-
         /// <summary>
-        /// 我要认证，接口已授权
+        /// 认证，接口已授权（角色admin，invoice）
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("GetProduct1")]
         public async Task<ResponseResult<ProductEntityResult>> GetProduct1Async(long id)
-        {
-            var ip = IPHelper.GetCurrentIp();
-            return await _productService.GetProductAsync(id);
-        }
-        /// <summary>
-        /// 我要认证的，但接口未授权
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("GetProduct2")]
-        public async Task<ResponseResult<ProductEntityResult>> GetProduct2Async(long id)
         {
             var ip = IPHelper.GetCurrentIp();
             return await _productService.GetProductAsync(id);
