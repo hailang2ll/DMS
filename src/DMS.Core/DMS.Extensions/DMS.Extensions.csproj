@@ -6,11 +6,13 @@
 		<Description>基于DMSN.Common扩展，主要实现公共中间件的作用</Description>
 		<Copyright>Copyright@2018-2022 Dylan</Copyright>
 		<Authors>Dylan,hailang</Authors>
-		<Version>3.0.0</Version>
+		<Version>3.1.0</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
+		<PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
 		<PackageReference Include="DMS.Common" Version="4.0.3" />
 		<PackageReference Include="FreeSql.Provider.MySql" Version="3.0.100" />
 		<PackageReference Include="IdentityModel" Version="6.0.0" />

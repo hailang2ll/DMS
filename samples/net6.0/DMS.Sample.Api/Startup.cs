@@ -1,7 +1,5 @@
 using Autofac;
 using DMS.Auth;
-using DMS.Auth.Token.FilterAttribute;
-using DMS.Autofac;
 using DMS.Common.Extensions;
 using DMS.Common.Helper;
 using DMS.Common.JsonHandler.JsonConverters;
@@ -17,6 +15,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Collections.Generic;
 
 namespace DMS.Sample.Api
 {
@@ -73,7 +73,7 @@ namespace DMS.Sample.Api
             services.AddHttpContextSetup();
             //开启身份认证服务，与api文档验证对应即可
             services.AddAuthSetup(AuthModel.All);
-   
+
 
             Permissions.IsUseIds4 = DMS.Common.AppConfig.GetValue(new string[] { "IdentityServer4", "Enabled" }).ToBool();
             services.AddAuthorizationSetup();
@@ -126,7 +126,10 @@ namespace DMS.Sample.Api
         /// <param name="builder"></param>
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterAutofac31();
+            builder.RegisterModule(new AutofacModuleRegister(AppContext.BaseDirectory, new List<string>()
+            {
+                "DMS.Sample.Service.dll",
+            }));
         }
 
     }
