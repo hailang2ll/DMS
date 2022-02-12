@@ -19,14 +19,14 @@ namespace DMS.Sample.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        private readonly IProductService productService;
+        private readonly IProductService _productService;
         /// <summary>
         /// 构造函数注入
         /// </summary>
 
         public InjectionController(IProductService productService)
         {
-            this.productService = productService;
+            this._productService = productService;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace DMS.Sample.Api.Controllers
         public async Task<ResponseResult<ProductEntityResult>> GetProductAsync(long id)
         {
             var ip = IPHelper.GetCurrentIp();
-            return await productService.GetProductAsync(id);
+            return await _productService.GetProductAsync(id);
         }
     }
 }
