@@ -16,20 +16,25 @@ namespace DMS.Extensions.ServiceExtensions
     {
         public static void AddAuthenticationJWTSetup(this IServiceCollection services)
         {
-
-            string Issuer = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Issuer" });
-            string Audience = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Audience" });
-            string secretCredentials = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Secret" });
+            var option = DMS.Extensions.Authorizations.AppConfig.JwtSettingOption;
+            string issuer = option.Issuer;
+            string audience = option.Audience;
+            string secretCredentials = option.SecretKey;
 
             // 令牌验证参数
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,//是否验证发行人
-                ValidIssuer = Issuer,//发行人
+                ValidIssuer = issuer,//发行人
                                     
                 ValidateAudience = true,//是否验证被发布者
-                ValidAudience = Audience,//受众人
-                                         
+                ValidAudience = audience,//受众人
+                //这里采用动态验证的方式，在重新登陆时，刷新token，旧token就强制失效了
+                //AudienceValidator = (m, n, z) =>
+                //{
+                //    return m != null && m.FirstOrDefault().Equals(audience);
+                //},
+
                 ValidateIssuerSigningKey = true,//是否验证密钥
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretCredentials)),
 
@@ -68,12 +73,12 @@ namespace DMS.Extensions.ServiceExtensions
                         {
                             var jwtToken = jwtHandler.ReadJwtToken(token);
 
-                            if (jwtToken.Issuer != Issuer)
+                            if (jwtToken.Issuer != issuer)
                             {
                                 context.Response.Headers.Add("Token-Error-Iss", "issuer is wrong!");
                             }
 
-                            if (jwtToken.Audiences.FirstOrDefault() != Audience)
+                            if (jwtToken.Audiences.FirstOrDefault() != audience)
                             {
                                 context.Response.Headers.Add("Token-Error-Aud", "Audience is wrong!");
                             }

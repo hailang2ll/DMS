@@ -81,7 +81,9 @@ namespace DMS.Swagger
                             Description = "JWT认证授权，使用直接在下框中输入Bearer {token}（注意两者之间是一个空格）\"",
                             Name = "Authorization",  //jwt 默认参数名称
                             In = ParameterLocation.Header,  //jwt默认存放Authorization信息的位置（请求头）
-                            Type = SecuritySchemeType.ApiKey
+                            Type = SecuritySchemeType.ApiKey,
+                            BearerFormat = "JWT",
+                            Scheme = "Bearer"
                         });
                         //开启加权小锁
                         option.OperationFilter<AddResponseHeadersFilter>();
@@ -99,7 +101,9 @@ namespace DMS.Swagger
                             Description = "JWT认证授权，使用直接在下框中输入Bearer {token}（注意两者之间是一个空格）\"",
                             Name = "Authorization",  //jwt 默认参数名称
                             In = ParameterLocation.Header,  //jwt默认存放Authorization信息的位置（请求头）
-                            Type = SecuritySchemeType.ApiKey
+                            Type = SecuritySchemeType.ApiKey,
+                            BearerFormat = "JWT",
+                            Scheme = "Bearer"
                         });
                         //开启加权小锁
                         option.OperationFilter<AddResponseHeadersFilter>();

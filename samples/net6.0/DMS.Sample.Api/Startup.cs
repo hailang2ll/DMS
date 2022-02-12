@@ -60,8 +60,8 @@ namespace DMS.Sample.Api
             }).AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
-                options.JsonSerializerOptions.PropertyNamingPolicy = null;
-                options.JsonSerializerOptions.DictionaryKeyPolicy = null;
+                //options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                //options.JsonSerializerOptions.DictionaryKeyPolicy = null;
             });
             //api文档生成，1支持普通token验证，2支持oauth2切换；默认为1
             services.AddSwaggerGenSetup(AuthModel.All);

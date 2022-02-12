@@ -25,9 +25,10 @@ namespace DMS.Extensions.ServiceExtensions
             //});
 
             #region 参数
-            string issuer = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Issuer" });
-            string audience = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Audience" });
-            string secretCredentials = DMS.Common.AppConfig.GetValue(new string[] { "Audience", "Secret" });
+            var option = DMS.Extensions.Authorizations.AppConfig.JwtSettingOption;
+            string issuer = option.Issuer;
+            string audience = option.Audience;
+            string secretCredentials = option.SecretKey;
 
             var keyByteArray = Encoding.ASCII.GetBytes(secretCredentials);
             var signingKey = new SymmetricSecurityKey(keyByteArray);

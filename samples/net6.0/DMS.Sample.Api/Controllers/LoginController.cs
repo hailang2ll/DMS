@@ -99,32 +99,60 @@ namespace DMS.Sample.Api.Controllers
                 //claims.AddRange(userRoles.Split(',').Select(s => new Claim(ClaimTypes.Role, s)));
                 claims.AddRange(userRoles.Select(s => new Claim(ClaimTypes.Role, s)));
 
-
-                //jwt
-                //var data = await _roleModulePermissionServices.RoleModuleMaps();
-                var data = new List<PermissionData>() {
+                if (!Permissions.IsUseIds4)
+                {
+                    //jwt
+                    //var data = await _roleModulePermissionServices.RoleModuleMaps();
+                    var data = new List<PermissionData>() {
                               new PermissionData { Id=1,  LinkUrl="/api/Oauth2/GetProduct1", Name="invoice"},
                               new PermissionData { Id=2,  LinkUrl="/api/values", Name="admin"},
                               new PermissionData { Id=3,  LinkUrl="/api/Oauth2/GetProduct2", Name="system"},
                               new PermissionData { Id=4,  LinkUrl="/api/values1", Name="system"}
                               };
-                var list = (from item in data
-                            where item.IsDeleted == false
-                            orderby item.Id
-                            select new PermissionItem
-                            {
-                                Url = item.LinkUrl,
-                                Name = item.Name.ToStringDefault(),
-                            }).ToList();
+                    var list = (from item in data
+                                where item.IsDeleted == false
+                                orderby item.Id
+                                select new PermissionItem
+                                {
+                                    Url = item.LinkUrl,
+                                    Name = item.Name.ToStringDefault(),
+                                }).ToList();
 
-                _requirement.Permissions = list;
 
-                var token = JwtToken.BuildJwtToken(claims.ToArray(), _requirement);
+                    //DMS.Extensions.Authorizations.AppConfig.Audience = user.UserName + DateTime.Now.ToString();
+                    //_requirement.Audience = DMS.Extensions.Authorizations.AppConfig.Audience;
+                    _requirement.Permissions = list;
+                }
+
+                var token = JwtHelper.BuildJwtToken(claims.ToArray(), _requirement);
                 result.data = token;
 
             }
             return result;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         /// <summary>
         /// 请求刷新Token
         /// </summary>
@@ -174,7 +202,7 @@ namespace DMS.Sample.Api.Controllers
                     var identity = new ClaimsIdentity(JwtBearerDefaults.AuthenticationScheme);
                     identity.AddClaims(claims);
 
-                    var refreshToken = JwtToken.BuildJwtToken(claims.ToArray(), _requirement);
+                    var refreshToken = JwtHelper.BuildJwtToken(claims.ToArray(), _requirement);
                     result.data = refreshToken;
                     return result;
                 }
@@ -211,7 +239,7 @@ namespace DMS.Sample.Api.Controllers
                     new Claim(ClaimTypes.Expiration, DateTime.Now.AddSeconds(TimeSpan.FromSeconds(60 * 60).TotalSeconds).ToString()) };
 
                 claims.AddRange(userRoles.Select(s => new Claim(ClaimTypes.Role, s)));
-                var token = JwtToken.BuildJwtToken(claims.ToArray(), _requirement);
+                var token = JwtHelper.BuildJwtToken(claims.ToArray(), _requirement);
 
                 result.data = token;
             }
