@@ -8,12 +8,15 @@ using DMS.Extensions.Authorizations.Model;
 using DMS.Extensions.ServiceExtensions;
 using DMS.NLogs.Filters;
 using DMS.Redis.Configurations;
+using DMS.Sample.Api.Filter;
 using DMS.Sample.Service.RedisEvBus;
 using DMS.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -89,7 +92,7 @@ namespace DMS.Sample.Api
 
             ////¿ªÆô¿çÓò·þÎñ
             //services.AddCorsSetup();
-
+            services.Replace(ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());
 
         }
 
@@ -130,6 +133,7 @@ namespace DMS.Sample.Api
             {
                 "DMS.Sample.Service.dll",
             }));
+            builder.RegisterModule<AutofacPropertityModuleRegister>();
         }
 
     }

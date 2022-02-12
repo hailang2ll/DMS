@@ -19,6 +19,10 @@ namespace DMS.Sample.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
+        public IProductService productService1 { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly IProductService _productService;
         /// <summary>
         /// 构造函数注入
@@ -37,6 +41,7 @@ namespace DMS.Sample.Api.Controllers
         [HttpGet("GetProduct")]
         public async Task<ResponseResult<ProductEntityResult>> GetProductAsync(long id)
         {
+            var a = productService1.GetProductAsync(id);
             var ip = IPHelper.GetCurrentIp();
             return await _productService.GetProductAsync(id);
         }
