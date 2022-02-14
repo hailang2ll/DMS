@@ -3,6 +3,7 @@ using DMS.Auth;
 using DMS.Common.Extensions;
 using DMS.Common.Helper;
 using DMS.Common.JsonHandler.JsonConverters;
+using DMS.Common.Model.Result;
 using DMS.Extensions;
 using DMS.Extensions.Authorizations.Model;
 using DMS.Extensions.Filter;
@@ -14,6 +15,7 @@ using DMS.Sample.Service.RedisEvBus;
 using DMS.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +23,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DMS.Sample.Api
 {
@@ -60,7 +63,6 @@ namespace DMS.Sample.Api
             {
                 //全局处理异常，支持DMS.Log4net，DMS.NLogs
                 option.Filters.Add<GlobalExceptionFilter>();
-                option.Filters.Add<ApiResultFilterAttribute>();
 
             }).AddJsonOptions(options =>
             {
@@ -69,8 +71,49 @@ namespace DMS.Sample.Api
                 //options.JsonSerializerOptions.DictionaryKeyPolicy = null;
             }).ConfigureApiBehaviorOptions(options =>
             {
-                options.SuppressModelStateInvalidFilter = true;
+                //使用自定义模型验证
+                options.InvalidModelStateResponseFactory = (context) =>
+                {
+                    var result = new ResponseResult();
+                    result.errmsg = string.Join(Environment.NewLine, context.ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)));
+                    return new JsonResult(result);
+                };
             });
+            #region 模型验证三种方法，选择一种即可
+            //第一种：模型全局验证
+            //option.Filters.Add<ApiResultFilterAttribute>();
+            //.ConfigureApiBehaviorOptions(options =>
+            // {
+            //     options.SuppressModelStateInvalidFilter = true;
+            // });
+
+
+            //第二种：模型全局验证
+            //.ConfigureApiBehaviorOptions(options =>
+            // {
+            //     //使用自定义模型验证
+            //     options.InvalidModelStateResponseFactory = (context) =>
+            //     {
+            //         var result = new ResponseResult();
+            //         result.errmsg = string.Join(Environment.NewLine, context.ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)));
+            //         return new JsonResult(result);
+            //     };
+            // });
+
+
+            //第三种：模型全局验证
+            //services.Configure<ApiBehaviorOptions>(options =>
+            //{
+            //    options.InvalidModelStateResponseFactory = (context) =>
+            //    {
+            //        var result = new ResponseResult();
+            //        result.errmsg = string.Join(Environment.NewLine, context.ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)));
+            //        return new JsonResult(result);
+            //    };
+            //});
+            #endregion
+
+
             //api文档生成，1支持普通token验证，2支持oauth2切换；默认为1
             services.AddSwaggerGenSetup(AuthModel.All);
             ////开启redis服务
