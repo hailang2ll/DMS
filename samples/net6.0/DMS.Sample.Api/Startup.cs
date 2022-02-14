@@ -5,6 +5,7 @@ using DMS.Common.Helper;
 using DMS.Common.JsonHandler.JsonConverters;
 using DMS.Extensions;
 using DMS.Extensions.Authorizations.Model;
+using DMS.Extensions.Filter;
 using DMS.Extensions.ServiceExtensions;
 using DMS.NLogs.Filters;
 using DMS.Redis.Configurations;
@@ -59,12 +60,16 @@ namespace DMS.Sample.Api
             {
                 //全局处理异常，支持DMS.Log4net，DMS.NLogs
                 option.Filters.Add<GlobalExceptionFilter>();
+                option.Filters.Add<ApiResultFilterAttribute>();
 
             }).AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
                 //options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 //options.JsonSerializerOptions.DictionaryKeyPolicy = null;
+            }).ConfigureApiBehaviorOptions(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
             });
             //api文档生成，1支持普通token验证，2支持oauth2切换；默认为1
             services.AddSwaggerGenSetup(AuthModel.All);

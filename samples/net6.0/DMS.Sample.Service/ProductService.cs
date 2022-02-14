@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DMS.Common.JsonHandler;
 using DMS.Sample.Contracts.Result;
+using DMS.Sample.Contracts.Param;
 
 namespace DMS.Sample.Service
 {
@@ -36,7 +37,27 @@ namespace DMS.Sample.Service
             return await Task.FromResult(result);
 
         }
-       
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public async Task<ResponseResult<ProductEntityResult>> SearchProductListAsync(SearchProductParam  param)
+        {
+            ResponseResult<ProductEntityResult> result = new ResponseResult<ProductEntityResult>();
+            ProductEntityResult entity = new ProductEntityResult()
+            {
+                //long类型转为string输出
+                Id = "1125964271981826048",
+                ProductName = "aaaa",
+                ProductPrice = 125.23m,
+                CreatedTime = DateTime.Now,
+            };
+            result.data = entity;
+            return await Task.FromResult(result);
+
+        }
 
     }
 }
