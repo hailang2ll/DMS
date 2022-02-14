@@ -2,6 +2,8 @@ using Autofac.Extensions.DependencyInjection;
 using DMS.NLogs;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System.IO;
 
 namespace DMS.Sample.Api
 {
@@ -30,7 +32,13 @@ namespace DMS.Sample.Api
                 {
                     webBuilder.UseUrls("http://*:20300");
                     webBuilder.UseNLog($"Configs/nlog.config");
-                    webBuilder.UseStartup<Startup>();
+
+                    webBuilder.UseStartup<Startup>()
+                    .ConfigureLogging((hostingContext, builder) =>
+                    {
+                        //builder.AddLog4Net(Path.Combine(Directory.GetCurrentDirectory(), "Log4net.config"));
+                    })
+                 ; ;
                 });
     }
 }

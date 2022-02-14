@@ -11,18 +11,6 @@ namespace DMS.NLogs.Filters
     /// </summary>
     public class GlobalExceptionFilter : IExceptionFilter
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        private readonly IHostingEnvironment _env;
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="env"></param>
-        public GlobalExceptionFilter(IHostingEnvironment env)
-        {
-            _env = env;
-        }
         public void OnException(ExceptionContext context)
         {
             var json = new DMS.Common.Model.Result.ResponseResult()

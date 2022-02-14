@@ -11,11 +11,6 @@ namespace DMS.Log4net.Filters
     /// </summary>
     public class GlobalExceptionFilter : IExceptionFilter
     {
-        private readonly IHostingEnvironment _env;
-        public GlobalExceptionFilter(IHostingEnvironment env)
-        {
-            _env = env;
-        }
         public void OnException(ExceptionContext context)
         {
             var json = new DMS.Common.Model.Result.ResponseResult()

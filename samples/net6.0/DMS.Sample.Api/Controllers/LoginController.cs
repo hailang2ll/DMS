@@ -215,7 +215,7 @@ namespace DMS.Sample.Api.Controllers
         [HttpPost("MainLogin")]
         public ResponseResult MainLogin()
         {
-            ResponseResult result = new ResponseResult();
+            ResponseResult result = new ();
 
             var list = new List<dynamic> {
                 new { Id="12", UserName="aaa",Pwd="123456",Role="admin"},
@@ -253,7 +253,7 @@ namespace DMS.Sample.Api.Controllers
         [HttpPost("LoginByCookies")]
         public ResponseResult LoginByCookies()
         {
-            ResponseResult result = new ResponseResult();
+            ResponseResult result = new ();
 
             var list = new List<dynamic> {
                 new { Id="12", UserName="aaa",Pwd="123456",Role="admin"},

@@ -12,11 +12,6 @@ namespace DMS.Exceptionless.Filters
     /// </summary>
     public class GlobalExceptionFilter : IExceptionFilter
     {
-        private readonly IHostingEnvironment _env;
-        public GlobalExceptionFilter(IHostingEnvironment env)
-        {
-            _env = env;
-        }
         public void OnException(ExceptionContext context)
         {
             var json = new DMS.Common.Model.Result.ResponseResult()
@@ -27,21 +22,15 @@ namespace DMS.Exceptionless.Filters
             //这里面是自定义的操作记录日志
             if (context.Exception.GetType() == typeof(UserOperationException))
             {
-                json.errmsg = "用户自定义错误，Message:" + context.Exception.Message;
-                if (_env.IsDevelopment())
-                {
-                    json.errmsg += ",StackTrace:" + context.Exception.StackTrace;
-                }
+                json.errmsg = "custom error:" + context.Exception.Message;
+                json.errmsg += ",StackTrace:" + context.Exception.StackTrace;
                 context.Exception.Submit(json.errmsg);
                 context.Result = new BadRequestObjectResult(json);
             }
             else
             {
-                json.errmsg = "内部错误，Message:" + context.Exception.Message;
-                if (_env.IsDevelopment())
-                {
-                    json.errmsg += ",StackTrace:" + context.Exception.StackTrace;//堆栈信息
-                }
+                json.errmsg = "internal，error:" + context.Exception.Message;
+                json.errmsg += ",StackTrace:" + context.Exception.StackTrace;//堆栈信息
                 context.Exception.Submit(json.errmsg);
                 context.Result = new InternalServerErrorObjectResult(json);
             }
