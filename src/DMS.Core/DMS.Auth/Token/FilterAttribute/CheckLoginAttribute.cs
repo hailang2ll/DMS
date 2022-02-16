@@ -18,7 +18,7 @@ namespace DMS.Auth.Token.FilterAttribute
     /// 如果存在构造函数调用：[TypeFilter(typeof(AuthorizationFilter))]
     /// 不同实现思路
     /// </summary>
-    public class AuthorizationFilter : Attribute, IAuthorizationFilter
+    public class CheckLoginAuthorizationFilter : Attribute, IAuthorizationFilter
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {

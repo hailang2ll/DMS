@@ -16,7 +16,7 @@ namespace DMS.Sample.Api.Controllers
     [ApiController]
     //全局Token认证二选一
     //[TypeFilter(typeof(CheckLoginAttribute))]
-    [AuthorizationFilter]
+    [CheckLoginAuthorizationFilter]
     public class TokenController : ControllerBase
     {
         /// <summary>
