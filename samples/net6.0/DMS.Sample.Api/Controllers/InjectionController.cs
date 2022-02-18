@@ -18,11 +18,11 @@ namespace DMS.Sample.Api.Controllers
     public class InjectionController : ControllerBase
     {
         /// <summary>
-        /// 
+        /// 属性注入
         /// </summary>
-        public IProductService productService1 { get; set; }
+        public IProductService _productService1 { get; set; }
         /// <summary>
-        /// 
+        /// 构造函数注入
         /// </summary>
         private readonly IProductService _productService;
         /// <summary>
@@ -42,7 +42,7 @@ namespace DMS.Sample.Api.Controllers
         [HttpGet("GetProduct")]
         public async Task<ResponseResult<ProductEntityResult>> GetProductAsync(long id)
         {
-            var a = productService1.GetProductAsync(id);
+            var a = _productService1.GetProductAsync(id);
             var ip = IPHelper.GetCurrentIp();
             return await _productService.GetProductAsync(id);
         }
