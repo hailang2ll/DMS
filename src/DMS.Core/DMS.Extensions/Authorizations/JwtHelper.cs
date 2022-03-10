@@ -13,7 +13,7 @@ namespace DMS.Extensions.Authorizations
 {
     public class JwtHelper
     {
-        public static string ValidAudience = "aaaa"+ DateTime.Now.ToString();
+        //public static string ValidAudience = "aaaa"+ DateTime.Now.ToString();
 
 
         /// <summary>

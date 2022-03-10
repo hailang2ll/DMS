@@ -11,6 +11,8 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Routing;
+using DMS.Common.JsonHandler;
+using DMS.Common.Helper;
 
 namespace DMS.Extensions.Authorizations.Policys
 {
@@ -136,6 +138,8 @@ namespace DMS.Extensions.Authorizations.Policys
 
                         var isMatchRole = false;
                         var permisssionRoles = requirement.Permissions.Where(w => currentUserRoles.Contains(w.Name));
+                        string permission = $"questUrl={questUrl}=====permisssionRoles={JsonSerializerExtensions.SerializeObject(permisssionRoles.ToList())}";
+                        ConsoleHelper.WriteInfoLine($"userauth:permission={permission}");
                         foreach (var item in permisssionRoles)
                         {
                             try
@@ -155,6 +159,7 @@ namespace DMS.Extensions.Authorizations.Policys
                         //当前用户无角色||未匹配到角色与URL，认证失败
                         if (currentUserRoles.Count <= 0 || !isMatchRole)
                         {
+                            ConsoleHelper.WriteInfoLine($"userauth:当前用户无角色||未匹配到角色与URL");
                             context.Fail();
                             return;
                         }
@@ -177,6 +182,7 @@ namespace DMS.Extensions.Authorizations.Policys
                         }
                         else
                         {
+                            ConsoleHelper.WriteInfoLine($"userauth:时间已过期");
                             context.Fail();
                             return;
                         }
@@ -186,8 +192,10 @@ namespace DMS.Extensions.Authorizations.Policys
                 }
 
                 //判断没有登录时，是否访问登录的url,并且是Post请求，并且是form表单提交类型，否则为失败
-                if (!(questUrl.Equals(requirement.LoginPath.ToLower(), StringComparison.Ordinal) && (!httpContext.Request.Method.Equals("POST") || !httpContext.Request.HasFormContentType)))
+                if (!(questUrl.Equals(requirement.LoginPath.ToLower(), StringComparison.Ordinal) 
+                    && (!httpContext.Request.Method.Equals("POST") || !httpContext.Request.HasFormContentType)))
                 {
+                    ConsoleHelper.WriteInfoLine($"userauth:访问的登录url");
                     context.Fail();
                     return;
                 }
