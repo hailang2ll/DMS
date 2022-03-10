@@ -6,7 +6,6 @@ using DMS.Common.JsonHandler.JsonConverters;
 using DMS.Common.Model.Result;
 using DMS.Extensions;
 using DMS.Extensions.Authorizations.Model;
-using DMS.Extensions.Filter;
 using DMS.Extensions.ServiceExtensions;
 using DMS.NLogs.Filters;
 using DMS.Redis.Configurations;

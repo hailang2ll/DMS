@@ -70,46 +70,39 @@ namespace DMS.Swagger
                     }
                     #endregion
 
-                    if (authModel == AuthModel.Token)
+                    void Token()
                     {
                         option.OperationFilter<AddRequiredHeaderParameter>("AccessToken");
+                    }
+                    void Auth20()
+                    {
+                        option.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                        {
+                            Description = "JWT认证授权，使用直接在下框中输入Bearer {token}（注意两者之间是一个空格）\"",
+                            Name = "Authorization",  //jwt 默认参数名称
+                            In = ParameterLocation.Header,  //jwt默认存放Authorization信息的位置（请求头）
+                            Type = SecuritySchemeType.ApiKey,
+                            BearerFormat = "JWT",
+                            Scheme = "Bearer"
+                        });
+                        //开启加权小锁
+                        option.OperationFilter<AddResponseHeadersFilter>();
+                        option.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+                        //在header中添加token，传递到后台
+                        option.OperationFilter<SecurityRequirementsOperationFilter>();
+                    }
+                    if (authModel == AuthModel.Token)
+                    {
+                        Token();
                     }
                     else if (authModel == AuthModel.Auth20)
                     {
-                        option.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-                        {
-                            Description = "JWT认证授权，使用直接在下框中输入Bearer {token}（注意两者之间是一个空格）\"",
-                            Name = "Authorization",  //jwt 默认参数名称
-                            In = ParameterLocation.Header,  //jwt默认存放Authorization信息的位置（请求头）
-                            Type = SecuritySchemeType.ApiKey,
-                            BearerFormat = "JWT",
-                            Scheme = "Bearer"
-                        });
-                        //开启加权小锁
-                        option.OperationFilter<AddResponseHeadersFilter>();
-                        option.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
-                        //在header中添加token，传递到后台
-                        option.OperationFilter<SecurityRequirementsOperationFilter>();
+                        Auth20();
                     }
                     else
                     {
-                        //两者都开启
-                        option.OperationFilter<AddRequiredHeaderParameter>("AccessToken");
-
-                        option.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-                        {
-                            Description = "JWT认证授权，使用直接在下框中输入Bearer {token}（注意两者之间是一个空格）\"",
-                            Name = "Authorization",  //jwt 默认参数名称
-                            In = ParameterLocation.Header,  //jwt默认存放Authorization信息的位置（请求头）
-                            Type = SecuritySchemeType.ApiKey,
-                            BearerFormat = "JWT",
-                            Scheme = "Bearer"
-                        });
-                        //开启加权小锁
-                        option.OperationFilter<AddResponseHeadersFilter>();
-                        option.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
-                        //在header中添加token，传递到后台
-                        option.OperationFilter<SecurityRequirementsOperationFilter>();
+                        Token();
+                        Auth20();
                     }
 
                 });

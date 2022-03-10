@@ -84,7 +84,6 @@ namespace DMS.Extensions.Authorizations.Policys
             //    requirement.Permissions = list;
             //}
             #endregion
-
             if (httpContext != null)
             {
                 var questUrl = httpContext.Request.Path.Value.ToLower();
