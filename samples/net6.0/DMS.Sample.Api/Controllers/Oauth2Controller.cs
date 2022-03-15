@@ -68,6 +68,11 @@ namespace DMS.Sample.Api.Controllers
         [HttpGet("GetProduct1")]
         public async Task<ResponseResult<ProductEntityResult>> GetProduct1Async(long id)
         {
+            var isAuth = _userOauth.IsAuthenticated();
+            var id2 = _userOauth.ID;
+            var name2 = _userOauth.Name;
+            var token = _userOauth.GetToken();
+            var ep = _userOauth.EpCode;
             var ip = IPHelper.GetCurrentIp();
             return await _productService.GetProductAsync(id);
         }

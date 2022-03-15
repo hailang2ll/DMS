@@ -7,6 +7,8 @@ namespace DMS.Auth.Oauth2
     {
         long ID { get; }
         string Name { get; }
+        string EpCode { get; }
+
         string GetToken();
         bool IsAuthenticated();
     }

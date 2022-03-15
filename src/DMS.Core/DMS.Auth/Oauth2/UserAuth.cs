@@ -22,9 +22,12 @@ namespace DMS.Auth.Oauth2
             this.redisRepository = redisRepository;
         }
 
-        public long ID => GetClaimValueByType("jti").FirstOrDefault().ToLong();
+        public long ID => GetClaimValueByType(JwtRegisteredClaimNames.Jti).FirstOrDefault().ToLong();
         public string Name => GetName();
-
+        /// <summary>
+        /// 临时方法，需要改进
+        /// </summary>
+        public string EpCode => GetValue(0);
         public string GetToken()
         {
             return _accessor.HttpContext?.Request?.Headers["Authorization"].ToStringDefault().Replace("Bearer ", "");
@@ -33,6 +36,18 @@ namespace DMS.Auth.Oauth2
         {
             return _accessor.HttpContext.User.Identity.IsAuthenticated;
         }
+
+
+
+
+        private string GetValue(int index)
+        {
+            string sid = DMS.Common.Encrypt.DESHelper.Decode(Sid);
+            var list = new List<string>(sid.Split('^'));
+            return list[index];
+        }
+        private string Sid => GetClaimValueByType(JwtRegisteredClaimNames.Sid).FirstOrDefault();
+
         private string GetName()
         {
             if (IsAuthenticated() && !_accessor.HttpContext.User.Identity.Name.IsNullOrEmpty())
@@ -51,8 +66,6 @@ namespace DMS.Auth.Oauth2
 
             return "";
         }
-
-
 
         public List<string> GetUserInfoFromToken(string ClaimType)
         {
@@ -83,6 +96,7 @@ namespace DMS.Auth.Oauth2
                     select item.Value).ToList();
 
         }
+
 
     }
 }

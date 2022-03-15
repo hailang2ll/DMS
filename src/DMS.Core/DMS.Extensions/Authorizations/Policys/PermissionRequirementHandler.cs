@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Routing;
 using DMS.Common.JsonHandler;
 using DMS.Common.Helper;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace DMS.Extensions.Authorizations.Policys
 {
