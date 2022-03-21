@@ -114,7 +114,14 @@ namespace DMS.Sample.Api
 
 
             //api文档生成，1支持普通token验证，2支持oauth2切换；默认为1
-            services.AddSwaggerGenSetup(AuthModel.All);
+            services.AddSwaggerGenSetup(option =>
+            {
+                option.RootPath = AppContext.BaseDirectory;
+                option.XmlFiles = new List<string> {
+                     AppDomain.CurrentDomain.FriendlyName+".xml",
+                     "DMS.Sample.Contracts.xml"
+                };
+            });
             ////开启redis服务
             services.AddRedisSetup();
             //开启redismq服务
@@ -122,7 +129,7 @@ namespace DMS.Sample.Api
             //开启HttpContext服务
             services.AddHttpContextSetup();
             //开启身份认证服务，与api文档验证对应即可
-            services.AddAuthSetup(AuthModel.All);
+            services.AddAuthSetup();
 
 
             Permissions.IsUseIds4 = DMS.Common.AppConfig.GetValue(new string[] { "IdentityServer4", "Enabled" }).ToBool();

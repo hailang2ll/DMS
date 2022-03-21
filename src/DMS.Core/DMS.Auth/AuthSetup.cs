@@ -6,7 +6,7 @@ namespace DMS.Auth
 {
     public static class AuthSetup
     {
-        public static void AddAuthSetup(this IServiceCollection services, AuthModel authModel = AuthModel.Token)
+        public static void AddAuthSetup(this IServiceCollection services, AuthModel authModel = AuthModel.Auth20)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
             if (authModel == AuthModel.Token)
