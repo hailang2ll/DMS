@@ -58,5 +58,17 @@ namespace DMS.Sample.Api.Controllers
             var ip = IPHelper.GetCurrentIp();
             return await _productService.SearchProductListAsync(param);
         }
+
+        /// <summary>
+        /// 搜索产品
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        [HttpPost("SearchProductList2")]
+        public async Task<ResponseResult<ProductEntityResult>> SearchProductList2Async([FromBody] SearchProductParam param)
+        {
+            var ip = IPHelper.GetCurrentIp();
+            return await _productService.SearchProductListAsync(param);
+        }
     }
 }
