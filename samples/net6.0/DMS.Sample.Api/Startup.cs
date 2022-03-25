@@ -125,7 +125,8 @@ namespace DMS.Sample.Api
                      "DMS.Sample.Contracts.xml"
                 };
             });
-            ////开启redis服务
+            services.AddSqlsugarSetup();
+            //开启redis服务
             services.AddRedisSetup();
             //开启redismq服务
             services.AddRedisMqSetup();

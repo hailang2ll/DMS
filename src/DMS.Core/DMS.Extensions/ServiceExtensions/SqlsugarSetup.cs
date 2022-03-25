@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DMS.Extensions.DBExtensions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
 using System;
@@ -10,22 +11,32 @@ namespace DMS.Extensions.ServiceExtensions
 {
     public static class SqlsugarSetup
     {
-        public static void AddSqlsugarSetup(this IServiceCollection services, IConfiguration configuration, string dbName = "db_master")
+        public static void AddSqlsugarSetup(this IServiceCollection services)
         {
-            SqlSugarScope sqlSugar = new SqlSugarScope(new ConnectionConfig()
+            var listConfig = new List<ConnectionConfig>();
+            var allCon = DBConfig.MutiInitConn();
+            allCon.ForEach(q =>
             {
-                DbType = SqlSugar.DbType.MySql,
-                ConnectionString = configuration.GetConnectionString(dbName),
-                IsAutoCloseConnection = true,
-            },
+                listConfig.Add(new ConnectionConfig()
+                {
+                    DbType = (DbType)q.DbType,
+                    ConnectionString = q.Connection,
+                    IsAutoCloseConnection = true,
+                    ConfigId = q.ConnId,
+                });
+            });
+            SqlSugarScope sqlSugar = new SqlSugarScope(listConfig,
             db =>
             {
-                //单例参数配置，所有上下文生效
-                db.Aop.OnLogExecuting = (sql, pars) =>
+                allCon.ForEach(q =>
                 {
-                    Console.WriteLine(sql);//输出sql
-                    Console.WriteLine(string.Join(",", pars?.Select(it => it.ParameterName + ":" + it.Value)));//参数
-                };
+                    db.GetConnection(q.ConnId).Aop.OnLogExecuting = (sql, pars) =>
+                    {
+                        Console.WriteLine(sql);//输出sql
+                        Console.WriteLine(string.Join(",", pars?.Select(it => it.ParameterName + ":" + it.Value)));//参数
+                    };
+                });
+
             });
             services.AddSingleton<ISqlSugarClient>(sqlSugar);
         }
