@@ -8,17 +8,8 @@ using System.Linq.Expressions;
 
 namespace DMS.Services
 {
-    public class YxyMemberService : IYxyMemberService
+    public class YxyMemberService : BaseService<YxyMember>, IYxyMemberService
     {
-        public ISqlSugarClient _mainDB;
-        public YxyMemberService(ISqlSugarClient sqlSugar)
-        {
-            //默认为主对象
-            _mainDB = sqlSugar;
-        }
-        //子对象
-        public SqlSugarProvider _slaveDB => _mainDB.AsTenant().GetConnection("yxy_system");
-
         /// <summary>
         /// 详情
         /// </summary>
@@ -27,7 +18,7 @@ namespace DMS.Services
         public async Task<ResponseResult<YxyMemberResult>> GetMemberAsync(long memberID)
         {
             ResponseResult<YxyMemberResult> result = new() { data = new YxyMemberResult() };
-            var entity = await _slaveDB.Queryable<YxyMember>()
+            var entity = await Context.Queryable<YxyMember>()
                 .Select<YxyMemberResult>()
                 .FirstAsync(q => q.Id > 0);
             if (entity == null)
@@ -56,7 +47,7 @@ namespace DMS.Services
                 result.errmsg = "参数不合法";
                 return result;
             }
-            var list = await _slaveDB.Queryable<YxyMember>()
+            var list = await Context.Queryable<YxyMember>()
                 .Where(q => q.Id > 0)
                 .Select<YxyMemberResult>()
                 .ToListAsync();
@@ -91,7 +82,7 @@ namespace DMS.Services
             var expression = Expressionable.Create<YxyMember>();
             expression.And(m => m.Id == 1);
             Expression<Func<YxyMember, bool>> where = expression.ToExpression();
-            var list = await _slaveDB.Queryable<YxyMember>()
+            var list = await Context.Queryable<YxyMember>()
                 .WhereIF(where != null, where)
                 .OrderBy(q => q.Id, OrderByType.Desc)
                 .Select<YxyMemberResult>()

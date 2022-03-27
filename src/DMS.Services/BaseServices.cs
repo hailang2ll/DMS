@@ -1,21 +1,10 @@
 ﻿using DMS.IServices;
+using DMS.Repository;
 using SqlSugar;
 
 namespace DMS.Services
 {
-    public class BaseServices<TEntity> : IBaseServices<TEntity> where TEntity : class, new()
-    {
-        public ISqlSugarClient _db;
-        public BaseServices(ISqlSugarClient sqlSugar)
-        {
-            _db = sqlSugar;
-        }
-
-        public async Task<TEntity> QueryById(object objId)
-        {
-            return await _db.Queryable<TEntity>().InSingleAsync(objId);
-           
-        }
-    }
+    public class BaseService<T> : BaseRepository<T> where T : class, new()
+    { }
 
 }
