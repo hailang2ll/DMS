@@ -11,7 +11,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\src\DMS.Core\DMS.Swagger\DMS.Swagger.csproj" />
-		<ProjectReference Include="..\DMS.Sample.Service\DMS.Sample.Service.csproj" />
 	</ItemGroup>
 
 
