@@ -9,19 +9,17 @@ using System.Linq.Expressions;
 
 namespace DMS.Services
 {
-    public class SysJobLogService : ISysJobLogService
+    /// <summary>
+    /// .net ioc注入
+    /// </summary>
+    public class SysJobLogService : BaseService<SysJoblog>, ISysJobLogService
     {
-        public ISqlSugarClient db;
-        public SysJobLogService(ISqlSugarClient sqlSugar)
-        {
-            db = sqlSugar;
-        }
         /// <summary>
         /// 各种新增语法
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public async Task<ResponseResult> AddAsync(AddJobLogParam param)
+        public async Task<ResponseResult> Add(AddJobLogParam param)
         {
             ResponseResult result = new();
             if (param == null
@@ -32,25 +30,23 @@ namespace DMS.Services
                 result.errmsg = "参数错误";
                 return result;
             }
-            Sys_JobLog jobLogEntity = new()
+            SysJoblog jobLogEntity = new()
             {
                 Name = param.Name,
-                JobLogType = param.JobLogType,
-                ServerIP = IPHelper.GetCurrentIp(),
-                TaskLogType = param.TaskLogType,
+                JobLogtype = param.JobLogType,
+                ServerIp = IPHelper.GetCurrentIp(),
+                TaskLogtype = param.TaskLogType.Value,
                 Message = param.Message,
                 CreateTime = DateTime.Now,
             };
 
             //插入返回自增列
-            var flag = db.Insertable(jobLogEntity).ExecuteReturnIdentity();
-            //插入返回影响行
-            flag = await db.Insertable(jobLogEntity).ExecuteCommandAsync();
+            var flag = await base.InsertReturnIdentityAsync(jobLogEntity);
             //null 列不插入
-            flag = await db.Insertable(jobLogEntity).IgnoreColumns(ignoreNullColumn: true).ExecuteCommandAsync();
+            flag = await base.AsInsertable(jobLogEntity).IgnoreColumns(ignoreNullColumn: true).ExecuteCommandAsync();
             //插入指定列
-            flag = db.Insertable(jobLogEntity).InsertColumns(it => new { it.Name, it.JobLogType }).ExecuteReturnIdentity();
-            flag = db.Insertable(jobLogEntity).InsertColumns("Name", "JobLogType").ExecuteReturnIdentity();
+            flag = base.AsInsertable(jobLogEntity).InsertColumns(it => new { it.Name, it.JobLogtype }).ExecuteReturnIdentity();
+            flag = base.AsInsertable(jobLogEntity).InsertColumns("Name", "JobLogType").ExecuteReturnIdentity();
             result.data = flag;
             return result;
         }
@@ -59,7 +55,7 @@ namespace DMS.Services
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public async Task<ResponseResult> AddTranAsync(AddJobLogParam param)
+        public async Task<ResponseResult> AddTran(AddJobLogParam param)
         {
             ResponseResult result = new();
             if (param == null
@@ -70,25 +66,24 @@ namespace DMS.Services
                 result.errmsg = "参数错误";
                 return result;
             }
-            Sys_JobLog jobLogEntity = new()
+            SysJoblog jobLogEntity = new()
             {
                 Name = param.Name,
-                JobLogType = param.JobLogType,
-                ServerIP = IPHelper.GetCurrentIp(),
-                TaskLogType = param.TaskLogType,
+                JobLogtype = param.JobLogType,
+                ServerIp = IPHelper.GetCurrentIp(),
+                TaskLogtype = param.TaskLogType.Value,
                 Message = param.Message,
                 CreateTime = DateTime.Now,
             };
-            Sys_Log jobEntity = new()
+            SysLog jobEntity = new()
             {
                 Logger = "测试数据",
                 Level = "测试等级",
-                IP = "::",
-                DeleteFlag = 0,
+                Ip = "::",
                 LogType = 1,
                 Message = "测试数据",
-                SubSysID = 1,
-                SubSysName = "测试子名称",
+                SubSysid = 1,
+                SubSysname = "测试子名称",
                 Thread = "测试数据",
                 Url = "http://www.xxxxx.com/",
                 MemberName = "name",
@@ -96,10 +91,10 @@ namespace DMS.Services
                 Exception = "测试异常信息",
             };
             #region 事物写法1
-            var resultTran = await db.Ado.UseTranAsync(async () =>
+            var resultTran = await Context.Ado.UseTranAsync(async () =>
             {
-                var t1 = await db.Insertable(jobLogEntity).ExecuteCommandAsync();
-                var t2 = await db.Insertable(jobEntity).ExecuteCommandAsync();
+                var t1 = await Context.Insertable(jobLogEntity).ExecuteCommandAsync();
+                var t2 = await Context.Insertable(jobEntity).ExecuteCommandAsync();
             });
             if (!resultTran.IsSuccess)
             {
@@ -108,12 +103,18 @@ namespace DMS.Services
             }
             #endregion
             #region 事物写法2-简写
-            resultTran = await db.Ado.UseTranAsync(async () =>
+            resultTran = await Context.Ado.UseTranAsync(async () =>
             {
-                var t1 = await db.Insertable(jobLogEntity).ExecuteCommandAsync();
-                var t2 = await db.Insertable(jobEntity).ExecuteCommandAsync();
+                var t1 = await Context.Insertable(jobLogEntity).ExecuteCommandAsync();
+                var t2 = await Context.Insertable(jobEntity).ExecuteCommandAsync();
             }, e => throw e);
             #endregion
+
+            await UseITenantTran(async () =>
+            {
+                var t1 = await Context.Insertable(jobLogEntity).ExecuteCommandAsync();
+                var t2 = await Context.Insertable(jobEntity).ExecuteCommandAsync();
+            });
             return result;
         }
         /// <summary>
@@ -131,8 +132,8 @@ namespace DMS.Services
                 return result;
             }
 
-            var t1 = await db.Deleteable<Sys_JobLog>()
-                .Where(a => a.JobLogID == jobLogID)
+            var t1 = await Context.Deleteable<SysJoblog>()
+                .Where(a => a.Id == jobLogID)
                 .ExecuteCommandAsync();
             result.data = t1;
             return result;
@@ -151,13 +152,13 @@ namespace DMS.Services
                 result.errmsg = "参数不合法";
                 return result;
             }
-            var t1 = await db.Updateable(
-                new Sys_JobLog()
+            var t1 = await Context.Updateable(
+                new SysJoblog()
                 {
                     Message = "新标题",
                     CreateTime = DateTime.Now
                 })
-                .Where(a => a.JobLogID == jobLogID)
+                .Where(a => a.Id == jobLogID)
                 .ExecuteCommandAsync();
             result.data = t1;
             return result;
@@ -171,7 +172,7 @@ namespace DMS.Services
         public async Task<ResponseResult<JobLogResult>> GetJobLogAsync(long jobLogID)
         {
             ResponseResult<JobLogResult> result = new() { data = new JobLogResult() };
-            var entity = await db.Queryable<Sys_JobLog>()
+            var entity = await Context.Queryable<SysJoblog>()
                 .Select<JobLogResult>()
                 .FirstAsync(q => q.JobLogID == jobLogID);
             if (entity == null)
@@ -200,8 +201,8 @@ namespace DMS.Services
                 result.errmsg = "参数不合法";
                 return result;
             }
-            var list = await db.Queryable<Sys_JobLog>()
-                .Where(q => q.JobLogType == jobLogType)
+            var list = await Context.Queryable<SysJoblog>()
+                .Where(q => q.JobLogtype == jobLogType)
                 .Select<JobLogResult>()
                 .ToListAsync();
             if (list == null || list.Count <= 0)
@@ -232,24 +233,23 @@ namespace DMS.Services
             }
 
             RefAsync<int> totalCount = 0;
-            var expression = Expressionable.Create<Sys_JobLog>();
-            expression.And(m => m.JobLogType == 1);
-            Expression<Func<Sys_JobLog, bool>> where = expression.ToExpression();
-            var list = await db.Queryable<Sys_JobLog>()
+            var expression = Expressionable.Create<SysJoblog>();
+            expression.And(m => m.JobLogtype == 1);
+            Expression<Func<SysJoblog, bool>> where = expression.ToExpression();
+            var list = await Context.Queryable<SysJoblog>()
                 .WhereIF(where != null, where)
-                .OrderBy(q => q.JobLogID, OrderByType.Desc)
+                .OrderBy(q => q.Id, OrderByType.Desc)
                 .Select<JobLogResult>()
                 .ToPageListAsync(param.pageIndex, param.pageSize, totalCount);
+
+
             if (list == null || list.Count <= 0)
             {
                 result.errno = 2;
                 result.errmsg = "未找到相关数据";
                 return result;
             }
-            result.data.resultList = list;
-            result.data.pageIndex = param.pageIndex;
-            result.data.pageSize = param.pageSize;
-            result.data.totalRecord = (int)totalCount;
+            result.data = await base.QueryPageList<JobLogResult>(where, param, "id desc");
             return result;
         }
     }

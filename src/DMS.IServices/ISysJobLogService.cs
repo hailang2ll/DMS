@@ -14,13 +14,13 @@ namespace DMS.IServices
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        Task<ResponseResult> AddAsync(AddJobLogParam param);
+        Task<ResponseResult> Add(AddJobLogParam param);
         /// <summary>
         /// 事物处理
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        Task<ResponseResult> AddTranAsync(AddJobLogParam param);
+        Task<ResponseResult> AddTran(AddJobLogParam param);
         /// <summary>
         /// 异步修改
         /// </summary>

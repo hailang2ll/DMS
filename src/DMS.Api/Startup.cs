@@ -116,7 +116,7 @@ namespace DMS.Api
                      "DMS.IServices.xml"
                 };
             });
-            services.AddSqlsugarSetup();
+            services.AddSqlsugarIocSetup(Configuration);
             //开启redis服务
             services.AddRedisSetup();
             //开启redismq服务

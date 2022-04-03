@@ -4,6 +4,7 @@ using System.Text;
 
 namespace DMS.Extensions.DBExtensions
 {
+
     public class DBOptions
     {
         public string MainDB { get; set; }

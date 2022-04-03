@@ -9,21 +9,10 @@ namespace DMS.IServices
     /// </summary>
     public interface IYxyMemberService
     {
-       
-        /// <summary>
-        /// 异步查询
-        /// </summary>
-        /// <returns></returns>
-        Task<ResponseResult<YxyMemberResult>> GetMemberAsync(long memberID);
-        /// <summary>
-        /// 异步查询
-        /// </summary>
-        /// <returns></returns>
-        Task<ResponseResult<List<YxyMemberResult>>> GetMemberListAsync(long memberType);
-        /// <summary>
-        /// 异步查询
-        /// </summary>
-        /// <returns></returns>
-        Task<ResponseResult<PageModel<YxyMemberResult>>> SearchMemberAsync(SearchYxyMemberParam param);
+        Task<ResponseResult> Add(AddMemberParam param);
+        Task<ResponseResult> AddTran(AddMemberParam param);
+        Task<ResponseResult> GetEntity(long id);
+        Task<ResponseResult> GetList(long id);
+        Task<ResponseResult> GetList(SearchMemberParam param);
     }
 }

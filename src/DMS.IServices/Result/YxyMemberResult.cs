@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 
 namespace DMS.IServices.Result
 {
@@ -10,15 +11,18 @@ namespace DMS.IServices.Result
         /// <summary>
         /// ID
         /// </summary>
+        [SugarColumn(ColumnName = "id")]
         public long Id { get; set; }
         /// <summary>
         /// 名称
         /// </summary>
+        [SugarColumn(ColumnName = "member_name")]
         public string MemberName { get; set; }
         /// <summary>
         /// 密码
         /// </summary>
+        [SugarColumn(ColumnName = "password")]
         public string Password { get; set; }
-       
+
     }
 }

@@ -22,39 +22,58 @@ namespace DMS.Api.Controllers
         {
             this._memberService = memberService;
         }
-
+        /// <summary>
+        /// 添加用户-同库事物
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        [HttpPost("Add")]
+        public async Task<ResponseResult> Add(AddMemberParam param)
+        {
+            var a = await _memberService.Add(param);
+            return a;
+        }
+        /// <summary>
+        /// 添加用户-切换仓库不同库事物
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        [HttpPost("AddTran")]
+        public async Task<ResponseResult> AddTran(AddMemberParam param)
+        {
+            var a = await _memberService.AddTran(param);
+            return a;
+        }
         /// <summary>
         /// 获取用户
         /// </summary>
-        /// <param name="memberID"></param>
+        /// <param name="jobLogID"></param>
         /// <returns></returns>
-        [HttpGet("GetMember")]
-        public async Task<ResponseResult<YxyMemberResult>> GetMemberAsync(long memberID)
+        [HttpGet("GetEntity")]
+        public async Task<ResponseResult> GetEntity(long jobLogID)
         {
-            return await _memberService.GetMemberAsync(memberID);
+            var a = await _memberService.GetEntity(jobLogID);
+            return a;
         }
-
         /// <summary>
         /// 获取用户集合
         /// </summary>
-        /// <param name="memberType"></param>
+        /// <param name="jobLogType"></param>
         /// <returns></returns>
-        [HttpGet("GetMemberList")]
-        public async Task<ResponseResult<List<YxyMemberResult>>> GetMemberListAsync(long memberType)
+        [HttpGet("GetList")]
+        public async Task<ResponseResult> GetList(long jobLogType)
         {
-            return await _memberService.GetMemberListAsync(memberType);
+            return await _memberService.GetList(jobLogType);
         }
         /// <summary>
         /// 搜索用户
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-
-        [HttpGet("SearchMember")]
-        public async Task<ResponseResult<PageModel<YxyMemberResult>>> SearchMemberAsync([FromQuery] SearchYxyMemberParam param)
+        [HttpGet("GetPageList")]
+        public async Task<ResponseResult> GetPageList([FromQuery] SearchMemberParam param)
         {
-
-            return await _memberService.SearchMemberAsync(param);
+            return await _memberService.GetList(param);
         }
     }
 }

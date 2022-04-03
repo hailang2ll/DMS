@@ -63,7 +63,7 @@ namespace DMS.Api.Controllers
             var v = await redisRepository.GetValueAsync<UserTicket>("dylan");
             #endregion
 
-            return await jobLogService.AddAsync(param);
+            return await jobLogService.Add(param);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace DMS.Api.Controllers
         [HttpPost("AddTran")]
         public async Task<ResponseResult> AddTranAsync(AddJobLogParam param)
         {
-            return await jobLogService.AddTranAsync(param);
+            return await jobLogService.AddTran(param);
         }
 
         /// <summary>

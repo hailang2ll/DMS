@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="IBaseRepository.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\DMS.Core\DMS.Extensions\DMS.Extensions.csproj" />
   </ItemGroup>
 
