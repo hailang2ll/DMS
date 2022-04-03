@@ -10,7 +10,7 @@ namespace DMS.IServices.Result
         /// <summary>
         /// 任务ID
         /// </summary>
-        public int JobLogID { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// 任务时间
         /// </summary>

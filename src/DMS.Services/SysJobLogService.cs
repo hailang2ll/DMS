@@ -174,7 +174,7 @@ namespace DMS.Services
             ResponseResult<JobLogResult> result = new() { data = new JobLogResult() };
             var entity = await Context.Queryable<SysJoblog>()
                 .Select<JobLogResult>()
-                .FirstAsync(q => q.JobLogID == jobLogID);
+                .FirstAsync(q => q.Id == jobLogID);
             if (entity == null)
             {
                 result.errno = 1;

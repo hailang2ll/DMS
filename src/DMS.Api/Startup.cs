@@ -116,16 +116,16 @@ namespace DMS.Api
                      "DMS.IServices.xml"
                 };
             });
+            //开启HttpContext服务
+            services.AddHttpContextSetup();
+            //开启sqlsugar服务
             services.AddSqlsugarIocSetup(Configuration);
             //开启redis服务
             services.AddRedisSetup();
             //开启redismq服务
             services.AddRedisMqSetup();
-            //开启HttpContext服务
-            services.AddHttpContextSetup();
-            //开启身份认证服务，与api文档验证对应即可
+            //开启身份认证服务，与api文档验证对应即可，要先开启redis服务
             services.AddAuthSetup();
-
 
             Permissions.IsUseIds4 = DMS.Common.AppConfig.GetValue(new string[] { "IdentityServer4", "Enabled" }).ToBool();
             services.AddAuthorizationSetup();
