@@ -35,7 +35,7 @@ namespace DMS.Repository
         #endregion
 
 
-        #region 查询列表，TEntity查询扩展
+        #region 查询列表，返回TEntity用法
         public async Task<List<TEntity>> QueryList(string strOrderByFileds)
         {
             return await Context.Queryable<TEntity>()
@@ -62,6 +62,14 @@ namespace DMS.Repository
                 .OrderByIF(orderByExpression != null, orderByExpression)
                 .ToListAsync();
         }
+        public async Task<List<TEntity>> QueryList(int top, Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, object>> orderByExpression = null)
+        {
+            return await Context.Queryable<TEntity>()
+                .WhereIF(predicate != null, predicate)
+                .OrderByIF(orderByExpression != null, orderByExpression)
+                .Take(top)
+                .ToListAsync();
+        }
         public async Task<List<TEntity>> QueryList(Expression<Func<TEntity, TEntity>> selectExpression, Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, object>> orderByExpression = null)
         {
             return await Context.Queryable<TEntity>()
@@ -70,8 +78,60 @@ namespace DMS.Repository
                 .Select(selectExpression)
                 .ToListAsync();
         }
+        public async Task<List<TEntity>> QueryList(int top, Expression<Func<TEntity, TEntity>> selectExpression, Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, object>> orderByExpression = null)
+        {
+            return await Context.Queryable<TEntity>()
+                .WhereIF(predicate != null, predicate)
+                .OrderByIF(orderByExpression != null, orderByExpression)
+                .Select(selectExpression)
+                .Take(top)
+                .ToListAsync();
+        }
+
         #endregion
-        #region 分页列表，TEntity查询扩展
+        #region 查询列表，返回TResult用法
+        public async Task<List<TResult>> QueryRList<TResult>(string strOrderByFileds)
+        {
+            return await Context.Queryable<TEntity>()
+                .OrderBy(strOrderByFileds)
+                .Select<TResult>()
+                .ToListAsync();
+        }
+        public async Task<List<TResult>> QueryRList<TResult>(Expression<Func<TEntity, object>> orderByExpression)
+        {
+            return await Context.Queryable<TEntity>()
+                .OrderByIF(orderByExpression != null, orderByExpression)
+                .Select<TResult>()
+                .ToListAsync();
+        }
+        public async Task<List<TResult>> QueryRList<TResult>(Expression<Func<TEntity, bool>> predicate, string strOrderByFileds)
+        {
+            return await Context.Queryable<TEntity>()
+                .WhereIF(predicate != null, predicate)
+                .OrderByIF(strOrderByFileds != null, strOrderByFileds)
+                .Select<TResult>()
+                .ToListAsync();
+        }
+        public async Task<List<TResult>> QueryRList<TResult>(Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, object>> orderByExpression = null)
+        {
+            return await Context.Queryable<TEntity>()
+                .WhereIF(predicate != null, predicate)
+                .OrderByIF(orderByExpression != null, orderByExpression)
+                .Select<TResult>()
+                .ToListAsync();
+        }
+        public async Task<List<TResult>> QueryRList<TResult>(Expression<Func<TEntity, TResult>> selectExpression, Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, object>> orderByExpression = null)
+        {
+            return await Context.Queryable<TEntity>()
+                .WhereIF(predicate != null, predicate)
+                .OrderByIF(orderByExpression != null, orderByExpression)
+                .Select(selectExpression)
+                .ToListAsync();
+        }
+
+        #endregion
+
+        #region 分页列表，返回TEntity用法
         public async Task<PageModel<TEntity>> QueryPageList(Expression<Func<TEntity, bool>> predicate, PageParam pageParam, string strOrderByFileds)
         {
             RefAsync<int> totalCount = 0;
@@ -104,27 +164,7 @@ namespace DMS.Repository
             return new PageModel<TEntity>() { pageIndex = pageParam.pageIndex, pageSize = pageParam.pageSize, totalRecord = totalCount, resultList = list };
         }
         #endregion
-
-
-        #region 查询列表,返回TResult用法
-        public async Task<List<TResult>> QueryList<TResult>(string strOrderByFileds)
-        {
-            return await Context.Queryable<TEntity>().OrderBy(strOrderByFileds).Select<TResult>().ToListAsync();
-        }
-        public async Task<List<TResult>> QueryList<TResult>(Expression<Func<TEntity, object>> orderByExpression)
-        {
-            return await Context.Queryable<TEntity>().OrderByIF(orderByExpression != null, orderByExpression).Select<TResult>().ToListAsync();
-        }
-        public async Task<List<TResult>> QueryList<TResult>(Expression<Func<TEntity, bool>> predicate, string strOrderByFileds)
-        {
-            return await Context.Queryable<TEntity>().WhereIF(predicate != null, predicate).OrderByIF(strOrderByFileds != null, strOrderByFileds).Select<TResult>().ToListAsync();
-        }
-        public async Task<List<TResult>> QueryList<TResult>(Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, object>> orderByExpression = null)
-        {
-            return await Context.Queryable<TEntity>().WhereIF(predicate != null, predicate).OrderByIF(orderByExpression != null, orderByExpression).Select<TResult>().ToListAsync();
-        }
-        #endregion
-        #region 分页列表,返回TResult用法
+        #region 分页列表，返回TResult用法
         public async Task<PageModel<TResult>> QueryPageList<TResult>(Expression<Func<TEntity, bool>> predicate, PageParam pageParam, string strOrderByFileds)
         {
             RefAsync<int> totalCount = 0;
@@ -172,50 +212,6 @@ namespace DMS.Repository
         }
 
         #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-        #region 查询列表,select(expression)表达式用法
-        /// <summary>
-        /// 查询列表
-        /// select(expression)表达式用法
-        /// </summary>
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="expression"></param>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        //public async Task<List<TResult>> QueryList<TResult>(Expression<Func<TEntity, TResult>> expression, Expression<Func<TEntity, bool>> predicate = null)
-        //{
-        //    return await Context.Queryable<TEntity>().WhereIF(predicate != null, predicate).Select(expression).ToListAsync();
-        //}
-        //public async Task<List<TResult>> QueryList<TResult>(Expression<Func<TEntity, TResult>> expression, string strOrderByFileds)
-        //{
-        //    return await Context.Queryable<TEntity>().OrderBy(strOrderByFileds).Select(expression).ToListAsync();
-        //}
-        //public async Task<List<TResult>> QueryList<TResult>(Expression<Func<TEntity, TResult>> expression, Expression<Func<TEntity, object>> orderByExpression)
-        //{
-        //    return await Context.Queryable<TEntity>().OrderByIF(orderByExpression != null, orderByExpression).Select(expression).ToListAsync();
-        //}
-        //public async Task<List<TResult>> QueryList<TResult>(Expression<Func<TEntity, TResult>> expression, Expression<Func<TEntity, bool>> predicate, string strOrderByFileds)
-        //{
-        //    return await Context.Queryable<TEntity>().WhereIF(predicate != null, predicate).OrderByIF(strOrderByFileds != null, strOrderByFileds).Select(expression).ToListAsync();
-        //}
-        //public async Task<List<TResult>> QueryList<TResult>(Expression<Func<TEntity, TResult>> expression, Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, object>> orderByExpression)
-        //{
-        //    return await Context.Queryable<TEntity>().WhereIF(predicate != null, predicate).OrderByIF(orderByExpression != null, orderByExpression).Select(expression).ToListAsync();
-        //}
-        #endregion
-
-
 
         #region 事物委托
         /// <summary>

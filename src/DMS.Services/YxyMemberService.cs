@@ -161,36 +161,28 @@ namespace DMS.Services
             list = await base.QueryList();
             list = await base.QueryList(q => q.Id > 4000);
             list = await base.QueryList(q => q.Id > 4000, q => new { q.Id, CreateTime = SqlFunc.Desc(q.CreateTime) });
-            var blist = await base.QueryList(q => new YxyMember() { Id = q.Id, MemberName = q.MemberName }, q => q.Id > 4000, q => new { q.Id, CreateTime = SqlFunc.Desc(q.CreateTime) });
-
-
-            var clist = await base.QueryList<YxyMemberResult>("id desc");
-            clist = await base.QueryList<YxyMemberResult>(q => new { Id = q.Id, CreateTime = SqlFunc.Desc(q.CreateTime) });
-            clist = await base.QueryList<YxyMemberResult>(q => q.Id > 1, "id desc");
-            clist = await base.QueryList<YxyMemberResult>();
-            clist = await base.QueryList<YxyMemberResult>(q => q.Id > 50000);
-            clist = await base.QueryList<YxyMemberResult>(q => q.Id > 1, q => new { Id = q.Id, CreateTime = SqlFunc.Desc(q.CreateTime) });
-
-
-
+            list = await base.QueryList(10);
+            list = await base.QueryList(10, q => q.Id > 4000);
+            list = await base.QueryList(10, q => q.Id > 4000, q => new { q.Id, CreateTime = SqlFunc.Desc(q.CreateTime) });
+            list = await base.QueryList(q => new YxyMember() { Id = q.Id, MemberName = q.MemberName });
+            list = await base.QueryList(q => new YxyMember() { Id = q.Id, MemberName = q.MemberName }, q => q.Id > 4000);
+            list = await base.QueryList(q => new YxyMember() { Id = q.Id, MemberName = q.MemberName }, q => q.Id > 4000, q => new { q.Id, CreateTime = SqlFunc.Desc(q.CreateTime) });
+            list = await base.QueryList(10, q => new YxyMember() { Id = q.Id, MemberName = q.MemberName });
+            list = await base.QueryList(10, q => new YxyMember() { Id = q.Id, MemberName = q.MemberName }, q => q.Id > 4000);
+            list = await base.QueryList(10, q => new YxyMember() { Id = q.Id, MemberName = q.MemberName }, q => q.Id > 4000, q => new { q.Id, CreateTime = SqlFunc.Desc(q.CreateTime) });
 
 
 
-            //自定义实体
-            //var clist = await base.QueryList<YxyMemberResult>();
+            var clist = await base.QueryRList<YxyMemberResult>("id desc");
+            clist = await base.QueryRList<YxyMemberResult>(q => new { Id = q.Id, CreateTime = SqlFunc.Desc(q.CreateTime) });
+            clist = await base.QueryRList<YxyMemberResult>(q => q.Id > 1, "id desc");
+            clist = await base.QueryRList<YxyMemberResult>();
+            clist = await base.QueryRList<YxyMemberResult>(q => q.Id > 50000);
+            clist = await base.QueryRList<YxyMemberResult>(q => q.Id > 50000, q => new { Id = q.Id, CreateTime = SqlFunc.Desc(q.CreateTime) });
+            clist = await base.QueryRList(q => new YxyMemberResult { Id = q.Id, MemberName = q.MemberName });
+            clist = await base.QueryRList(q => new YxyMemberResult { Id = q.Id, MemberName = q.MemberName }, q => q.Id > 4000);
+            clist = await base.QueryRList(q => new YxyMemberResult { Id = q.Id, MemberName = q.MemberName }, q => q.Id > 4000, q => new { q.Id, CreateTime = SqlFunc.Desc(q.CreateTime) });
 
-
-            //clist = await base.QueryList<YxyMemberResult>(q => q.Id);
-            //clist = await base.QueryList<YxyMemberResult>(q => q.Id > 100, "id desc");
-            //clist = await base.QueryList<YxyMemberResult>(q => q.Id > 100, q => new { Id = SqlFunc.Desc(q.Id) });
-
-
-            //clist = await base.QueryList(q => new YxyMemberResult() { Id = q.Id, MemberName = q.MemberName });
-            //clist = await base.QueryList(q => new YxyMemberResult() { Id = q.Id, MemberName = q.MemberName }, q => q.Id > 50000);
-            //clist = await base.QueryList(q => new YxyMemberResult() { Id = q.Id, MemberName = q.MemberName }, "id desc");
-            //clist = await base.QueryList(q => new YxyMemberResult() { Id = q.Id, MemberName = q.MemberName }, q => q.Id);
-            //clist = await base.QueryList(q => new YxyMemberResult() { Id = q.Id, MemberName = q.MemberName }, q => q.Id > 100, "id desc");
-            //clist = await base.QueryList(q => new YxyMemberResult() { Id = q.Id, MemberName = q.MemberName }, q => q.Id > 100, q => q.Id);
 
             var a = await Context.Queryable<YxyMember>().OrderBy(q => new { id = q.Id, name = SqlFunc.Desc(q.CreateTime) }).ToListAsync();
             clist = await Context.Queryable<YxyMember>()
@@ -225,6 +217,7 @@ namespace DMS.Services
             var pageList = await base.QueryPageList(q => q.Id > 100, param, "id desc");
             pageList = await base.QueryPageList(q => q.Id > 100, param);
             pageList = await base.QueryPageList(q => q.Id > 100, param, q => new { q.Id, MemberName = SqlFunc.Desc(q.CreateTime) });
+            pageList = await base.QueryPageList(q => new YxyMember { Id = q.Id, MemberName = q.MemberName }, q => q.Id > 100, param);
             pageList = await base.QueryPageList(q => new YxyMember { Id = q.Id, MemberName = q.MemberName }, q => q.Id > 100, param, q => new { q.Id, MemberName = SqlFunc.Desc(q.CreateTime) });
 
 
@@ -244,7 +237,7 @@ namespace DMS.Services
             Expression<Func<YxyMember, bool>> where = expression.ToExpression();
             var bpageList = await Context.Queryable<YxyMember>()
                  .WhereIF(where != null, where)
-                 .OrderBy(q => q.Id, OrderByType.Desc)
+                 .OrderBy(q => new { q.Id, CreateTime = SqlFunc.Desc(q.CreateTime) })
                  .Select<YxyMemberResult>()
                  .ToPageListAsync(param.pageIndex, param.pageSize, totalCount);
             if (bpageList == null || bpageList.Count <= 0)
