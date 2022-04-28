@@ -9,8 +9,8 @@ namespace DMS.Authorizations.UserContext.Dto
     /// </summary>
     public class UserClaimModel
     {
-        public string Uid { get; set; }
-        public string Cid { get; set; }
+        public long Uid { get; set; }
+        public long Cid { get; set; }
         public string EpCode { get; set; }
         public string Role { get; set; }
         public string Expiration { get; set; }

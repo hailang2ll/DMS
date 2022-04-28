@@ -7,6 +7,7 @@ using DMS.Common.Extensions;
 using DMS.Common.JsonHandler.JsonConverters;
 using DMS.Common.Model.Result;
 using DMS.Extensions.ServiceExtensions;
+using DMS.NLogs;
 using DMS.NLogs.Filters;
 using DMS.Redis.Configurations;
 using DMS.Services.RedisEvBus;
@@ -17,14 +18,15 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//builder.Configuration.AddCommandLine(args);
+//builder.WebHost.UseUrls(builder.Configuration.GetValue<string>("StartUrl"));
 builder.Host
 .ConfigureLogging((hostingContext, builder) =>
 {
     //builder.AddFilter("System", LogLevel.Error);
     //builder.AddFilter("Microsoft", LogLevel.Error);
     //builder.SetMinimumLevel(LogLevel.Error);
-    //builder.AddLog4Net(Path.Combine(Directory.GetCurrentDirectory(), "Log4net.config"));
+    builder.UseNLog(Path.Combine(Directory.GetCurrentDirectory(), "Configs/nlog.config"));
 })
 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
 .ConfigureContainer<ContainerBuilder>(builder =>
@@ -38,6 +40,7 @@ builder.Host
 .ConfigureAppConfiguration((hostingContext, config) =>
 {
     config.Sources.Clear();
+    config.AddCommandLine(args);
     config.AddJsonFile($"Configs/redis.json", optional: false, reloadOnChange: true);
     config.AddJsonFile($"Configs/domain.json", optional: false, reloadOnChange: true);
     config.AddJsonFile($"appsettings.json", optional: true, reloadOnChange: true);

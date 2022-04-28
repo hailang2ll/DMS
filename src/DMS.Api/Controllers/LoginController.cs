@@ -34,14 +34,20 @@ namespace DMS.Api.Controllers
         /// </summary>
         private readonly IRedisRepository _redisRepository;
         /// <summary>
+        /// 
+        /// </summary>
+        private readonly DMS.Authorizations.UserContext.Jwt.IUserAuth _userOauth;
+        /// <summary>
         /// 构造函数注入
         /// </summary>
         /// <param name="requirement"></param>
         /// <param name="redisRepository"></param>
-        public LoginController(PermissionRequirement requirement, IRedisRepository redisRepository)
+        /// <param name="userAuth"></param>
+        public LoginController(PermissionRequirement requirement, IRedisRepository redisRepository, DMS.Authorizations.UserContext.Jwt.IUserAuth userAuth)
         {
             _requirement = requirement;
             _redisRepository = redisRepository;
+            _userOauth = userAuth;
         }
         /// <summary>
         /// 普通TOKEN认识方式
@@ -105,8 +111,8 @@ namespace DMS.Api.Controllers
                 #region 2
                 UserClaimModel claimModel = new UserClaimModel()
                 {
-                    Uid = user.Id.ToString(),
-                    Cid = user.Id.ToString(),
+                    Uid = user.Id,
+                    Cid = user.Id,
                     EpCode = user.Id.ToString(),
                     Expiration = DateTime.Now.Add(_requirement.Expiration).ToString(),
                 };
@@ -170,7 +176,7 @@ namespace DMS.Api.Controllers
                                     ChildNodes=new List<MenuModel>()
                                     {
                                         new MenuModel()
-                                        {  
+                                        {
                                             Id=1,
                                             Type=30,
                                             Name="用户列表",
@@ -348,23 +354,18 @@ namespace DMS.Api.Controllers
         /// <summary>
         /// 请求刷新Token
         /// </summary>
+        /// <param name="token"></param>
         /// <returns></returns>
         [HttpGet("RefreshToken")]
-        public ResponseResult RefreshToken(string token = "")
+        public ResponseResult RefreshToken(string token)
         {
             ResponseResult result = new ResponseResult();
 
-            if (string.IsNullOrEmpty(token))
+            var tokenModel = JwtHelper.ParseJwtToken(token);
+            if (tokenModel == null || JwtHelper.VerifyTokenSafe(token) && tokenModel.Uid < 0)
             {
                 result.errno = 1;
-                result.errmsg = "token无效，请重新登录";
-                return result;
-            }
-            var tokenModel = JwtHelper.SerializeJwt(token);
-            if (tokenModel == null || JwtHelper.customSafeVerify(token) && tokenModel.Uid < 0)
-            {
-                result.errno = 4;
-                result.errmsg = "认证失败";
+                result.errmsg = "认证失败，可能信息被篡改";
                 return result;
             }
             else
@@ -382,20 +383,19 @@ namespace DMS.Api.Controllers
                 }
                 else
                 {
-                    var userRoles = userList.Select(q => q.Role).ToList();
-                    //如果是基于用户的授权策略，这里要添加用户;如果是基于角色的授权策略，这里要添加角色
-                    var claims = new List<Claim> {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti, tokenModel.Uid.ToString()),
-                    new Claim(ClaimTypes.Expiration, DateTime.Now.AddSeconds(_requirement.Expiration.TotalSeconds).ToString()) };
-                    //claims.AddRange(userRoles.Split(',').Select(s => new Claim(ClaimTypes.Role, s)));
-                    claims.AddRange(userRoles.Select(s => new Claim(ClaimTypes.Role, s)));
-                    //用户标识
-                    var identity = new ClaimsIdentity(JwtBearerDefaults.AuthenticationScheme);
-                    identity.AddClaims(claims);
+                    #region 2
+                    UserClaimModel claimModel = new UserClaimModel()
+                    {
+                        Uid = tokenModel.Uid,
+                        Cid = tokenModel.Cid,
+                        EpCode = tokenModel.EpCode,
+                        Expiration = DateTime.Now.Add(_requirement.Expiration).ToString(),
+                    };
+                    var jwtToken = JwtHelper.Create(claimModel);
+                    #endregion
 
-                    var refreshToken = JwtHelper.Create(claims.ToArray(), _requirement);
-                    result.data = refreshToken;
+                    //缓存信息
+                    result.data = jwtToken;
                     return result;
                 }
             }

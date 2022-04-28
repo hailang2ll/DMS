@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace DMS.NLogs
@@ -11,7 +12,6 @@ namespace DMS.NLogs
     /// </summary>
     public static class NLogExtensions
     {
-
         /// <summary>
         /// 设置配置文件
         /// </summary>
@@ -51,7 +51,20 @@ namespace DMS.NLogs
             NLogContext.Configure(configPath, basePath);
             return builder;
         }
+        /// <summary>
+        ///  使用NLog
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="configPath">配置文件路径，默认调用当前项目执行目录下面的log4net.config作为配置文件</param>
+        /// <returns></returns>
+        public static ILoggingBuilder UseNLog(this ILoggingBuilder builder, string configPath, string basePath = null)
+        {
+            if (builder == null)
+                throw new ArgumentNullException(nameof(builder));
 
+            NLogContext.Configure(configPath, basePath);
+            return builder;
+        }
 
     }
 }

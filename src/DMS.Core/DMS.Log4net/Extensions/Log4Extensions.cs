@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace DMS.Log4net
@@ -49,6 +50,19 @@ namespace DMS.Log4net
             Log4Context.Configure(configPath, basePath);
             return builder;
         }
+        /// <summary>
+        /// 使用Log4net
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="configPath">配置文件路径，默认调用当前项目执行目录下面的log4net.config作为配置文件</param>
+        /// <returns></returns>
+        public static ILoggingBuilder UseLog4net(this ILoggingBuilder builder, string configPath, string basePath = null)
+        {
+            if (builder == null)
+                throw new ArgumentNullException(nameof(builder));
 
+            Log4Context.Configure(configPath, basePath);
+            return builder;
+        }
     }
 }
