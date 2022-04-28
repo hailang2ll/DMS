@@ -370,34 +370,23 @@ namespace DMS.Api.Controllers
             }
             else
             {
-                var userList = new List<dynamic> {
-                    new { Id="12", UserName="aaa",Pwd="123456",Role="admin"},
-                    new { Id="45", UserName="bbb",Pwd="456789",Role="invoice"},
-                };
-                var user = userList.SingleOrDefault(q => q.UserName == "aaa" && q.Pwd == "123456");
-                if (user == null)
-                {
-                    result.errno = 1;
-                    result.errmsg = "用户名或密码错误";
-                    return result;
-                }
-                else
-                {
-                    #region 2
-                    UserClaimModel claimModel = new UserClaimModel()
-                    {
-                        Uid = tokenModel.Uid,
-                        Cid = tokenModel.Cid,
-                        EpCode = tokenModel.EpCode,
-                        Expiration = DateTime.Now.Add(_requirement.Expiration).ToString(),
-                    };
-                    var jwtToken = JwtHelper.Create(claimModel);
-                    #endregion
+                //判断用户信息是否合法
 
-                    //缓存信息
-                    result.data = jwtToken;
-                    return result;
-                }
+                #region 2
+                UserClaimModel claimModel = new UserClaimModel()
+                {
+                    Uid = tokenModel.Uid,
+                    Cid = tokenModel.Cid,
+                    EpCode = tokenModel.EpCode,
+                    Expiration = DateTime.Now.Add(_requirement.Expiration).ToString(),
+                };
+                var jwtToken = JwtHelper.Create(claimModel);
+                #endregion
+
+                //缓存信息
+                result.data = jwtToken;
+                return result;
+
             }
         }
         /// <summary>
