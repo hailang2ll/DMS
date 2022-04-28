@@ -2,6 +2,8 @@
 using DMS.IServices;
 using DMS.IServices.Param;
 using DMS.IServices.Result;
+using DMS.IServices.Validation.Fluent;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DMS.Api.Controllers
@@ -22,6 +24,7 @@ namespace DMS.Api.Controllers
         {
             this._memberService = memberService;
         }
+
         /// <summary>
         /// 添加用户-同库事物
         /// </summary>
@@ -30,6 +33,14 @@ namespace DMS.Api.Controllers
         [HttpPost("Add")]
         public async Task<ResponseResult> Add(AddMemberParam param)
         {
+            //通用FluentValidation验证方法
+            //AddMemberParamValidator validationRules = new AddMemberParamValidator();
+            //var validResult = validationRules.Validate(param);
+            //if (!validResult.IsValid)
+            //{
+            //    validResult.AddToModelState(ModelState, string.Empty);
+            //}
+
             var a = await _memberService.Add(param);
             return a;
         }

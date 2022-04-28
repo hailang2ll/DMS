@@ -1,5 +1,5 @@
-﻿using DMS.Auth;
-using DMS.Auth.Oauth2;
+﻿using DMS.Authorizations.UserContext;
+using DMS.Authorizations.UserContext.Jwt;
 using DMS.Common.Model.Result;
 using DMS.IServices;
 using DMS.IServices.Param;
@@ -43,8 +43,7 @@ namespace DMS.Api.Controllers
             var url = DMS.Common.AppConfig.GetValue("ProductUrl");
             var de = DMS.Common.AppConfig.GetValue(new string[] { "Logging", "LogLevel", "Default" });
 
-            var id = userAuth.ID;
-            var name = userAuth.Name;
+            var id = userAuth.Uid;
 
             var appid = Request.Headers["appid"];
             var accessToken = Request.Headers["AccessToken"];
@@ -129,8 +128,7 @@ namespace DMS.Api.Controllers
         [HttpGet("SearchJobLog")]
         public async Task<ResponseResult<PageModel<JobLogResult>>> SearchJobLogAsync([FromQuery] SearchJobLogParam param)
         {
-            var id = userAuth.ID;
-            var name = userAuth.Name;
+            var id = userAuth.Uid;
 
             return await jobLogService.SearchJobLogAsync(param);
         }

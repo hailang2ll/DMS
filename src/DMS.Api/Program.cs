@@ -1,18 +1,17 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using DMS.Api.Filter;
-using DMS.Auth;
+using DMS.Authorizations.Model;
+using DMS.Authorizations.ServiceExtensions;
 using DMS.Common.Extensions;
-using DMS.Common.Helper;
 using DMS.Common.JsonHandler.JsonConverters;
 using DMS.Common.Model.Result;
-using DMS.Extensions.Authorizations.Model;
 using DMS.Extensions.ServiceExtensions;
-using DMS.NLogs;
 using DMS.NLogs.Filters;
 using DMS.Redis.Configurations;
 using DMS.Services.RedisEvBus;
 using DMS.Swagger;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -46,7 +45,6 @@ builder.Host
 });
 
 
-
 builder.Services.AddControllers(option =>
 {
     //全局处理异常，支持DMS.Log4net，DMS.NLogs
@@ -54,10 +52,23 @@ builder.Services.AddControllers(option =>
 
 }).AddJsonOptions(options =>
 {
-    options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
+    options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter());
     //options.JsonSerializerOptions.PropertyNamingPolicy = null;
     //options.JsonSerializerOptions.DictionaryKeyPolicy = null;
-}).ConfigureApiBehaviorOptions(options =>
+})
+.AddFluentValidation(config =>
+{
+    //程序集方式添加验证
+    //config.RegisterValidatorsFromAssemblyContaining(typeof(AddMemberParamValidator));
+
+    //批量添加验证
+    var validatorList = DMS.Common.Extensions.TypeExtensions.GetTypeList("DMS.IServices", "Validator");
+    foreach (var item in validatorList)
+    {
+        config.RegisterValidatorsFromAssemblyContaining(item);
+    }
+})
+.ConfigureApiBehaviorOptions(options =>
 {
     //使用自定义模型验证
     options.InvalidModelStateResponseFactory = (context) =>
@@ -88,7 +99,7 @@ builder.Services.AddRedisSetup();
 //开启redismq服务
 builder.Services.AddRedisMqSetup();
 //开启身份认证服务，与api文档验证对应即可，要先开启redis服务
-builder.Services.AddAuthSetup();
+builder.Services.AddUserContextSetup();
 
 Permissions.IsUseIds4 = DMS.Common.AppConfig.GetValue(new string[] { "IdentityServer4", "Enabled" }).ToBool();
 builder.Services.AddAuthorizationSetup();

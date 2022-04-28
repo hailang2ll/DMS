@@ -16,7 +16,7 @@ namespace DMS.Extensions
         /// <summary>
         /// 基于auth2.0认证
         /// </summary>
-        Auth20,
+        Jwt,
         /// <summary>
         /// 都支持
         /// </summary>

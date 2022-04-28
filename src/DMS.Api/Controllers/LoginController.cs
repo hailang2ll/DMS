@@ -1,22 +1,19 @@
-﻿using DMS.Auth;
-using DMS.Common.Extensions;
+﻿using DMS.Api.Model;
+using DMS.Authorizations;
+using DMS.Authorizations.Model;
+using DMS.Authorizations.Policys;
+using DMS.Authorizations.UserContext;
+using DMS.Authorizations.UserContext.Dto;
 using DMS.Common.JsonHandler;
 using DMS.Common.Model.Result;
-using DMS.Extensions.Authorizations;
-using DMS.Extensions.Authorizations.Model;
-using DMS.Extensions.Authorizations.Policys;
+using DMS.Models;
 using DMS.Redis;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace DMS.Api.Controllers
 {
@@ -67,6 +64,221 @@ namespace DMS.Api.Controllers
             return result;
         }
 
+
+        /// <summary>
+        /// 登录 token生成
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("Login")]
+        public async Task<ResponseResult> Login()
+        {
+            ResponseResult result = new ResponseResult();
+
+            var userList = new List<YxyMember> {
+                new YxyMember{  Id=11111,MemberName="aaa",Password="123456"},
+                new YxyMember{  Id=22222,MemberName="bbb",Password="123456"},
+            };
+
+            var user = userList.SingleOrDefault(q => q.MemberName == "bbb" && q.Password == "123456");
+            if (user == null)
+            {
+                result.errno = 1;
+                result.errmsg = "用户名或密码错误";
+                return result;
+            }
+            else
+            {
+                #region 1
+                ////var userRoles = "admin,invoice";
+                ////如果是基于用户的授权策略，这里要添加用户;如果是基于角色的授权策略，这里要添加角色
+                ////需要改进：JwtClaimTypes，减少生成规则
+                //var claims = new List<Claim> {
+                //    new Claim(JwtClaimTypes.Uid, user.Id.ToString()),
+                //    new Claim(JwtClaimTypes.Cid, "555555555"),
+                //    new Claim(JwtClaimTypes.EpCode, "6666666666666"),
+                //    new Claim(JwtClaimTypes.Expiration, DateTime.Now.Add(_requirement.Expiration).ToString())
+                //};
+                ////claims.AddRange(userRoles.Split(',').Select(s => new Claim(JwtClaimTypes.Role, s)));
+                //var jwtToken = JwtHelper.Create(claims.ToArray());
+                #endregion
+
+                #region 2
+                UserClaimModel claimModel = new UserClaimModel()
+                {
+                    Uid = user.Id.ToString(),
+                    Cid = user.Id.ToString(),
+                    EpCode = user.Id.ToString(),
+                    Expiration = DateTime.Now.Add(_requirement.Expiration).ToString(),
+                };
+                var jwtToken = JwtHelper.Create(claimModel);
+                #endregion
+
+                var token = jwtToken.token;
+                result.data = new
+                {
+                    companyList = new List<dynamic>
+                    {
+                        new { cid=1,cname="A公司" },
+                        new { cid=2,cname="B公司" },
+                    },
+                    token = token,
+                    user = new
+                    {
+                        id = 1,
+                        name = "hailang"
+                    },
+                };
+
+
+
+
+
+                #region 用户信息缓存
+                var userRedis = new
+                {
+                    Uid = user.Id,
+                    Cid = 5555,//当前公司
+                    Expiration = jwtToken.expires,
+                };
+                await _redisRepository.HashSetAsync(token, "user", userRedis);
+                #endregion
+
+                #region 用户菜单缓存,多角色合并菜单
+                List<MenuCompanyModel> menuRedis = new List<MenuCompanyModel>();
+                MenuCompanyModel menuCompany1 = new MenuCompanyModel()
+                {
+                    Cid = 1,
+                    Name = "A公司",
+                    Roles = "admin,system",
+                    ChildNodes = new List<MenuModel>() {
+                        new MenuModel()
+                        {
+                            Id=1,
+                            Type=10,
+                            Name="系统中心",
+                            Url="",
+                            IconName="system",
+                            ChildNodes=new List<MenuModel>()
+                            {
+                                new MenuModel()
+                                {
+                                    Id=1,
+                                    Type=20,
+                                    Name="权限管理",
+                                    Url="",
+                                    IconName="",
+                                    ChildNodes=new List<MenuModel>()
+                                    {
+                                        new MenuModel()
+                                        {  
+                                            Id=1,
+                                            Type=30,
+                                            Name="用户列表",
+                                            Url="/api/add",
+                                            IconName="",
+                                            ChildNodes=null
+                                        },
+                                        new MenuModel()
+                                        {
+                                            Id=2,
+                                            Type=30,
+                                            Name="角色列表",
+                                            Url="/api/add",
+                                            IconName="",
+                                            ChildNodes=null
+                                        },
+                                        new MenuModel()
+                                        {
+                                            Id=3,
+                                            Type=30,
+                                            Name="部门列表",
+                                            Url="/api/add",
+                                            IconName="",
+                                            ChildNodes=null
+                                        }
+                                    }
+                                },
+                            },
+                        },
+                    },
+                };
+                MenuCompanyModel menuCompany2 = new MenuCompanyModel()
+                {
+                    Cid = 2,
+                    Name = "B公司",
+                    Roles = "admin,system",
+                    ChildNodes = new List<MenuModel>() {
+                        new MenuModel()
+                        {
+                            Id=1,
+                            Type=10,
+                            Name="系统中心",
+                            Url="",
+                            IconName="system",
+                            ChildNodes=new List<MenuModel>()
+                            {
+                                new MenuModel()
+                                {
+                                    Id=1,
+                                    Type=20,
+                                    Name="权限管理",
+                                    Url="",
+                                    IconName="",
+                                    ChildNodes=new List<MenuModel>()
+                                    {
+                                        new MenuModel()
+                                        {
+                                            Id=1,
+                                            Type=30,
+                                            Name="用户列表",
+                                            Url="",
+                                            IconName="",
+                                            ChildNodes=null
+                                        },
+                                        new MenuModel()
+                                        {
+                                            Id=2,
+                                            Type=30,
+                                            Name="角色列表",
+                                            Url="",
+                                            IconName="",
+                                            ChildNodes=null
+                                        },
+                                        new MenuModel()
+                                        {
+                                            Id=3,
+                                            Type=30,
+                                            Name="部门列表",
+                                            Url="",
+                                            IconName="",
+                                            ChildNodes=null
+                                        }
+                                    }
+                                },
+                            },
+                        },
+                    },
+                };
+                menuRedis.Add(menuCompany1);
+                menuRedis.Add(menuCompany2);
+                await _redisRepository.HashSetAsync(token, "menu", menuRedis);
+                #endregion
+
+                #region 接口权限缓存
+                var permissionRedis = new List<PermissionItem>
+                {
+                    new PermissionItem { Id=1,  Url="/api/Oauth2/GetProduct1"},
+                    new PermissionItem { Id=2,  Url="/api/Oauth2/GetProduct"},
+                    new PermissionItem { Id=3,  Url="/api/values"},
+                };
+                await _redisRepository.HashSetAsync(token, "permission", permissionRedis);
+                await _redisRepository.KeyExpireAsync(token, jwtToken.expires);
+                #endregion
+            }
+            return result;
+        }
+
+
         /// <summary>
         /// JWT token 生成
         /// </summary>
@@ -97,7 +309,7 @@ namespace DMS.Api.Controllers
                     new Claim(JwtRegisteredClaimNames.Jti, user.Id.ToString()),
                     //new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Sid, DMS.Common.Encrypt.DESHelper.Encode("aaaa")),
-                    new Claim(ClaimTypes.Expiration, DateTime.Now.AddSeconds(_requirement.Expiration.TotalSeconds).ToString()) 
+                    new Claim(ClaimTypes.Expiration, DateTime.Now.AddSeconds(_requirement.Expiration.TotalSeconds).ToString())
                 };
                 claims.AddRange(userRoles.Select(s => new Claim(ClaimTypes.Role, s)));
 
@@ -117,7 +329,7 @@ namespace DMS.Api.Controllers
                                 select new PermissionItem
                                 {
                                     Url = item.LinkUrl,
-                                    Name = item.Name.ToStringDefault(),
+                                    //Name = item.Name.ToStringDefault(),
                                 }).ToList();
 
 
@@ -126,34 +338,12 @@ namespace DMS.Api.Controllers
                     _requirement.Permissions = list;
                 }
 
-                var token = JwtHelper.BuildJwtToken(claims.ToArray(), _requirement);
+                var token = JwtHelper.Create(claims.ToArray(), _requirement);
                 result.data = token;
 
             }
             return result;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         /// <summary>
         /// 请求刷新Token
@@ -204,7 +394,7 @@ namespace DMS.Api.Controllers
                     var identity = new ClaimsIdentity(JwtBearerDefaults.AuthenticationScheme);
                     identity.AddClaims(claims);
 
-                    var refreshToken = JwtHelper.BuildJwtToken(claims.ToArray(), _requirement);
+                    var refreshToken = JwtHelper.Create(claims.ToArray(), _requirement);
                     result.data = refreshToken;
                     return result;
                 }
@@ -217,7 +407,7 @@ namespace DMS.Api.Controllers
         [HttpPost("MainLogin")]
         public ResponseResult MainLogin()
         {
-            ResponseResult result = new ();
+            ResponseResult result = new();
 
             var list = new List<dynamic> {
                 new { Id="12", UserName="aaa",Pwd="123456",Role="admin"},
@@ -241,7 +431,7 @@ namespace DMS.Api.Controllers
                     new Claim(ClaimTypes.Expiration, DateTime.Now.AddSeconds(TimeSpan.FromSeconds(60 * 60).TotalSeconds).ToString()) };
 
                 claims.AddRange(userRoles.Select(s => new Claim(ClaimTypes.Role, s)));
-                var token = JwtHelper.BuildJwtToken(claims.ToArray(), _requirement);
+                var token = JwtHelper.Create(claims.ToArray(), _requirement);
 
                 result.data = token;
             }
@@ -255,7 +445,7 @@ namespace DMS.Api.Controllers
         [HttpPost("LoginByCookies")]
         public ResponseResult LoginByCookies()
         {
-            ResponseResult result = new ();
+            ResponseResult result = new();
 
             var list = new List<dynamic> {
                 new { Id="12", UserName="aaa",Pwd="123456",Role="admin"},

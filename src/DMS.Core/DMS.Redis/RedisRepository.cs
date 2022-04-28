@@ -35,6 +35,11 @@ namespace DMS.Redis
             _database = _conn.GetDatabase(dbNum);
         }
 
+        public async Task<bool> KeyExpireAsync(string key, DateTime expiry)
+        {
+            return await _database.KeyExpireAsync(key, expiry);
+        }
+
         public async Task<bool> SetAsync(string key, object value, DateTime expiry)
         {
             if (value is string cacheValue)

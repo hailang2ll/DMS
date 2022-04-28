@@ -1,14 +1,14 @@
 using Autofac;
-using DMS.Auth;
+using DMS.Api.Filter;
+using DMS.Authorizations.Model;
+using DMS.Authorizations.ServiceExtensions;
 using DMS.Common.Extensions;
 using DMS.Common.Helper;
 using DMS.Common.JsonHandler.JsonConverters;
 using DMS.Common.Model.Result;
-using DMS.Extensions.Authorizations.Model;
 using DMS.Extensions.ServiceExtensions;
 using DMS.NLogs.Filters;
 using DMS.Redis.Configurations;
-using DMS.Api.Filter;
 using DMS.Services.RedisEvBus;
 using DMS.Swagger;
 using Microsoft.AspNetCore.Mvc;
@@ -56,7 +56,7 @@ namespace DMS.Api
 
             }).AddJsonOptions(options =>
             {
-                options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter("yyyy-MM-dd HH:mm:ss"));
+                options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter());
                 //options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 //options.JsonSerializerOptions.DictionaryKeyPolicy = null;
             }).ConfigureApiBehaviorOptions(options =>
@@ -125,7 +125,7 @@ namespace DMS.Api
             //开启redismq服务
             services.AddRedisMqSetup();
             //开启身份认证服务，与api文档验证对应即可，要先开启redis服务
-            services.AddAuthSetup();
+            services.AddUserContextSetup();
 
             Permissions.IsUseIds4 = DMS.Common.AppConfig.GetValue(new string[] { "IdentityServer4", "Enabled" }).ToBool();
             services.AddAuthorizationSetup();
@@ -155,7 +155,7 @@ namespace DMS.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseSwaggerUI(DebugHelper.IsDebug(GetType()));
+            app.UseSwaggerUI(DebugHelper.IsDebug);
             // CORS跨域
             app.UseCors(DMS.Common.AppConfig.GetValue(new string[] { "Cors", "PolicyName" }));
             //开户静态页面

@@ -1,16 +1,27 @@
 ﻿using DMS.Common.Model.Param;
+using DMS.IServices.Validation;
+using DMS.IServices.Validation.Attribute;
 
 namespace DMS.IServices.Param
 {
     /// <summary>
     /// 添加会员参数
     /// </summary>
+    //[AddMemberParamValidation]
     public class AddMemberParam
     {
         /// <summary>
         /// 会员名称
         /// </summary>
         public string MemberName { get; set; }
+        /// <summary>
+        /// 密码
+        /// </summary>
+        public string Password { get; set; }
+        /// <summary>
+        /// 确认密码
+        /// </summary>
+        public string ConfirmPassword { get; set; }
         /// <summary>
         /// 会员类型
         /// </summary>
@@ -24,6 +35,7 @@ namespace DMS.IServices.Param
         /// </summary>
         public string Mobile { get; set; }
     }
+
     /// <summary>
     /// 
     /// </summary>

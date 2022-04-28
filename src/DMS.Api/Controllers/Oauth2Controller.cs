@@ -1,6 +1,6 @@
-﻿using DMS.Common.Helper;
+﻿using DMS.Authorizations.Model;
+using DMS.Common.Helper;
 using DMS.Common.Model.Result;
-using DMS.Extensions.Authorizations.Model;
 using DMS.IServices;
 using DMS.IServices.Result;
 using Microsoft.AspNetCore.Authorization;
@@ -26,7 +26,7 @@ namespace DMS.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        private readonly DMS.Auth.Oauth2.IUserAuth _userOauth;
+        private readonly DMS.Authorizations.UserContext.Jwt.IUserAuth _userOauth;
         /// <summary>
         /// 
         /// </summary>
@@ -36,29 +36,28 @@ namespace DMS.Api.Controllers
         /// </summary>
         /// <param name="userOauth"></param>
         /// <param name="productService"></param>
-        public Oauth2Controller(DMS.Auth.Oauth2.IUserAuth userOauth,  IProductService productService)
+        public Oauth2Controller(DMS.Authorizations.UserContext.Jwt.IUserAuth userOauth,  IProductService productService)
         {
             _userOauth = userOauth;
             _productService = productService;
         }
 
         /// <summary>
-        /// 认证，但接口未授权
+        /// 接口不在资源中，认证失败
         /// </summary>
         /// <returns></returns>
         [HttpGet("CheckOauth2")]
         public async Task<ResponseResult> CheckOauth2()
         {
             var isAuth = _userOauth.IsAuthenticated();
-            var id2 = _userOauth.ID;
-            var name2 = _userOauth.Name;
+            var id2 = _userOauth.Uid;
             var token = _userOauth.GetToken();
             var a = DMS.Common.AppConfig.GetValue("AllowedHosts");
 
-            return await Task.FromResult(new ResponseResult() { data = new { isAuth, id2, name2 } });
+            return await Task.FromResult(new ResponseResult() { data = new { isAuth, id2 } });
         }
         /// <summary>
-        /// 认证，接口已授权（角色admin，invoice）
+        /// 需要认证，接口必须在资源中
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -66,8 +65,7 @@ namespace DMS.Api.Controllers
         public async Task<ResponseResult<ProductEntityResult>> GetProduct1Async(long id)
         {
             var isAuth = _userOauth.IsAuthenticated();
-            var id2 = _userOauth.ID;
-            var name2 = _userOauth.Name;
+            var id2 = _userOauth.Uid;
             var token = _userOauth.GetToken();
             var ep = _userOauth.EpCode;
             var ip = IPHelper.GetCurrentIp();

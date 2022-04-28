@@ -9,6 +9,7 @@ namespace DMS.Redis
     public interface IRedisRepository
     {
         void ChangeDatabase(int dbNum = -1);
+        Task<bool> KeyExpireAsync(string key, DateTime expiry);
         Task<bool> SetAsync(string key, object value, DateTime expiry);
         Task<bool> SetAsync(string key, object value, TimeSpan? expiry = default(TimeSpan?));
         Task<bool> SetAsync(List<KeyValuePair<RedisKey, RedisValue>> keyValues);

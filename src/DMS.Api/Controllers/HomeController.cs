@@ -1,5 +1,4 @@
-﻿using DMS.Auth.Token.FilterAttribute;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace DMS.Api.Controllers
 {

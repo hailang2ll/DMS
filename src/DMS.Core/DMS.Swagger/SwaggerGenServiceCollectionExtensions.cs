@@ -1,5 +1,6 @@
-﻿using DMS.Extensions;
+﻿using DMS.Common.Extensions;
 using DMS.Common.Helper;
+using DMS.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
@@ -8,7 +9,6 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using DMS.Common.Extensions;
 
 namespace DMS.Swagger
 {
@@ -20,7 +20,7 @@ namespace DMS.Swagger
     }
     public static class SwaggerGenServiceCollectionExtensions
     {
-        public static IServiceCollection AddSwaggerGenSetup(this IServiceCollection services, Action<SwaggerOption> swaggerOption, AuthModel authModel = AuthModel.Auth20)
+        public static IServiceCollection AddSwaggerGenSetup(this IServiceCollection services, Action<SwaggerOption> swaggerOption, AuthModel authModel = AuthModel.Jwt)
         {
             // 添加Swagger
             services.AddSwaggerGen(option =>
@@ -107,7 +107,7 @@ namespace DMS.Swagger
                 {
                     Token();
                 }
-                else if (authModel == AuthModel.Auth20)
+                else if (authModel == AuthModel.Jwt)
                 {
                     Auth20();
                 }

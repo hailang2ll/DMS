@@ -6,7 +6,7 @@
 		<Company>Dylan,hailang</Company>
 		<Authors>Dylan,hailang</Authors>
 		<Copyright>Copyright@2016-2022 Dylan</Copyright>
-		<Version>3.0.0</Version>
+		<Version>3.0.1</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 

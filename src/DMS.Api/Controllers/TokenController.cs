@@ -1,4 +1,4 @@
-﻿using DMS.Auth.Token.FilterAttribute;
+﻿using DMS.Authorizations.UserContext.Token.FilterAttribute;
 using DMS.Common.Helper;
 using DMS.Common.Model.Result;
 using DMS.IServices;
@@ -20,7 +20,7 @@ namespace DMS.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        private readonly DMS.Auth.Token.IUserAuth userToken;
+        private readonly DMS.Authorizations.UserContext.Token.IUserAuth userToken;
         /// <summary>
         /// 
         /// </summary>
@@ -30,7 +30,7 @@ namespace DMS.Api.Controllers
         /// </summary>
         /// <param name="userToken"></param>
         /// <param name="productService"></param>
-        public TokenController(DMS.Auth.Token.IUserAuth userToken, IProductService productService)
+        public TokenController(DMS.Authorizations.UserContext.Token.IUserAuth userToken, IProductService productService)
         {
             this.userToken = userToken;
             this.productService = productService;
