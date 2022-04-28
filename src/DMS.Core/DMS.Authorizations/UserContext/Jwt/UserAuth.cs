@@ -44,12 +44,16 @@ namespace DMS.Authorizations.UserContext.Jwt
         public async Task<List<PermissionItem>> GetPermissionDatas()
         {
             var token = GetToken();
-            List<PermissionItem> list = await _redisRepository.HashGeAsync<List<PermissionItem>>(token, "permission");
-            if (list == null)
+            bool flag = await _redisRepository.HashExistsAsync(token, "permission");
+            if (flag)
             {
-                return new List<PermissionItem>();
+                List<PermissionItem> list = await _redisRepository.HashGeAsync<List<PermissionItem>>(token, "permission");
+                if (list != null && list.Count > 0)
+                {
+                    return list;
+                }
             }
-            return list;
+            return new List<PermissionItem>();
         }
 
         public string GetToken()

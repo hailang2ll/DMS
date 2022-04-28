@@ -16,5 +16,18 @@ namespace DMS.Authorizations.Model
         /// true：表示启动IDS4
         /// false：表示使用JWT
         public static bool IsUseIds4 = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string ValidAudience;
+
+        public static string valid
+        {
+            get
+            {
+                return "";
+            }
+        }
     }
 }

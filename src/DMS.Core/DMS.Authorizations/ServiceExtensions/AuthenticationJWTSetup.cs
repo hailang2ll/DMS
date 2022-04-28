@@ -29,12 +29,12 @@ namespace DMS.Authorizations.ServiceExtensions
                 ValidIssuer = issuer,//发行人
                                     
                 ValidateAudience = true,//是否验证被发布者
-                ValidAudience = audience,//受众人
+                //ValidAudience = audience,//受众人
                 //这里采用动态验证的方式，在重新登陆时，刷新token，旧token就强制失效了
-                //AudienceValidator = (m, n, z) =>
-                //{
-                //    return m != null && m.FirstOrDefault().Equals(audience);
-                //},
+                AudienceValidator = (m, n, z) =>
+                {
+                    return m != null && m.FirstOrDefault().Equals(Permissions.ValidAudience);
+                },
 
                 ValidateIssuerSigningKey = true,//是否验证密钥
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretCredentials)),

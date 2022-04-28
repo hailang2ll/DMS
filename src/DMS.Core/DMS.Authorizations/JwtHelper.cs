@@ -15,7 +15,6 @@ namespace DMS.Authorizations
 {
     public class JwtHelper
     {
-        //public static string ValidAudience = "aaaa"+ DateTime.Now.ToString();
 
         /// <summary>
         /// 获取基于JWT的Token
@@ -105,8 +104,9 @@ namespace DMS.Authorizations
             #region 参数
             var thisTime = DateTime.Now;
             JwtSettingModel option = DMS.Common.AppConfig.GetValue<JwtSettingModel>("JwtSetting");
+            Permissions.ValidAudience = model.Uid + option.Audience + DateTime.Now.ToString();
             string issuer = option.Issuer;
-            string audience = option.Audience;
+            string audience = Permissions.ValidAudience; //option.Audience;
             string secretCredentials = option.SecretKey;
             double expireMinutes = option.ExpireMinutes;
 

@@ -4,6 +4,7 @@ using DMS.Authorizations.Model;
 using DMS.Authorizations.Policys;
 using DMS.Authorizations.UserContext;
 using DMS.Authorizations.UserContext.Dto;
+using DMS.Common.Extensions;
 using DMS.Common.JsonHandler;
 using DMS.Common.Model.Result;
 using DMS.Models;
@@ -76,7 +77,7 @@ namespace DMS.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("Login")]
-        public async Task<ResponseResult> Login()
+        public async Task<ResponseResult> Login(string uid, string pwd)
         {
             ResponseResult result = new ResponseResult();
 
@@ -94,6 +95,7 @@ namespace DMS.Api.Controllers
             }
             else
             {
+
                 #region 1
                 ////var userRoles = "admin,invoice";
                 ////如果是基于用户的授权策略，这里要添加用户;如果是基于角色的授权策略，这里要添加角色
@@ -111,7 +113,7 @@ namespace DMS.Api.Controllers
                 #region 2
                 UserClaimModel claimModel = new UserClaimModel()
                 {
-                    Uid = user.Id,
+                    Uid = uid.ToLong(),
                     Cid = user.Id,
                     EpCode = user.Id.ToString(),
                     Expiration = DateTime.Now.Add(_requirement.Expiration).ToString(),
