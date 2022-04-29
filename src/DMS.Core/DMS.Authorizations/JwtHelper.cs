@@ -104,9 +104,9 @@ namespace DMS.Authorizations
             #region 参数
             var thisTime = DateTime.Now;
             JwtSettingModel option = DMS.Common.AppConfig.GetValue<JwtSettingModel>("JwtSetting");
-            Permissions.ValidAudience = model.Uid + option.Audience + DateTime.Now.ToString();
+            //Permissions.ValidAudience = model.Uid + option.Audience + DateTime.Now.ToString();
             string issuer = option.Issuer;
-            string audience = Permissions.ValidAudience; //option.Audience;
+            string audience =option.Audience;
             string secretCredentials = option.SecretKey;
             double expireMinutes = option.ExpireMinutes;
 
@@ -121,7 +121,7 @@ namespace DMS.Authorizations
                     new Claim(JwtClaimTypes.Uid, model.Uid.ToString()),
                     new Claim(JwtClaimTypes.Cid, model.Cid.ToString()),
                     new Claim(JwtClaimTypes.EpCode, model.EpCode),
-                    new Claim(JwtClaimTypes.Expiration, model.Expiration)
+                    //new Claim(JwtClaimTypes.Expiration, expiresTime.ToString())
                 };
 
 
@@ -130,8 +130,8 @@ namespace DMS.Authorizations
                 issuer: issuer,
                 audience: audience,
                 claims: claims,
-                notBefore: thisTime,
-                expires: expiresTime,
+                //notBefore: thisTime,
+                //expires: expiresTime,
                 signingCredentials: signingCredentials
             );
             // 生成 Token
@@ -177,7 +177,7 @@ namespace DMS.Authorizations
                     Cid = cid.ToLong(),
                     EpCode = epcode.ToStringDefault(),
                     Role = role.ToStringDefault(),
-                    Expiration = expiration.ToStringDefault(),
+                    //Expiration = expiration.ToStringDefault(),
                 };
             }
             return userClaimModel;
@@ -214,22 +214,4 @@ namespace DMS.Authorizations
         }
     }
 
-    /// <summary>
-    /// 令牌
-    /// </summary>
-    public class TokenModelJwt
-    {
-        /// <summary>
-        /// Id
-        /// </summary>
-        public long Uid { get; set; }
-        /// <summary>
-        /// 用户名称
-        /// </summary>
-        public string Name { get; set; }
-        /// <summary>
-        /// 角色
-        /// </summary>
-        public string Role { get; set; }
-    }
 }

@@ -55,6 +55,19 @@ namespace DMS.Authorizations.UserContext.Jwt
             }
             return new List<PermissionItem>();
         }
+        /// <summary>
+        /// 设置token过期时间
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="exprise"></param>
+        /// <returns></returns>
+        public async Task<bool> SetTokenExpireAsync(string token, DateTime exprise)
+        {
+            await _redisRepository.HashSetAsync(token, "exptime", exprise);
+            return await _redisRepository.KeyExpireAsync(token, exprise);
+        }
+
+
 
         public string GetToken()
         {

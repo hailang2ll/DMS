@@ -2,6 +2,7 @@
 using DMS.Common.Extensions;
 using DMS.Common.Helper;
 using DMS.Common.JsonHandler;
+using DMS.Redis;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -23,6 +24,7 @@ namespace DMS.Authorizations.Policys
         public IAuthenticationSchemeProvider Schemes { get; set; }
         private readonly IHttpContextAccessor _accessor;
         private readonly DMS.Authorizations.UserContext.Jwt.IUserAuth _userAuth;
+        private readonly IRedisRepository _redisRepository;
         /// <summary>
         /// 构造函数注入
         /// </summary>
@@ -69,19 +71,19 @@ namespace DMS.Authorizations.Policys
                             if (Permissions.IsUseIds4)
                             {
                                 isExp = (httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) != null
-                                    && DMS.Common.Extensions.DateTimeExtensions.ToDateTime(httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) >= DateTime.Now;
+                                    && DMS.Common.Extensions.DateTimeExtensions.StampToDateTime(httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) >= DateTime.Now;
                             }
                             else
                             {
                                 //jwt
-                                DateTime expTime = (httpContext.User.Claims.SingleOrDefault(s => s.Type == "expiration")?.Value).ToDate(DateTime.Now);
-                                isExp = (httpContext.User.Claims.SingleOrDefault(s => s.Type == "expiration")?.Value) != null
+                                DateTime expTime = (httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value).StampToDateTime();
+                                isExp = (httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) != null
                                     && expTime >= DateTime.Now;
 
                             }
                             if (!isExp)
                             {
-                                ConsoleHelper.WriteInfoLine($"userauth:时间已过期");
+                                ConsoleHelper.WriteInfoLine($"token时间已过期：{uid}");
                                 context.Fail();
                                 return;
                             }
@@ -97,12 +99,13 @@ namespace DMS.Authorizations.Policys
                             var menu = requirement.Permissions.Where(x => x.Url.ToLower().Equals(questUrl)).FirstOrDefault();
                             if (menu == null)
                             {
-                                ConsoleHelper.WriteInfoLine($"userauth:未匹配到URL");
+                                ConsoleHelper.WriteInfoLine($"接口权限不足，未匹配到URL:{uid},{questUrl}");
                                 context.Fail();
                                 return;
                             }
                             else
                             {
+                                await _userAuth.SetTokenExpireAsync(token, DateTime.Now.Add(requirement.Expiration));
                                 context.Succeed(requirement);
                             }
                             #endregion

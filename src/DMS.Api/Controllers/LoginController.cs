@@ -77,16 +77,16 @@ namespace DMS.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost("Login")]
-        public async Task<ResponseResult> Login(string uid, string pwd)
+        public async Task<ResponseResult> Login(string uname, string pwd)
         {
             ResponseResult result = new ResponseResult();
 
             var userList = new List<YxyMember> {
-                new YxyMember{  Id=11111,MemberName="aaa",Password="123456"},
-                new YxyMember{  Id=22222,MemberName="bbb",Password="123456"},
+                new YxyMember{  Id=1,MemberName="aaa",Password="123456"},
+                new YxyMember{  Id=2,MemberName="bbb",Password="123456"},
             };
 
-            var user = userList.SingleOrDefault(q => q.MemberName == "bbb" && q.Password == "123456");
+            var user = userList.SingleOrDefault(q => q.MemberName == uname && q.Password == pwd);
             if (user == null)
             {
                 result.errno = 1;
@@ -113,10 +113,10 @@ namespace DMS.Api.Controllers
                 #region 2
                 UserClaimModel claimModel = new UserClaimModel()
                 {
-                    Uid = uid.ToLong(),
+                    Uid = user.ToLong(),
                     Cid = user.Id,
                     EpCode = user.Id.ToString(),
-                    Expiration = DateTime.Now.Add(_requirement.Expiration).ToString(),
+                    //Expiration = DateTime.Now.Add(_requirement.Expiration).ToString(),
                 };
                 var jwtToken = JwtHelper.Create(claimModel);
                 #endregion
@@ -142,6 +142,7 @@ namespace DMS.Api.Controllers
 
 
                 #region 用户信息缓存
+                
                 var userRedis = new
                 {
                     Uid = user.Id,
@@ -280,6 +281,7 @@ namespace DMS.Api.Controllers
                     new PermissionItem { Id=3,  Url="/api/values"},
                 };
                 await _redisRepository.HashSetAsync(token, "permission", permissionRedis);
+                await _redisRepository.HashSetAsync(token, "exptime", jwtToken.expires);
                 await _redisRepository.KeyExpireAsync(token, jwtToken.expires);
                 #endregion
             }
@@ -380,7 +382,7 @@ namespace DMS.Api.Controllers
                     Uid = tokenModel.Uid,
                     Cid = tokenModel.Cid,
                     EpCode = tokenModel.EpCode,
-                    Expiration = DateTime.Now.Add(_requirement.Expiration).ToString(),
+                    //Expiration = DateTime.Now.Add(_requirement.Expiration).ToString(),
                 };
                 var jwtToken = JwtHelper.Create(claimModel);
                 #endregion

@@ -29,19 +29,19 @@ namespace DMS.Authorizations.ServiceExtensions
                 ValidIssuer = issuer,//发行人
                                     
                 ValidateAudience = true,//是否验证被发布者
-                //ValidAudience = audience,//受众人
+                ValidAudience = audience,//受众人
                 //这里采用动态验证的方式，在重新登陆时，刷新token，旧token就强制失效了
-                AudienceValidator = (m, n, z) =>
-                {
-                    return m != null && m.FirstOrDefault().Equals(Permissions.ValidAudience);
-                },
+                //AudienceValidator = (m, n, z) =>
+                //{
+                //    return m != null && m.FirstOrDefault().Equals(Permissions.ValidAudience);
+                //},
 
                 ValidateIssuerSigningKey = true,//是否验证密钥
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretCredentials)),
 
-                ValidateLifetime = true, //验证生命周期
+                //ValidateLifetime = true, //验证生命周期
                 ClockSkew = TimeSpan.FromSeconds(30),//注意这是缓冲过期时间，总的有效时间等于这个时间加上jwt的过期时间，如果不配置，默认是5分钟
-                RequireExpirationTime = true, //过期时间
+                //RequireExpirationTime = true, //过期时间
             };
             //开启Bearer认证
             services.AddAuthentication(x =>

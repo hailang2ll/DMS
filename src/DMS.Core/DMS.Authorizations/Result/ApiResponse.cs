@@ -21,7 +21,7 @@ namespace DMS.Authorizations.Result
                 case StatusCode.CODE403:
                     {
                         Status = 403;
-                        Value = "很抱歉，您的访问权限等级不够，联系管理员!";
+                        Value = "很抱歉，您的访问权限不够，请联系管理员!";
                     }
                     break;
                 case StatusCode.CODE404:
