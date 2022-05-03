@@ -42,6 +42,7 @@ namespace DMS.Authorizations.ServiceExtensions
             var permissionRequirement = new PermissionRequirement(
                 "/api/denied",
                 permission,
+                JwtClaimTypes.UniqueId,
                 issuer,
                 audience,
                 signingCredentials,//签名凭据

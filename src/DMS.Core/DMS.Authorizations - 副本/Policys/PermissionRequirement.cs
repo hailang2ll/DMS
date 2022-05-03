@@ -24,6 +24,10 @@ namespace DMS.Authorizations.Policys
 
 
         /// <summary>
+        /// 认证授权类型
+        /// </summary>
+        public string ClaimType { internal get; set; }
+        /// <summary>
         /// 发行人
         /// </summary>
         public string Issuer { get; set; }
@@ -51,11 +55,12 @@ namespace DMS.Authorizations.Policys
         /// <param name="audience">订阅人</param>
         /// <param name="signingCredentials">签名验证实体</param>
         /// <param name="expiration">过期时间</param>
-        public PermissionRequirement(string deniedAction, List<PermissionItem> permissions,  string issuer, string audience, SigningCredentials signingCredentials, TimeSpan expiration)
+        public PermissionRequirement(string deniedAction, List<PermissionItem> permissions, string claimType, string issuer, string audience, SigningCredentials signingCredentials, TimeSpan expiration)
         {
             DeniedAction = deniedAction;
             Permissions = permissions;
 
+            ClaimType = claimType;
             Issuer = issuer;
             Audience = audience;
             Expiration = expiration;

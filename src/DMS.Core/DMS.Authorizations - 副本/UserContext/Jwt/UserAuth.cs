@@ -32,11 +32,14 @@ namespace DMS.Authorizations.UserContext.Jwt
                 if (!UniqueId.IsNullOrEmpty())
                 {
                     string[] arr = UniqueId.Split(new char[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+
                     UserClaimModel claimModel = new UserClaimModel()
                     {
                         Uid = arr[0].ToLong(),
                         Cid = arr[1].ToLong(),
                         EpCode = arr[2],
+                        Role = arr[3],
+                        Expiration = arr[4],
                     };
                     return claimModel;
                 }
@@ -45,6 +48,7 @@ namespace DMS.Authorizations.UserContext.Jwt
         }
         public long Uid => UserClaimModel.Uid;
         public long Cid => UserClaimModel.Cid;
+
         public string EpCode
         {
             get
@@ -56,7 +60,6 @@ namespace DMS.Authorizations.UserContext.Jwt
                 //return list[index];
             }
         }
-
         /// <summary>
         /// 获取资源列表
         /// </summary>

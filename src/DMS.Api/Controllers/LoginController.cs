@@ -113,10 +113,9 @@ namespace DMS.Api.Controllers
                 #region 2
                 UserClaimModel claimModel = new UserClaimModel()
                 {
-                    Uid = user.ToLong(),
+                    Uid = user.Id,
                     Cid = user.Id,
                     EpCode = user.Id.ToString(),
-                    //Expiration = DateTime.Now.Add(_requirement.Expiration).ToString(),
                 };
                 var jwtToken = JwtHelper.Create(claimModel);
                 #endregion
@@ -142,7 +141,7 @@ namespace DMS.Api.Controllers
 
 
                 #region 用户信息缓存
-                
+
                 var userRedis = new
                 {
                     Uid = user.Id,

@@ -116,9 +116,8 @@ namespace DMS.Authorizations
             DateTime expiresTime = thisTime.AddMinutes(expireMinutes);
             #endregion
 
-
             string UniqueId = model.Uid + "&" + model.Cid + "&" + model.EpCode;
-            string RadmonNum = Guid.NewGuid().ToString().Replace("-", "");
+            string RadmonNum = Guid.NewGuid().ToString().Replace("-", "") + expiresTime.ToString();
             var claims = new List<Claim> {
                     new Claim(JwtClaimTypes.UniqueId, UniqueId),
                     new Claim(JwtClaimTypes.RadmonNum, RadmonNum)
@@ -127,8 +126,8 @@ namespace DMS.Authorizations
 
             // 实例化JwtSecurityToken
             var jwt = new JwtSecurityToken(
-                //issuer: issuer,
-                //audience: audience,
+                issuer: issuer,
+                audience: audience,
                 claims: claims,
                 //notBefore: thisTime,
                 //expires: expiresTime,

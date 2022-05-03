@@ -24,6 +24,7 @@ namespace DMS.Authorizations.Policys
         public IAuthenticationSchemeProvider Schemes { get; set; }
         private readonly IHttpContextAccessor _accessor;
         private readonly DMS.Authorizations.UserContext.Jwt.IUserAuth _userAuth;
+        private readonly IRedisRepository _redisRepository;
         /// <summary>
         /// 构造函数注入
         /// </summary>
@@ -67,27 +68,25 @@ namespace DMS.Authorizations.Policys
                             httpContext.User = result.Principal;
                             #region 过期时间验证
                             var isExp = false;
-                            //if (Permissions.IsUseIds4)
-                            //{
-                            //    isExp = (httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) != null
-                            //        && DMS.Common.Extensions.DateTimeExtensions.StampToDateTime(httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) >= DateTime.Now;
-                            //}
-                            //else
-                            //{
-                            //    //jwt
-                            //    DateTime expTime = (httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value).StampToDateTime();
-                            //    isExp = (httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) != null
-                            //        && expTime >= DateTime.Now;
+                            if (Permissions.IsUseIds4)
+                            {
+                                isExp = (httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) != null
+                                    && DMS.Common.Extensions.DateTimeExtensions.StampToDateTime(httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) >= DateTime.Now;
+                            }
+                            else
+                            {
+                                //jwt
+                                DateTime expTime = (httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value).StampToDateTime();
+                                isExp = (httpContext.User.Claims.SingleOrDefault(s => s.Type == "exp")?.Value) != null
+                                    && expTime >= DateTime.Now;
 
-                            //}
-
-
-                            //if (!isExp)
-                            //{
-                            //    ConsoleHelper.WriteInfoLine($"token时间已过期：{uid}");
-                            //    context.Fail();
-                            //    return;
-                            //}
+                            }
+                            if (!isExp)
+                            {
+                                ConsoleHelper.WriteInfoLine($"token时间已过期：{uid}");
+                                context.Fail();
+                                return;
+                            }
                             #endregion
 
                             #region 验证接口权限

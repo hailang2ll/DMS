@@ -25,10 +25,10 @@ namespace DMS.Authorizations.ServiceExtensions
             // 令牌验证参数
             var tokenValidationParameters = new TokenValidationParameters
             {
-                ValidateIssuer = false,//是否验证发行人
+                ValidateIssuer = true,//是否验证发行人
                 ValidIssuer = issuer,//发行人
                                     
-                ValidateAudience = false,//是否验证被发布者
+                ValidateAudience = true,//是否验证被发布者
                 ValidAudience = audience,//受众人
                 //这里采用动态验证的方式，在重新登陆时，刷新token，旧token就强制失效了
                 //AudienceValidator = (m, n, z) =>
@@ -39,9 +39,9 @@ namespace DMS.Authorizations.ServiceExtensions
                 ValidateIssuerSigningKey = true,//是否验证密钥
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretCredentials)),
 
-                ValidateLifetime = false, //验证生命周期
+                ValidateLifetime = true, //验证生命周期
                 ClockSkew = TimeSpan.FromSeconds(30),//注意这是缓冲过期时间，总的有效时间等于这个时间加上jwt的过期时间，如果不配置，默认是5分钟
-                RequireExpirationTime = false, //过期时间
+                RequireExpirationTime = true, //过期时间
             };
             //开启Bearer认证
             services.AddAuthentication(x =>
@@ -67,23 +67,23 @@ namespace DMS.Authorizations.ServiceExtensions
                     },
                     OnAuthenticationFailed = context =>
                     {
-                        //var jwtHandler = new JwtSecurityTokenHandler();
-                        //var token = context.Request.Headers["Authorization"].ToStringDefault().Replace("Bearer ", "");
+                        var jwtHandler = new JwtSecurityTokenHandler();
+                        var token = context.Request.Headers["Authorization"].ToStringDefault().Replace("Bearer ", "");
 
-                        //if (!token.IsNullOrEmpty() && jwtHandler.CanReadToken(token))
-                        //{
-                        //    var jwtToken = jwtHandler.ReadJwtToken(token);
+                        if (!token.IsNullOrEmpty() && jwtHandler.CanReadToken(token))
+                        {
+                            var jwtToken = jwtHandler.ReadJwtToken(token);
 
-                        //    if (jwtToken.Issuer != issuer)
-                        //    {
-                        //        context.Response.Headers.Add("Token-Error-Iss", "issuer is wrong!");
-                        //    }
+                            if (jwtToken.Issuer != issuer)
+                            {
+                                context.Response.Headers.Add("Token-Error-Iss", "issuer is wrong!");
+                            }
 
-                        //    if (jwtToken.Audiences.FirstOrDefault() != audience)
-                        //    {
-                        //        context.Response.Headers.Add("Token-Error-Aud", "Audience is wrong!");
-                        //    }
-                        //}
+                            if (jwtToken.Audiences.FirstOrDefault() != audience)
+                            {
+                                context.Response.Headers.Add("Token-Error-Aud", "Audience is wrong!");
+                            }
+                        }
 
 
                         // 如果过期，则把<是否过期>添加到，返回头信息中

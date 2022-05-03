@@ -12,5 +12,7 @@ namespace DMS.Authorizations.UserContext.Dto
         public long Uid { get; set; }
         public long Cid { get; set; }
         public string EpCode { get; set; }
+        public string Role { get; set; }
+        public string Expiration { get; set; }
     }
 }
