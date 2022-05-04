@@ -146,7 +146,6 @@ namespace DMS.Api.Controllers
                 {
                     Uid = user.Id,
                     Cid = 5555,//当前公司
-                    Expiration = jwtToken.expires,
                 };
                 await _redisRepository.HashSetAsync(token, "user", userRedis);
                 #endregion
