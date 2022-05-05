@@ -18,8 +18,8 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-//builder.Configuration.AddCommandLine(args);
-//builder.WebHost.UseUrls(builder.Configuration.GetValue<string>("StartUrl"));
+builder.Configuration.AddCommandLine(args);
+builder.WebHost.UseUrls(builder.Configuration.GetValue<string>("StartUrl"));
 builder.Host
 .ConfigureLogging((hostingContext, builder) =>
 {
