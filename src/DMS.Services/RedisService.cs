@@ -67,6 +67,9 @@ namespace DMS.Services
 
                 flag = await redisRepository.HashDeleteAsync("user_1", visid);
             }
+
+            await redisRepository.HashSetAsync("user_:a", "aaaaaaaaaa", userTicket);
+            await redisRepository.HashSetAsync("user_:b", "bbbbbbbbbb", userTicket);
             #endregion
 
 
