@@ -41,6 +41,7 @@ namespace DMS.Api.Controllers
         public async Task<ResponseResult> AddAsync(AddJobLogParam param)
         {
             var url = DMS.Common.AppConfig.GetValue("ProductUrl");
+            var murl = DMS.Common.AppConfig.GetValue("MemberUrl");
             var de = DMS.Common.AppConfig.GetValue(new string[] { "Logging", "LogLevel", "Default" });
 
             var id = userAuth.Uid;

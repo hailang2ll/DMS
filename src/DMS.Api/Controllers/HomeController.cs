@@ -11,6 +11,10 @@ namespace DMS.Api.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index() => Content("OK");
+        public IActionResult Index()
+        {
+            var murl = DMS.Common.AppConfig.GetValue("MemberUrl");
+            return Content("OK-" + murl);
+        }
     }
 }

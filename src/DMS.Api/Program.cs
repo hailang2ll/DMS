@@ -41,10 +41,11 @@ builder.Host
 {
     config.Sources.Clear();
     config.AddCommandLine(args);
+    var env = hostingContext.HostingEnvironment;
     config.AddJsonFile($"Configs/redis.json", optional: false, reloadOnChange: true);
-    config.AddJsonFile($"Configs/domain.json", optional: false, reloadOnChange: true);
+    //config.AddJsonFile($"Configs/domain.json", optional: false, reloadOnChange: true);
     config.AddJsonFile($"appsettings.json", optional: true, reloadOnChange: true);
-    config.AddAppSettingsFile($"appsettings.json", optional: true, reloadOnChange: true);
+    config.AddAppSettingsFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
 });
 
 
