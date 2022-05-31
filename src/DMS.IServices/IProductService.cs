@@ -19,6 +19,6 @@ namespace DMS.IServices
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        Task<ResponseResult<ProductEntityResult>> SearchProductListAsync(SearchProductParam param);
+        Task<ResponseResult<PageModel<ProductEntityResult>>> SearchProductListAsync(SearchProductParam param);
     }
 }

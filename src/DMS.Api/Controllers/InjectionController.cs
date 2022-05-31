@@ -4,6 +4,8 @@ using DMS.IServices;
 using DMS.IServices.Param;
 using DMS.IServices.Result;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
+using System.ComponentModel.DataAnnotations;
 
 namespace DMS.Api.Controllers
 {
@@ -37,9 +39,18 @@ namespace DMS.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("GetProduct")]
-        public async Task<ResponseResult<ProductEntityResult>> GetProductAsync(long id)
+        public async Task<ResponseResult<ProductEntityResult>> GetProductAsync([Required] long id)
         {
             var ip = IPHelper.GetCurrentIp();
+            bool mockEnable = DMS.Common.AppConfig.GetValue<bool>("MockEnable");
+            if (mockEnable)
+            {
+                GenFu.GenFu.Configure<ProductEntityResult>().Fill(b => b.ProductName, () => { return "全局替换"; });
+                DateTime dateTime = DateTime.Now;
+                var result = GenFu.GenFu.New(new ResponseResult<ProductEntityResult>() { data = GenFu.GenFu.New(new ProductEntityResult { CreatedTime = dateTime }) });
+                result.errno = 0;
+                return result;
+            }
             return await _productService.GetProductAsync(id);
         }
 
@@ -60,8 +71,26 @@ namespace DMS.Api.Controllers
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpGet("SearchProductList")]
-        public async Task<ResponseResult<ProductEntityResult>> SearchProductListAsync([FromQuery]SearchProductParam param)
+        public async Task<ResponseResult<PageModel<ProductEntityResult>>> SearchProductListAsync([FromQuery] SearchProductParam param)
         {
+            bool mockEnable = DMS.Common.AppConfig.GetValue<bool>("MockEnable");
+            if (mockEnable)
+            {
+                GenFu.GenFu.Configure<ProductEntityResult>().Fill(b => b.ProductName, () => { return "全局替换"; });
+                DateTime dateTime = DateTime.Now;
+                var result = GenFu.GenFu.New(new ResponseResult<PageModel<ProductEntityResult>>()
+                {
+                    data = new PageModel<ProductEntityResult>()
+                    {
+                        pageIndex = param.pageIndex,
+                        pageSize = param.pageSize,
+                        totalRecord = param.totalCount,
+                        resultList = GenFu.GenFu.ListOf<ProductEntityResult>(param.pageSize),
+                    }
+                });
+                result.errno = 0;
+                return result;
+            }
             var ip = IPHelper.GetCurrentIp();
             return await _productService.SearchProductListAsync(param);
         }
@@ -72,7 +101,7 @@ namespace DMS.Api.Controllers
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpPost("SearchProductList1")]
-        public async Task<ResponseResult<ProductEntityResult>> SearchProductList1Async([FromBody] SearchProductParam param)
+        public async Task<ResponseResult<PageModel<ProductEntityResult>>> SearchProductList1Async([FromBody] SearchProductParam param)
         {
             var ip = IPHelper.GetCurrentIp();
             return await _productService.SearchProductListAsync(param);

@@ -36,18 +36,31 @@ namespace DMS.Services
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public async Task<ResponseResult<ProductEntityResult>> SearchProductListAsync(SearchProductParam  param)
+        public async Task<ResponseResult<PageModel<ProductEntityResult>>> SearchProductListAsync(SearchProductParam param)
         {
-            ResponseResult<ProductEntityResult> result = new ResponseResult<ProductEntityResult>();
-            ProductEntityResult entity = new ProductEntityResult()
+            ResponseResult<PageModel<ProductEntityResult>> result = new ResponseResult<PageModel<ProductEntityResult>>()
             {
-                //long类型转为string输出
-                Id = "1125964271981826048",
-                ProductName = "aaaa",
-                ProductPrice = 125.23m,
-                CreatedTime = DateTime.Now,
+                data = new PageModel<ProductEntityResult>()
             };
-            result.data = entity;
+
+            PageModel<ProductEntityResult> pageModel = new PageModel<ProductEntityResult>()
+            {
+                pageIndex = param.pageIndex,
+                pageSize = param.pageSize,
+                totalRecord = param.totalCount,
+                resultList = new List<ProductEntityResult>(),
+            };
+            //ProductEntityResult entity = new ProductEntityResult()
+            //{
+            //    //long类型转为string输出
+            //    Id = "1125964271981826048",
+            //    ProductName = "aaaa",
+            //    ProductPrice = 125.23m,
+            //    CreatedTime = DateTime.Now,
+            //};
+
+            pageModel.resultList = GenFu.GenFu.ListOf<ProductEntityResult>(param.pageSize);
+            result.data = pageModel;
             return await Task.FromResult(result);
 
         }

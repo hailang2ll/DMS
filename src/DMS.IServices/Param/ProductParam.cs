@@ -1,15 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DMS.Common.Model.Param;
+using System.ComponentModel.DataAnnotations;
 
 namespace DMS.IServices.Param
 {
     /// <summary>
     /// 
     /// </summary>
-    public class SearchProductParam
+    public class SearchProductParam : PageParam
     {
         /// <summary>
         /// 
         /// </summary>
+        [Required]
         public int? ProductId { get; set; }
         /// <summary>
         /// 

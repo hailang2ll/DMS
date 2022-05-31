@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Moq" Version="4.18.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\DMS.BASE\DMS.Core\DMS.Authorizations\DMS.Authorizations.csproj" />
     <ProjectReference Include="..\DMS.Core\DMS.NLogs\DMS.NLogs.csproj" />
     <ProjectReference Include="..\DMS.Core\DMS.Swagger\DMS.Swagger.csproj" />
