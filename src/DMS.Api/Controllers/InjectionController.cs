@@ -47,8 +47,10 @@ namespace DMS.Api.Controllers
             {
                 GenFu.GenFu.Configure<ProductEntityResult>().Fill(b => b.ProductName, () => { return "全局替换"; });
                 DateTime dateTime = DateTime.Now;
-                var result = GenFu.GenFu.New(new ResponseResult<ProductEntityResult>() { data = GenFu.GenFu.New(new ProductEntityResult { CreatedTime = dateTime }) });
-                result.errno = 0;
+                var result = new ResponseResult<ProductEntityResult>()
+                {
+                    data = GenFu.GenFu.New(new ProductEntityResult { CreatedTime = dateTime }),
+                };
                 return result;
             }
             return await _productService.GetProductAsync(id);
@@ -78,7 +80,7 @@ namespace DMS.Api.Controllers
             {
                 GenFu.GenFu.Configure<ProductEntityResult>().Fill(b => b.ProductName, () => { return "全局替换"; });
                 DateTime dateTime = DateTime.Now;
-                var result = GenFu.GenFu.New(new ResponseResult<PageModel<ProductEntityResult>>()
+                var result = new ResponseResult<PageModel<ProductEntityResult>>()
                 {
                     data = new PageModel<ProductEntityResult>()
                     {
@@ -87,8 +89,7 @@ namespace DMS.Api.Controllers
                         totalRecord = param.totalCount,
                         resultList = GenFu.GenFu.ListOf<ProductEntityResult>(param.pageSize),
                     }
-                });
-                result.errno = 0;
+                };
                 return result;
             }
             var ip = IPHelper.GetCurrentIp();
