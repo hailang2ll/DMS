@@ -26,5 +26,6 @@ namespace DMS.IServices.Param
         [Range(0, 999.99)]
         public string ProductPrice { get; set; }
 
+
     }
 }

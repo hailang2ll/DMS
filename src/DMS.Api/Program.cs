@@ -125,12 +125,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    app.UseSwaggerUI(true);
 }
 else
 {
     app.UseExceptionHandler("/Error");
 }
-app.UseSwaggerUI(true);
+
 // CORS¿çÓò
 app.UseCors(DMS.Common.AppConfig.GetValue(new string[] { "Cors", "PolicyName" }));
 //¿ª»§¾²Ì¬Ò³Ãæ
