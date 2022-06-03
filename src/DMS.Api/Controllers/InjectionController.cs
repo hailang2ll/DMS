@@ -75,23 +75,23 @@ namespace DMS.Api.Controllers
         [HttpGet("SearchProductList")]
         public async Task<ResponseResult<PageModel<ProductEntityResult>>> SearchProductListAsync([FromQuery] SearchProductParam param)
         {
-            bool mockEnable = DMS.Common.AppConfig.GetValue<bool>("MockEnable");
-            if (mockEnable)
-            {
-                GenFu.GenFu.Configure<ProductEntityResult>().Fill(b => b.ProductName, () => { return "全局替换"; });
-                DateTime dateTime = DateTime.Now;
-                var result = new ResponseResult<PageModel<ProductEntityResult>>()
-                {
-                    data = new PageModel<ProductEntityResult>()
-                    {
-                        pageIndex = param.pageIndex,
-                        pageSize = param.pageSize,
-                        totalRecord = param.totalCount,
-                        resultList = GenFu.GenFu.ListOf<ProductEntityResult>(param.pageSize),
-                    }
-                };
-                return result;
-            }
+            //bool mockEnable = DMS.Common.AppConfig.GetValue<bool>("MockEnable");
+            //if (mockEnable)
+            //{
+            //    GenFu.GenFu.Configure<ProductEntityResult>().Fill(b => b.ProductName, () => { return "全局替换"; });
+            //    DateTime dateTime = DateTime.Now;
+            //    var result = new ResponseResult<PageModel<ProductEntityResult>>()
+            //    {
+            //        data = new PageModel<ProductEntityResult>()
+            //        {
+            //            pageIndex = param.pageIndex,
+            //            pageSize = param.pageSize,
+            //            totalRecord = param.totalCount,
+            //            resultList = GenFu.GenFu.ListOf<ProductEntityResult>(param.pageSize),
+            //        }
+            //    };
+            //    return result;
+            //}
             var ip = IPHelper.GetCurrentIp();
             return await _productService.SearchProductListAsync(param);
         }

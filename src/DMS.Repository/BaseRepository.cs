@@ -140,7 +140,7 @@ namespace DMS.Repository
              .OrderByIF(!string.IsNullOrEmpty(strOrderByFileds), strOrderByFileds)
              .ToPageListAsync(pageParam.pageIndex, pageParam.pageSize, totalCount);
 
-            return new PageModel<TEntity>() { pageIndex = 1, pageSize = pageParam.pageSize, totalRecord = totalCount, resultList = list };
+            return new PageModel<TEntity>() { pageIndex = pageParam.pageIndex, pageSize = pageParam.pageSize, totalRecord = totalCount, resultList = list };
         }
         public async Task<PageModel<TEntity>> QueryPageList(Expression<Func<TEntity, bool>> predicate, PageParam pageParam, Expression<Func<TEntity, object>> orderByExpression = null)
         {
