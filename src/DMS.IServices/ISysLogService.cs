@@ -8,6 +8,7 @@ namespace DMS.IServices
     /// </summary>
     public interface ISysLogService
     {
+        Task<int> Add0(AddSysLogParam param);
         /// <summary>
         /// 新增
         /// </summary>

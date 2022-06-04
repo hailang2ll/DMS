@@ -12,6 +12,26 @@ namespace DMS.Services
     /// </summary>
     public class SysLogService : BaseService<SysLog>, ISysLogService
     {
+        public async Task<int> Add0(AddSysLogParam param)
+        {
+            SysLog log = new()
+            {
+                MemberName = param.MemberName,
+                SubSysid = param.SubSysid,
+                SubSysname = param.SubSysname,
+                Ip = "",
+                Url = "",
+                Thread = "",
+                Level = "",
+                Logger = "",
+                Message = "",
+                LogType = 1,
+                Exception = "",
+                CreateTime = DateTime.Now,
+            };
+            var flag = await base.AsInsertable(log).IgnoreColumns(ignoreNullColumn: true).ExecuteCommandAsync();
+            return flag;
+        }
         /// <summary>
         /// 新增
         /// </summary>

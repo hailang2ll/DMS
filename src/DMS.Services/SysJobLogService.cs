@@ -223,7 +223,7 @@ namespace DMS.Services
         {
             ResponseResult<PageModel<JobLogResult>> result = new()
             {
-                data = new PageModel<JobLogResult>()
+                //data = new PageModel<JobLogResult>() { resultList = new List<JobLogResult>() }
             };
             if (param == null || param.JobLogType <= 0)
             {

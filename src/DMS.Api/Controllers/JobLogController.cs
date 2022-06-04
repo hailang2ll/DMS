@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DMS.Api.Controllers
 {
     /// <summary>
-    /// 日志管理
+    /// 工作日志接口
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]

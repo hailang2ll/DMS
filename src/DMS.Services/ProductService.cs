@@ -59,8 +59,8 @@ namespace DMS.Services
             //    CreatedTime = DateTime.Now,
             //};
 
-            //pageModel.resultList = GenFu.GenFu.ListOf<ProductEntityResult>(param.pageSize);
-            //result.data = pageModel;
+            pageModel.resultList = GenFu.GenFu.ListOf<ProductEntityResult>(param.pageSize);
+            result.data = pageModel;
             return await Task.FromResult(result);
 
         }
