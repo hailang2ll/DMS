@@ -20,7 +20,7 @@ namespace DMS.Swagger
         {
             if (isDebug)
             {
-                app.UseSwagger();
+                app.UseSwagger(c => { c.RouteTemplate = "swagger/{documentName}/swagger.json"; });
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", AppDomain.CurrentDomain.FriendlyName);
