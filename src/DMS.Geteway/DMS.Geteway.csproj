@@ -14,5 +14,8 @@
 	<ItemGroup>
 		<Folder Include="Controllers\" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\DMS.BASE\DMS.Core\DMS.Authorizations\DMS.Authorizations.csproj" />
+	</ItemGroup>
 
 </Project>
