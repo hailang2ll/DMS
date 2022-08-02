@@ -36,7 +36,16 @@ namespace DMS.Geteway
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+           
+            var authenticationProviderKey = "TestKey";
 
+            services.AddAuthentication()
+                .AddJwtBearer(authenticationProviderKey, x =>
+                {
+                    x.Authority = "test";
+                    x.Audience = "test";
+                    x.RequireHttpsMetadata = false;
+                });
             services.AddControllers();
             services.AddOcelot(Configuration);
         }
