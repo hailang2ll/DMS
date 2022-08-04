@@ -469,7 +469,7 @@ namespace DMS.Redis
         /// <param name="key"></param>
         /// <param name="dataKey"></param>
         /// <returns></returns>
-        public async Task<T> HashGeAsync<T>(string key, string dataKey)
+        public async Task<T> HashGetAsync<T>(string key, string dataKey)
         {
             key = AddSysCustomKey(key);
             string value = await Do(db => db.HashGetAsync(key, dataKey));
