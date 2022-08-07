@@ -1,3 +1,4 @@
+using DMS.NLogs;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +26,7 @@ namespace DMS.Geteway
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseNLog($"Configs/nlog.config");
                     webBuilder.UseStartup<Startup>();
                 });
     }

@@ -37,9 +37,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMS.Geteway", "DMS.Geteway\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMS.Authorizations", "..\..\DMS.BASE\DMS.Core\DMS.Authorizations\DMS.Authorizations.csproj", "{33D05064-9250-43FB-8C51-E3A0970CB018}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMS.Service1", "DMS.Service1\DMS.Service1.csproj", "{6C00391A-7753-4AA9-8B9C-509660095C14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMS.Service1", "DMS.Service1\DMS.Service1.csproj", "{6C00391A-7753-4AA9-8B9C-509660095C14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMS.Service2", "DMS.Service2\DMS.Service2.csproj", "{3FB38FDB-BCB1-4C9C-9AC8-F4EDC32C4C7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMS.Service2", "DMS.Service2\DMS.Service2.csproj", "{3FB38FDB-BCB1-4C9C-9AC8-F4EDC32C4C7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

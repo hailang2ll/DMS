@@ -57,7 +57,7 @@ namespace DMS.Geteway
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseOcelot().Wait();
+            //app.UseOcelot().Wait();
 
             app.UseRouting();
             app.UseAuthorization();

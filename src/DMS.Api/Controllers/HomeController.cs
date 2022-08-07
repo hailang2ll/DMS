@@ -16,5 +16,9 @@ namespace DMS.Api.Controllers
             var murl = DMS.Common.AppConfig.GetValue("MemberUrl");
             return Content("OK-" + murl);
         }
+
+      
     }
+
+   
 }
