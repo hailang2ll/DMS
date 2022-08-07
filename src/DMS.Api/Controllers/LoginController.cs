@@ -38,20 +38,24 @@ namespace DMS.Api.Controllers
         /// 
         /// </summary>
         private readonly DMS.Authorizations.UserContext.Jwt.IUserAuth _userOauth;
+        private readonly DMS.Authorizations.UserContext.Token.IUserAuth _userToken;
         /// <summary>
-        /// 构造函数注入
+        /// 
         /// </summary>
         /// <param name="requirement"></param>
         /// <param name="redisRepository"></param>
         /// <param name="userAuth"></param>
-        public LoginController(PermissionRequirement requirement, IRedisRepository redisRepository, DMS.Authorizations.UserContext.Jwt.IUserAuth userAuth)
+        /// <param name="userToken"></param>
+        public LoginController(PermissionRequirement requirement, IRedisRepository redisRepository
+            , DMS.Authorizations.UserContext.Jwt.IUserAuth userAuth
+            , DMS.Authorizations.UserContext.Token.IUserAuth userToken)
         {
             _requirement = requirement;
             _redisRepository = redisRepository;
             _userOauth = userAuth;
         }
         /// <summary>
-        /// 普通TOKEN认识方式
+        /// 登录 token+redis生成
         /// </summary>
         /// <returns></returns>
         [HttpPost("TokenLogin")]
@@ -71,13 +75,12 @@ namespace DMS.Api.Controllers
             return result;
         }
 
-
         /// <summary>
-        /// 登录 token生成
+        /// 登录 jwt+token+redis生成
         /// </summary>
         /// <returns></returns>
-        [HttpPost("Login")]
-        public async Task<ResponseResult> Login(string uname, string pwd)
+        [HttpPost("JwtTokenLogin")]
+        public async Task<ResponseResult> JwtTokenLogin(string uname, string pwd)
         {
             ResponseResult result = new ResponseResult();
 

@@ -43,6 +43,7 @@ namespace DMS.Api.Controllers
         [HttpGet("CheckTokenAuth")]
         public async Task<ResponseResult> CheckTokenAuth()
         {
+            var sid = Request.Headers["sid"];
             var id = userToken.ID;
             var name = userToken.Name;
             var epCode = userToken.EpCode;
