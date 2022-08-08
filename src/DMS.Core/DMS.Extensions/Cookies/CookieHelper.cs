@@ -44,6 +44,12 @@ namespace DMS.Extensions.Cookies
         /// <param name="value">value值</param>
         public void SetCookie(string key, string value)
         {
+            //写入cookies
+            CookieOptions options = new CookieOptions()
+            {
+                HttpOnly = true,
+                Domain = "",
+            };
             _httpContextAccessor.HttpContext.Response.Cookies.Append(key, value);
         }
 

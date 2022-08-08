@@ -37,7 +37,7 @@ namespace DMS.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        private readonly DMS.Authorizations.UserContext.Jwt.IUserAuth _userOauth;
+        private readonly DMS.Authorizations.UserContext.Jwt.IUserAuth _userAuth;
         /// <summary>
         /// 构造函数注入
         /// </summary>
@@ -48,29 +48,8 @@ namespace DMS.Api.Controllers
         {
             _requirement = requirement;
             _redisRepository = redisRepository;
-            _userOauth = userAuth;
+            _userAuth = userAuth;
         }
-        /// <summary>
-        /// 普通TOKEN认识方式
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("TokenLogin")]
-        public async Task<ResponseResult> TokenLogin()
-        {
-            ResponseResult result = new ResponseResult();
-            UserTicket tokenModel = new UserTicket
-            {
-                ID = 120,
-                EpCode = "100214545454",
-                UID = "435353534",
-                ExpDate = DateTime.Now.AddDays(1),
-            };
-            string sid = DMS.Extensions.UniqueGenerator.UniqueHelper.GetWorkerID().ToString();
-            await _redisRepository.SetAsync(sid, tokenModel.SerializeObject(), tokenModel.ExpDate);
-            result.data = sid;
-            return result;
-        }
-
 
         /// <summary>
         /// 登录 token生成

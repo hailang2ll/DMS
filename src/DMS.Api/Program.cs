@@ -6,6 +6,7 @@ using DMS.Authorizations.ServiceExtensions;
 using DMS.Common.Extensions;
 using DMS.Common.JsonHandler.JsonConverters;
 using DMS.Common.Model.Result;
+using DMS.Extensions;
 using DMS.Extensions.ServiceExtensions;
 using DMS.NLogs;
 using DMS.NLogs.Filters;
@@ -85,7 +86,8 @@ builder.Services.AddControllers(option =>
         return new JsonResult(result);
     };
 });
-//api文档生成，1支持普通token验证，2支持oauth2切换；默认为1
+AuthModel authModel = AuthModel.Jwt;
+//api文档生成+认证方式
 builder.Services.AddSwaggerGenSetup(option =>
 {
     option.RootPath = AppContext.BaseDirectory;
@@ -93,7 +95,7 @@ builder.Services.AddSwaggerGenSetup(option =>
         AppDomain.CurrentDomain.FriendlyName+".xml",
         "DMS.IServices.xml"
     };
-});
+}, authModel);
 //开启HttpContext服务
 builder.Services.AddHttpContextSetup();
 //开启sqlsugar服务
@@ -102,8 +104,10 @@ builder.Services.AddSqlsugarIocSetup(builder.Configuration);
 builder.Services.AddRedisSetup();
 //开启redismq服务
 builder.Services.AddRedisMqSetup();
-//开启身份认证服务，与api文档验证对应即可，要先开启redis服务
-builder.Services.AddUserContextSetup();
+//开启cookies服务
+builder.Services.AddCookieSetup();
+//开启身份认证服务，与api文档验证对应即可，要先开启AddRedisSetup服务和AddHttpContextSetup服务
+builder.Services.AddUserContextSetup(authModel);
 
 Permissions.IsUseIds4 = DMS.Common.AppConfig.GetValue(new string[] { "IdentityServer4", "Enabled" }).ToBool();
 builder.Services.AddAuthorizationSetup();

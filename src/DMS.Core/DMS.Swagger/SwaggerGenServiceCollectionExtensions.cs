@@ -86,7 +86,7 @@ namespace DMS.Swagger
                 {
                     option.OperationFilter<AddRequiredHeaderParameter>("AccessToken");
                 }
-                void Auth20()
+                void Auth2()
                 {
                     option.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                     {
@@ -103,20 +103,28 @@ namespace DMS.Swagger
                     //在header中添加token，传递到后台
                     option.OperationFilter<SecurityRequirementsOperationFilter>();
                 }
-                if (authModel == AuthModel.Token)
+                if (authModel == AuthModel.Cookies)
+                {
+                    ConsoleHelper.WriteInfoLine($"当前swagger.cookies认证");
+                }
+                else if (authModel == AuthModel.Token)
                 {
                     Token();
+                    ConsoleHelper.WriteInfoLine($"当前swagger.token认证,需开启redis");
                 }
                 else if (authModel == AuthModel.Jwt)
                 {
-                    Auth20();
+                    Auth2();
+                    ConsoleHelper.WriteInfoLine($"当前swagger.auth2认证,需开启jwt+redis");
+                }
+                else if (authModel == AuthModel.Id4)
+                {
+                    ConsoleHelper.WriteInfoLine($"当前swagger.id4认证,还未实现功能");
                 }
                 else
                 {
-                    Token();
-                    Auth20();
+                    ConsoleHelper.WriteInfoLine($"未知认证方式");
                 }
-
             });
 
 

@@ -10,16 +10,20 @@ namespace DMS.Extensions
     public enum AuthModel
     {
         /// <summary>
-        /// 简单token认证
+        /// cookies认证
+        /// </summary>
+        Cookies,
+        /// <summary>
+        /// token认证
         /// </summary>
         Token,
         /// <summary>
-        /// 基于auth2.0认证
+        /// jwt+redis认证
         /// </summary>
         Jwt,
         /// <summary>
-        /// 都支持
+        /// id4+redis认证
         /// </summary>
-        All
+        Id4
     }
 }
