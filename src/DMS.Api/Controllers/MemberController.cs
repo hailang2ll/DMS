@@ -86,5 +86,10 @@ namespace DMS.Api.Controllers
         {
             return await _memberService.GetList(param);
         }
+
+       
+
     }
+
+    
 }
