@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\Base2ApiController.cs" />
+    <Compile Remove="Controllers\CookiesController.cs" />
   </ItemGroup>
 
   <ItemGroup>
