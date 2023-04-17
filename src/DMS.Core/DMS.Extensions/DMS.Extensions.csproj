@@ -6,7 +6,7 @@
 		<Description>基于DMSN.Common扩展，主要实现公共中间件的作用</Description>
 		<Copyright>Copyright@2018-2022 Dylan</Copyright>
 		<Authors>Dylan,hailang</Authors>
-		<Version>3.2.6</Version>
+		<Version>3.2.7</Version>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 
@@ -23,7 +23,7 @@
 		<PackageReference Include="FreeSql.Provider.MySql" Version="3.0.100" />
 		<PackageReference Include="IdentityModel" Version="6.0.0" />
 		<PackageReference Include="SqlSugar.IOC" Version="2.0.0" />
-		<PackageReference Include="SqlSugarCore" Version="5.1.4.66" />
+		<PackageReference Include="SqlSugarCore" Version="5.1.4.67-preview15" />
 		<PackageReference Include="GenFu" Version="1.6.0" />
 	</ItemGroup>
 
