@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DMS.Log4net.Extensions;
+using System;
 
 namespace DMS.Log4net
 {

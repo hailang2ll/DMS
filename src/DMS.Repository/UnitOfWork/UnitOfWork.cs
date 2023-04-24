@@ -1,4 +1,6 @@
-﻿namespace SqlSugar.Template.Repository.UnitOfWork
+﻿using SqlSugar;
+
+namespace DMS.Repository.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -30,7 +32,7 @@
         {
             try
             {
-                _tenant.CommitTran(); 
+                _tenant.CommitTran();
             }
             catch (Exception ex)
             {

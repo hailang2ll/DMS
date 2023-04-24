@@ -1,5 +1,5 @@
 using Autofac.Extensions.DependencyInjection;
-using DMS.NLogs;
+using DMS.NLogs.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

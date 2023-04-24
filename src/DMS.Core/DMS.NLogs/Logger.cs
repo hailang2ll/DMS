@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DMS.NLogs.Extensions;
+using System;
 
 namespace DMS.NLogs
 {

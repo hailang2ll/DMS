@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace DMS.NLogs
+namespace DMS.NLogs.Extensions
 {
     /// <summary>
     /// log4net 上下文

@@ -3,7 +3,7 @@ using log4net.Repository;
 using System;
 using System.IO;
 
-namespace DMS.Log4net
+namespace DMS.Log4net.Extensions
 {
     /// <summary>
     /// 

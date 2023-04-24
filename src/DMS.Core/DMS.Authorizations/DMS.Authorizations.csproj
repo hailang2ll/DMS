@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Version>1.1.0</Version>
+		<Description>用于统一认证授权</Description>
+	</PropertyGroup>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="If $(ConfigurationName) == Release (&#xD;&#xA;del $(ProjectDir)$(OutDir)..\*.nupkg /s/q&#xD;&#xA;exit 0&#xD;&#xA;)ELSE (echo &quot;Not Debug mode, no file del from nupkg&quot;)" />
+	</Target>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\DMS.Redis\DMS.Redis.csproj" />
+	</ItemGroup>
+</Project>

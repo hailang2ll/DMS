@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace DMS.Log4net
+namespace DMS.Log4net.Extensions
 {
     /// <summary>
     /// nlog扩展

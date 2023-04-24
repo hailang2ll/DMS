@@ -12,7 +12,7 @@
 		<PackageReference Include="Ocelot.Provider.Polly" Version="17.0.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\DMS.BASE\DMS.Core\DMS.Authorizations\DMS.Authorizations.csproj" />
+	  <ProjectReference Include="..\DMS.Core\DMS.Authorizations\DMS.Authorizations.csproj" />
 	  <ProjectReference Include="..\DMS.Core\DMS.NLogs\DMS.NLogs.csproj" />
 	</ItemGroup>
 

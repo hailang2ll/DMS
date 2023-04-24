@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DMS.BASE\DMS.Core\DMS.Authorizations\DMS.Authorizations.csproj" />
+    <ProjectReference Include="..\DMS.Core\DMS.Authorizations\DMS.Authorizations.csproj" />
     <ProjectReference Include="..\DMS.IServices\DMS.IServices.csproj" />
     <ProjectReference Include="..\DMS.Repository\DMS.Repository.csproj" />
   </ItemGroup>

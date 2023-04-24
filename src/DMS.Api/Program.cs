@@ -8,7 +8,7 @@ using DMS.Common.JsonHandler.JsonConverters;
 using DMS.Common.Model.Result;
 using DMS.Extensions;
 using DMS.Extensions.ServiceExtensions;
-using DMS.NLogs;
+using DMS.NLogs.Extensions;
 using DMS.NLogs.Filters;
 using DMS.Redis.Configurations;
 using DMS.Services.RedisEvBus;

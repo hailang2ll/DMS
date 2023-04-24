@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SqlSugar;
 
-namespace SqlSugar.Template.Repository.UnitOfWork
+namespace DMS.Repository.UnitOfWork
 {
     public interface IUnitOfWork
     {
