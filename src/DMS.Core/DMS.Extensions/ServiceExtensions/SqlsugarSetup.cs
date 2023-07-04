@@ -68,33 +68,52 @@ namespace DMS.Extensions.ServiceExtensions
                 });
             });
 
-            services.AddSqlSugar(listConfig);
-            //配置参数
-            services.ConfigurationSugar(db =>
+            //services.AddSqlSugar(listConfig);
+            ////配置参数
+            //services.ConfigurationSugar(db =>
+            //{
+            //    allCon.ForEach(q =>
+            //    {
+            //        db.GetConnection(q.ConnId).Aop.OnLogExecuting = (sql, p) =>
+            //        {
+            //            Console.WriteLine(sql);//输出sql
+            //            Console.WriteLine(string.Join(",", p?.Select(it => it.ParameterName + ":" + it.Value)));//参数
+            //        };
+            //    });
+            //    //设置更多连接参数
+            //    //db.CurrentConnectionConfig.XXXX=XXXX
+            //    //db.CurrentConnectionConfig.MoreSettings=new ConnMoreSettings(){}
+            //    //二级缓存设置
+            //    //db.CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
+            //    //{
+            //    // DataInfoCacheService = myCache //配置我们创建的缓存类
+            //    //}
+            //    //读写分离设置
+            //    //laveConnectionConfigs = new List<SlaveConnectionConfig>(){...}
+
+            //    /*多租户注意*/
+            //    //单库是db.CurrentConnectionConfig 
+            //    //多租户需要db.GetConnection(configId).CurrentConnectionConfig 
+            //});
+
+            SugarIocServices.AddSqlSugar(listConfig);
+            SugarIocServices.ConfigurationSugar(db =>
             {
+                //db.Aop.OnLogExecuting = (sql, p) =>
+                //{
+                //    Console.WriteLine(sql);
+                //};
                 allCon.ForEach(q =>
                 {
                     db.GetConnection(q.ConnId).Aop.OnLogExecuting = (sql, p) =>
                     {
                         Console.WriteLine(sql);//输出sql
-                        Console.WriteLine(string.Join(",", p?.Select(it => it.ParameterName + ":" + it.Value)));//参数
+                        Console.WriteLine(string.Join(",", p?.Select(it => it.ParameterName + ":" + it.Value)));
                     };
                 });
-                //设置更多连接参数
-                //db.CurrentConnectionConfig.XXXX=XXXX
-                //db.CurrentConnectionConfig.MoreSettings=new ConnMoreSettings(){}
-                //二级缓存设置
-                //db.CurrentConnectionConfig.ConfigureExternalServices = new ConfigureExternalServices()
-                //{
-                // DataInfoCacheService = myCache //配置我们创建的缓存类
-                //}
-                //读写分离设置
-                //laveConnectionConfigs = new List<SlaveConnectionConfig>(){...}
 
-                /*多租户注意*/
-                //单库是db.CurrentConnectionConfig 
-                //多租户需要db.GetConnection(configId).CurrentConnectionConfig 
             });
+
         }
     }
 }
