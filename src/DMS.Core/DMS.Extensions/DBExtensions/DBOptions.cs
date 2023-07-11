@@ -26,6 +26,10 @@ namespace DMS.Extensions.DBExtensions
         /// </summary>
         public int HitRate { get; set; }
         /// <summary>
+        /// SQL是否打印
+        /// </summary>
+        public bool SqlPrint { get; set; }
+        /// <summary>
         /// 连接字符串
         /// </summary>
         public string Connection { get; set; }

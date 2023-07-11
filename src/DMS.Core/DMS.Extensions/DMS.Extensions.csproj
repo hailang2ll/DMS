@@ -8,7 +8,7 @@
 		<Description>基于DMSN.Common扩展，主要实现公共中间件的作用</Description>
 		<Copyright>Copyright@2018-2022 Dylan</Copyright>
 		<Authors>Dylan,hailang</Authors>
-		<Version>3.2.8</Version>
+		<Version>3.2.9.1</Version>
 	</PropertyGroup>
 
 	<ItemGroup>

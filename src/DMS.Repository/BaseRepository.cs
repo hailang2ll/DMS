@@ -20,7 +20,7 @@ namespace DMS.Repository
         public BaseRepository(ISqlSugarClient context = null) : base(context)
         {
             itenant = DbScoped.SugarScope;//设置租户接口,事物用
-            base.Context = DbScoped.SugarScope.GetConnectionWithAttr<TEntity>();
+            base.Context = DbScoped.SugarScope.GetConnectionScopeWithAttr<TEntity>();
         }
 
         #region 查询实体,select()用法
