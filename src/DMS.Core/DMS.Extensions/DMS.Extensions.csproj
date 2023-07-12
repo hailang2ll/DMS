@@ -8,7 +8,7 @@
 		<Description>基于DMSN.Common扩展，主要实现公共中间件的作用</Description>
 		<Copyright>Copyright@2018-2022 Dylan</Copyright>
 		<Authors>Dylan,hailang</Authors>
-		<Version>3.2.9.1</Version>
+		<Version>3.2.9.3</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -20,7 +20,7 @@
 	<ItemGroup>
 		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
 		<PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
-		<PackageReference Include="DMS.Common" Version="4.4.0" />
+		<PackageReference Include="DMS.Common" Version="4.4.2" />
 		<PackageReference Include="FreeSql.Provider.MySql" Version="3.2.697" />
 		<PackageReference Include="IdentityModel" Version="6.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.1" />
